@@ -90,7 +90,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'คลินิกผู้สูงอายุ  รพ.หาดใหญ่',
+      title: 'คลินิกผู้สูงอายุ  โรงพยาบาลหาดใหญ่',
     }
   },
 }
