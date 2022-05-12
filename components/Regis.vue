@@ -4,7 +4,13 @@
     <v-col>
       <v-card>
         <v-card-text>
-          <v-card-title> ทะเบียนผู้สูงอายุ </v-card-title>
+          <v-card-title>
+            ทะเบียนผู้สูงอายุ <v-spacer></v-spacer>
+            <v-btn class="mx-2" fab dark color="#6A67CE" @click="dialog = true">
+              <v-icon dark> mdi-card-search </v-icon>
+            </v-btn>
+          </v-card-title>
+
           <v-divider />
         </v-card-text>
 
@@ -311,6 +317,50 @@
           >
         </v-card-text>
       </v-card>
+      <v-dialog v-model="dialog" width="600">
+        <v-card>
+          <v-card-title class="text-h5 white--text deep-purple darken-3">
+            ค้นหาทะเบียน
+          </v-card-title>
+
+          <v-card-text>
+            <div class="text-h6">ค้นหาจาก HN หรือ เลขบัตรประชาชน</div>
+            <v-row
+              ><v-col cols="12" md="6">
+                <p class="text-h4 text--primary">HN</p>
+                <v-autocomplete
+                  v-model="nationality"
+                  :items="nationalitys"
+                  item-text="name"
+                  item-value="code"
+                  dense
+                  outlined
+                ></v-autocomplete
+              ></v-col>
+              <v-col cols="12" md="6">
+                <p class="text-h4 text--primary">เลขบัตรประชาชน</p>
+                <v-autocomplete
+                  v-model="nationality"
+                  :items="nationalitys"
+                  item-text="name"
+                  item-value="code"
+                  dense
+                  outlined
+                ></v-autocomplete></v-col
+            ></v-row>
+
+            <p class="text-h6">รายละเอียด</p>
+            <div class="text-h6 text--primary">
+              ชื่อ-นามสกุล : ทดสอบ ระบบ อายุ: 65 ปี
+            </div>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn text color="teal accent-4" @click="reveal = true">
+              ตกลง
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-col>
   </v-row>
 </template>
@@ -395,6 +445,7 @@ export default {
       drug: 'n',
       drug_detail: '',
       drug_show: true,
+      dialog: false,
     }
   },
   mounted() {
