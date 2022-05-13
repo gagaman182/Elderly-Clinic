@@ -347,7 +347,7 @@ export default {
       if (this.total >= 1 && this.total <= 4) return 'ติดเตียง'
       else if (this.total >= 5 && this.total <= 11) return 'ติดบ้าน'
       else if (this.total >= 12) return 'ติดสังคม'
-      else if (this.total == 0) return 'ว่าง'
+      else if (this.total == 0) return '-'
     },
   },
   //   watch: {
