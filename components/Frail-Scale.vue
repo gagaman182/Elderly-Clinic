@@ -154,7 +154,6 @@
                 label="โรคไต"
                 value="1.7"
               ></v-checkbox>
-              {{ frail4 }}
             </v-col>
             <v-col cols="12" md="2"
               ><v-avatar color="#79DAE8" size="62">
@@ -215,6 +214,16 @@
               <v-chip class="white--text text-h4" color="#79DAE8">
                 {{ result }}
               </v-chip>
+            </v-col>
+          </v-row>
+          <v-row
+            ><v-col cols="12">
+              <div class="text-center">
+                <v-btn rounded color="#6A67CE" x-large dark @click="save_frail">
+                  <v-icon>mdi-content-save-move </v-icon>
+                  <h4>บันทึก</h4>
+                </v-btn>
+              </div>
             </v-col>
           </v-row>
         </v-card-text>
@@ -314,6 +323,9 @@ export default {
         return '-'
       }
     },
+  },
+  methods: {
+    save_frail() {},
   },
 }
 </script>

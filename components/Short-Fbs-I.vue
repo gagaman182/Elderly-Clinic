@@ -168,6 +168,16 @@
               </v-chip>
             </v-col>
           </v-row> -->
+          <v-row
+            ><v-col cols="12">
+              <div class="text-center">
+                <v-btn rounded color="#6A67CE" x-large dark @click="save_short">
+                  <v-icon>mdi-content-save-move </v-icon>
+                  <h4>บันทึก</h4>
+                </v-btn>
+              </div></v-col
+            ></v-row
+          >
         </v-card-text>
       </v-card>
     </v-col>
@@ -215,6 +225,9 @@ export default {
       // else if (this.total >= 11) return 'มีภาวะซึมเศร้าแน่นอน'
       // else if (this.total < 6) return '-'
     },
+  },
+  methods: {
+    save_short() {},
   },
 }
 </script>

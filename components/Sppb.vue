@@ -122,7 +122,7 @@
           <v-row
             ><v-col cols="12">
               <div class="text-center">
-                <v-btn rounded color="#6A67CE" x-large dark @click="save_regis">
+                <v-btn rounded color="#6A67CE" x-large dark @click="save_tug">
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
@@ -163,6 +163,9 @@ export default {
     //   if (this.total < 4) return '-'
     //   else if (this.total >= 4) return 'มีความเสี่ยงต่อภาวะหกล้ม'
     // },
+  },
+  methods: {
+    save_sppb() {},
   },
 }
 </script>

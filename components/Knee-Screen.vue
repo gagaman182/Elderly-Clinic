@@ -94,6 +94,22 @@
               </v-chip>
             </v-col>
           </v-row>
+          <v-row
+            ><v-col cols="12">
+              <div class="text-center">
+                <v-btn
+                  rounded
+                  color="#6A67CE"
+                  x-large
+                  dark
+                  @click="save_kneescreen"
+                >
+                  <v-icon>mdi-content-save-move </v-icon>
+                  <h4>บันทึก</h4>
+                </v-btn>
+              </div>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-col>
@@ -135,6 +151,9 @@ export default {
       else if (this.total >= 1 && this.total < 2) return 'ปกติ '
       else if (this.total >= 2) return 'มีโอกาสที่จะเป็นโรคข้อเข่าเสื่อม '
     },
+  },
+  methods: {
+    save_kneescreen() {},
   },
 }
 </script>
