@@ -9,14 +9,19 @@
     >
       <div class="justify-center text-center logohead">
         <v-icon large color="#313552"> mdi-domain </v-icon>
-        <h3>โรงพยาบาลหาดใหญ่</h3>
-        <p class="text--secondary">กลุ่มงานเวชกรรมสังคม</p>
+        <h3>กลุ่มงานเวชกรรมสังคม</h3>
+        <p class="text--secondary">โรงพยาบาลหาดใหญ่</p>
       </div>
       <v-divider class="mx-4"></v-divider>
       <v-card class="mx-auto" max-width="434" tile>
-        <v-img
+        <!-- <v-img
           height="100%"
           src="https://hatyaihospital.go.th/web/site2019/images/2020-slide.jpg"
+        ></v-img> -->
+        <v-img
+          height="100%"
+          src="https://video.fhdy2-1.fna.fbcdn.net/v/t1.6435-9/67191996_2857987410896818_594038395588575232_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeGamdQsL8Y2UCOsHHiRSjIQY9mcHcSYHwFj2ZwdxJgfAYiTp7zYmclIsZcm8AEst7pbHliJSLQJeb-o49c0oVMk&_nc_ohc=yVtqUMYMk88AX_OeGKN&_nc_oc=AQn1kHbfEkWCzE9l7yShf6CO9NlOgP6tx9fekBwZsuQqDa2kKT3KKiLYqCfEG_nhqXo5ejmjGnr34tOxzrLNYBK0&_nc_ht=video.fhdy2-1.fna&oh=00_AT-zbx2h7k21FJNCeQngbR_c8zIjDSagMTPGsbFiyuPKhw&oe=62B2690F
+"
         ></v-img>
 
         <!-- <v-list-item
@@ -42,7 +47,7 @@
           color="#947EC3"
         >
           <v-list-item-action>
-            <fa :icon="item.icon" size="2x" color="#947EC3" />
+            <fa :icon="item.icon" size="lg" color="#947EC3" />
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title v-text="item.title" class="" />
@@ -63,10 +68,30 @@
       </v-btn> -->
       <img src="@/assets/65.gif" />
       <v-toolbar-title v-text="title" class="white--text" />
-      <!-- <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+      <v-spacer />
+      <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn> -->
+      <div class="text-center">
+        <v-menu open-on-hover top offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="#947EC3" dark v-bind="attrs" v-on="on">
+              <v-icon>mdi-menu</v-icon>
+            </v-btn>
+          </template>
+          <v-list-item-group v-model="selectedItem">
+            <v-list color="#6A67CE">
+              <v-list-item
+                class="white--text"
+                v-for="(item, index) in itemmenu"
+                :key="index"
+              >
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-list-item-group>
+        </v-menu>
+      </div>
     </v-app-bar>
     <v-main>
       <Nuxt />
@@ -100,27 +125,48 @@ export default {
       fixed: false,
       items: [
         {
+          icon: ['fas', 'person-cane'],
+          title: 'รวม',
+          to: '/clinic',
+        },
+        // {
+        //   icon: ['fas', 'person-cane'],
+        //   title: 'บันทึกข้อมูล',
+        //   to: '/clinic',
+        // },
+
+        {
           icon: ['fas', 'person-walking-with-cane'],
-          title: 'ลงทะเบียน',
+          title: 'ข้อมูลทั่วไป',
           to: '/',
         },
         {
-          icon: ['fas', 'person-cane'],
-          title: 'บันทึกข้อมูล',
-          to: '/clinic',
+          icon: ['fas', 'brain'],
+          title: 'Dementia',
+          to: '/dementia',
         },
         {
-          // icon: 'mdi-chart-bubble',
-
+          icon: ['fas', 'person-falling'],
+          title: 'Falling',
+          to: '/falling',
+        },
+        {
+          icon: ['fas', 'user-doctor'],
+          title: 'แพทย์',
+          to: '/doctor',
+        },
+        {
           icon: ['fas', 'fa-square-poll-horizontal'],
           title: 'ประเมินผล',
-          to: '/inspire',
+          to: '/evaluate',
         },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'คลินิกผู้สูงอายุ  โรงพยาบาลหาดใหญ่',
+      itemmenu: [{ title: 'ออกจากระบบ' }, { title: 'เข้าสู่ระบบ' }],
+      selectedItem: '',
     }
   },
 }

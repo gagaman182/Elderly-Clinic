@@ -31,8 +31,7 @@
                 “ให้ตั้งใจฟังดีๆ เดี๋ยวจะบอกคำ 3 คำ เมื่อพูดจบ
                 แล้วให้พูดตามและจำไว้ เดี๋ยวจะกลับมาถามซ้ำ”
               </h3>
-              <P CLASS="text-h6 green--text">หลานสาว สวรรค์ ภูเขา</P>
-              <!-- <v-checkbox
+              <v-checkbox
                 v-model="minicog1_1"
                 label="หลานสาว"
                 value="1"
@@ -46,7 +45,7 @@
                 v-model="minicog1_3"
                 label="ภูเขา"
                 value="1"
-              ></v-checkbox> -->
+              ></v-checkbox>
             </v-col>
             <!-- <v-col cols="12" md="2"
               ><v-avatar color="#79DAE8" size="62">
@@ -123,19 +122,16 @@
                 v-model="minicog3_1"
                 label="หลานสาว"
                 value="1"
-                @change="minicog_3"
               ></v-checkbox>
               <v-checkbox
                 v-model="minicog3_2"
                 label="สวรรค์"
                 value="1"
-                @change="minicog_3"
               ></v-checkbox>
               <v-checkbox
                 v-model="minicog3_3"
                 label="ภูเขา"
                 value="1"
-                @change="minicog_3"
               ></v-checkbox>
             </v-col>
 
@@ -162,7 +158,7 @@
             <v-col cols="12" md="6">
               <v-chip class="white--text text-h4" color="#79DAE8">
                 {{ result }}
-                {{ miniclogtosend }}
+                {{ bar }}
               </v-chip>
             </v-col>
           </v-row>
@@ -202,26 +198,13 @@ export default {
       minicog1_2: '',
       minicog1_3: '',
       minicog2: '',
-      minicog3: '0',
+
       minicog3_1: '0',
       minicog3_2: '0',
       minicog3_3: '0',
     }
   },
   methods: {
-    minicog_3() {
-      if (!this.minicog3_1) {
-        this.minicog3_1 = '0'
-      } else if (!this.minicog3_2) {
-        this.minicog3_2 = '0'
-      } else if (!this.minicog3_3) {
-        this.minicog3_3 = '0'
-      }
-      this.minicog3 =
-        parseInt(this.minicog3_1) +
-        parseInt(this.minicog3_2) +
-        parseInt(this.minicog3_3)
-    },
     pickFile() {
       this.$refs.image.click()
     },
@@ -273,14 +256,14 @@ export default {
     save_minicog() {},
   },
   computed: {
-    // minicog3: function () {
-    //   if (!this.minicog3_1 || !this.minicog3_2 || !this.minicog3_3) return 0
-    //   return (
-    //     parseInt(this.minicog3_1) +
-    //     parseInt(this.minicog3_2) +
-    //     parseInt(this.minicog3_3)
-    //   )
-    // },
+    minicog3: function () {
+      if (!this.minicog3_1 || !this.minicog3_2 || !this.minicog3_3) return 0
+      return (
+        parseInt(this.minicog3_1) +
+        parseInt(this.minicog3_2) +
+        parseInt(this.minicog3_3)
+      )
+    },
     total: function () {
       // if (!this.minicog2 || !this.minicog3) return 0
       // if (!this.minicog3) return 0
@@ -294,8 +277,10 @@ export default {
       else if (this.total > 3) return 'ปกติ'
       else if (this.total == 0) return '-'
     },
-    miniclogtosend: function () {
-      this.$emit('miniclog', this.total)
+    bar: function () {
+      if (this.total >= 1 && this.total <= 3) {
+        alert('dd')
+      }
     },
   },
 }
