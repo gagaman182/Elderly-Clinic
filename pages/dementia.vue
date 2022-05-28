@@ -33,16 +33,14 @@
             <v-stepper-step :complete="e1 > 1" step="1" color="#B689C0">
               Mini-Cog
             </v-stepper-step>
-
             <v-divider></v-divider>
-
             <v-stepper-step :complete="e1 > 2" step="2" color="#B689C0">
               TGDS-15
             </v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step step="3" color="#B689C0"> TMSE </v-stepper-step>
+            <v-stepper-step :complete="e1 > 3" step="3" color="#B689C0"> TMSE </v-stepper-step>
             <v-divider></v-divider>
-            <v-stepper-step step="4" color="#B689C0"> MOCA </v-stepper-step>
+            <v-stepper-step :complete="e1 > 4" step="4" color="#B689C0"> MOCA </v-stepper-step>
           </v-stepper-header>
 
           <v-stepper-items>
