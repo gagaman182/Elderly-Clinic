@@ -192,9 +192,10 @@
               ></v-autocomplete>
             </v-col>
           </v-row>
+          <v-divider class="mt-5 mb-5" />
           <v-row>
             <v-col cols="12" md="12">
-              <h3 class="textlabel mb-2">ส่งตัวมาจาก</h3>
+              <h3 class="textlabel">ส่งตัวมาจาก</h3>
             </v-col>
           </v-row>
           <v-row>
@@ -255,6 +256,33 @@
               ></v-checkbox>
             </v-col>
           </v-row>
+          <v-divider class="mt-5 mb-5" />
+          <v-row>
+            <v-col cols="12" md="12">
+              <h3 class="textlabel mb-2">อาการ</h3>
+            </v-col>
+            <v-col cols="12" md="4">
+              <h3 class="textlabel mb-2"></h3>
+
+              <v-checkbox
+                v-model="dementia"
+                label="Dementia"
+                color="#6A67CE"
+                hide-details
+              ></v-checkbox>
+            </v-col>
+            <v-col cols="12" md="4">
+              <h3 class="textlabel mb-2"></h3>
+
+              <v-checkbox
+                v-model="falling"
+                label="Falling"
+                color="#6A67CE"
+                hide-details
+              ></v-checkbox>
+            </v-col>
+          </v-row>
+          <v-divider class="mt-5 mb-5" />
           <v-row>
             <v-col cols="12" md="4">
               <h3 class="textlabel mb-2">โรคประจำตัว</h3>
@@ -355,7 +383,8 @@
             </div>
           </v-card-text>
           <v-card-actions>
-            <v-btn text color="teal accent-4" @click="reveal = true">
+            <v-specer />
+            <v-btn dark color="#6A67CE" @click="reveal = true" depressed>
               ตกลง
             </v-btn>
           </v-card-actions>
@@ -446,6 +475,8 @@ export default {
       drug_detail: '',
       drug_show: true,
       dialog: false,
+      dementia: '',
+      falling: '',
     }
   },
   mounted() {

@@ -137,7 +137,7 @@ import Knee_Score from '~/components/Knee-Score.vue'
 import Short_Fbs_I from '~/components/Short-Fbs-I.vue'
 
 export default {
-  name: 'IndexPage',
+  name: 'demetia',
   data() {
     return {
       e1: 1,

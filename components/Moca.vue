@@ -17,18 +17,18 @@
                 VISUOSPATIAL/EXECUTIVE
               </v-card-subtitle>
             </v-col>
-            <v-col cols="12" md="7">
+            <v-col cols="12" md="8">
               <img src="@/assets/moca1_50.png" />
             </v-col>
-            <v-col cols="12" md="5">
+            <v-col cols="12" md="4">
               <v-text-field
                 class="mr-8 mt-15 text-h5"
                 outlined
                 label="คะแนน"
                 type="number"
-                max-length="5"
-                placeholder="0"
+                min="0"
                 max="5"
+                placeholder="0"
                 suffix="/5 คะแนน"
                 v-model="moca1"
               ></v-text-field>
@@ -52,6 +52,7 @@
                 label="คะแนน"
                 type="number"
                 placeholder="0"
+                min="0"
                 max="3"
                 suffix="/3 คะแนน"
                 v-model="moca2"
@@ -94,6 +95,7 @@
                 label="คะแนน"
                 type="number"
                 placeholder="0"
+                min="0"
                 max="2"
                 suffix="/2 คะแนน"
                 v-model="moca4_1"
@@ -113,6 +115,7 @@
                 label="คะแนน"
                 type="number"
                 placeholder="0"
+                min="0"
                 max="1"
                 suffix="/1 คะแนน"
                 v-model="moca4_2"
@@ -130,9 +133,10 @@
                 label="คะแนน"
                 type="number"
                 placeholder="0"
+                min="0"
                 max="3"
                 suffix="/3 คะแนน"
-                v-model="moca4_2"
+                v-model="moca4_3"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -157,6 +161,7 @@
                 label="คะแนน"
                 type="number"
                 placeholder="0"
+                min="0"
                 max="2"
                 suffix="/2 คะแนน"
                 v-model="moca5_1"
@@ -175,6 +180,7 @@
                 label="คะแนน"
                 type="number"
                 placeholder="0"
+                min="0"
                 max="1"
                 suffix="/1 คะแนน"
                 v-model="moca5_2"
@@ -201,6 +207,7 @@
                 label="คะแนน"
                 type="number"
                 placeholder="0"
+                min="0"
                 max="2"
                 suffix="/2 คะแนน"
                 v-model="moca6"
@@ -227,6 +234,7 @@
                 label="คะแนน"
                 type="number"
                 placeholder="0"
+                min="0"
                 max="5"
                 suffix="/5 คะแนน"
                 v-model="moca7"
@@ -249,6 +257,7 @@
                 label="คะแนน"
                 type="number"
                 placeholder="0"
+                min="0"
                 max="6"
                 suffix="/6 คะแนน"
                 v-model="moca8"
@@ -258,7 +267,7 @@
           <v-row>
             <v-col cols="12">
               <div class="text-center">
-                <v-btn rounded color="#6A67CE" x-large dark @click="save_tug">
+                <v-btn rounded color="#6A67CE" x-large dark @click="save_moca">
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
@@ -290,7 +299,9 @@ export default {
     }
   },
   methods: {
-    save_tug() {},
+    save_moca() {
+      alert('save')
+    },
   },
 }
 </script>

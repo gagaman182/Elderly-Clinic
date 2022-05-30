@@ -236,6 +236,11 @@
                 <v-radio label="ทุกคืน" value="0"></v-radio>
               </v-radio-group>
             </v-col>
+            <v-col cols="12" md="2"
+              ><v-avatar color="#79DAE8" size="62">
+                <span class="white--text text-h5">{{ knee_score8 }}</span>
+              </v-avatar>
+            </v-col>
           </v-row>
           <!-- ----9----- -->
           <v-row>
@@ -364,6 +369,16 @@
               </v-chip>
             </v-col>
           </v-row>
+          <v-row>
+            <v-col cols="12" md="3"
+              ><h3 class="textlabel text-h4 mb-2">ส่งต่อ</h3>
+            </v-col>
+            <v-col cols="12" md="3">
+              <v-chip class="white--text text-h4" color="#FFD124">
+                {{ outto }}
+              </v-chip>
+            </v-col>
+          </v-row>
 
           <v-row
             ><v-col cols="12">
@@ -445,10 +460,14 @@ export default {
       )
     },
     result: function () {
-      if (this.total <= 19) return 'ระดับรุนแรง'
+      if (this.total >= 1 && this.total <= 19) return 'ระดับรุนแรง'
       else if (this.total >= 20 && this.total <= 29) return 'ระดับปานนกลาง'
       else if (this.total >= 30 && this.total <= 39) return 'ระดับเริ่มมีอาการ'
       else if (this.total >= 40 && this.total <= 48) return 'ไม่พบอาการผิดปกติ'
+    },
+    outto: function () {
+      if (this.total >= 1 && this.total < 30) return 'พบแพทย์'
+      else if (this.total >= 30 && this.total <= 39) return 'พบนักกายภาพ'
     },
   },
   methods: {

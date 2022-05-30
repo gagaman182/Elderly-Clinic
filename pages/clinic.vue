@@ -17,6 +17,8 @@
           >
 
           <v-tabs background-color="#B689C0" center-active dark v-model="tab">
+            <v-tab>fall</v-tab>
+            <v-tab>riskfall</v-tab>
             <v-tab>ทะเบียน</v-tab>
             <v-tab>ADL</v-tab>
             <v-tab>FRAIL SCALE</v-tab>
@@ -32,6 +34,20 @@
             <v-tab>TUG</v-tab>
             <v-tab>Sppb</v-tab>
 
+            <v-tab-item>
+              <v-card>
+                <v-card-text>
+                  <Fall />
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card>
+                <v-card-text>
+                  <Risk_fall />
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
             <v-tab-item>
               <v-card>
                 <v-card-text>
@@ -137,6 +153,8 @@
 </template>
 
 <script>
+import Fall from '~/components/Fall.vue'
+import Risk_fall from '~/components/Risk-fall.vue'
 import Regis from '~/components/Regis.vue'
 import Adl from '~/components/Adl.vue'
 import Frail_Scale from '~/components/Frail-Scale.vue'
@@ -171,6 +189,8 @@ export default {
     Thai_Frat,
     Tug,
     Sppb,
+    Fall,
+    Risk_fall,
   },
   mounted() {},
   methods: {},

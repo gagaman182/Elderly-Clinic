@@ -347,6 +347,7 @@
                   </v-text-field>
                 </v-col>
               </v-row>
+              <v-divider class="mt-5 mb-5" />
               <v-row
                 ><v-col cols="12" md="10">
                   <p class="body-1">
@@ -379,8 +380,9 @@
                   </v-checkbox>
                 </v-col>
               </v-row>
-              <v-row
-                ><v-col>
+              <v-divider class="mt-5 mb-5" />
+              <v-row>
+                <v-col>
                   <v-checkbox
                     v-model="tmse5_5"
                     label="5.5 ผู้ทดสอบบอกผู้ถูกทดสอบว่าให้อ่านคำว่า “หลับตา”  แล้วทำตาม"
@@ -392,8 +394,13 @@
                 </v-col>
                 <v-col>
                   <v-text-field dense rounded outlined v-model="tmse5_5_detail">
-                  </v-text-field> </v-col
-              ></v-row>
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12" md="12">
+                  <img src="@/assets/tmse5_5.png" />
+                </v-col>
+              </v-row>
+              <v-divider class="mt-5 mb-5" />
               <v-row
                 ><v-col cols="12" md="6">
                   <v-checkbox
@@ -405,6 +412,9 @@
                   >
                   </v-checkbox>
                   <v-row>
+                    <v-col cols="12" md="12">
+                      <img src="@/assets/tmse5_6.png" />
+                    </v-col>
                     <v-col cols="12" md="6">
                       <v-text-field
                         outlined
@@ -443,10 +453,12 @@
                 </v-col>
                 <v-col>
                   <v-text-field dense rounded outlined v-model="tmse5_6_detail">
-                  </v-text-field> </v-col
-              ></v-row>
-              <v-row
-                ><v-col>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <v-divider class="mt-5 mb-5" />
+              <v-row>
+                <v-col>
                   <v-checkbox
                     v-model="tmse5_7"
                     label="5.7 ผู้ทดสอบบอกผู้ถูกทดสอบว่า “กล้วยกับส้มเหมือนกันคือเป็นผลไม้ แมวกับหมาเหมือนกันคือ..”"
@@ -458,8 +470,10 @@
                 </v-col>
                 <v-col>
                   <v-text-field dense rounded outlined v-model="tmse5_7_detail">
-                  </v-text-field> </v-col
-              ></v-row>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <v-divider class="mt-5 mb-5" />
             </v-col>
             <v-col cols="12" md="2"
               ><v-avatar color="#79DAE8" size="62">

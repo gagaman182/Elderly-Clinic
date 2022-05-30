@@ -4,7 +4,7 @@
     <v-col>
       <v-card>
         <v-card-text>
-          <v-card-title> Timed Up and Go (TUG) test </v-card-title>
+          <v-card-title> Timed Up and Go Test (TUGT) </v-card-title>
           <v-divider />
           <v-alert
             dense
@@ -21,7 +21,7 @@
         <v-card-text>
           <v-row>
             <v-col cols="12" md="10">
-              <v-row>
+              <!-- <v-row>
                 <v-col cols="12" md="12">
                   <v-img
                     lazy-src="https://picsum.photos/id/11/10/6"
@@ -30,7 +30,7 @@
                     src="https://picsum.photos/id/11/500/300"
                   ></v-img>
                 </v-col>
-              </v-row>
+              </v-row> -->
               <v-row>
                 <v-col cols="12" md="12">
                   <h3 class="textlabel mb-2">จับเวลาได้</h3>
@@ -69,7 +69,7 @@
 
 <script>
 export default {
-  name: 'Tug',
+  name: 'Tugt',
   data() {
     return {
       tug1: '',

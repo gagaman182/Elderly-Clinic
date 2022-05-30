@@ -37,9 +37,27 @@
         </v-list-item> -->
       </v-card>
 
-      <v-list>
+      <v-list class="max-v-list-height">
+        <v-subheader>REPORTS</v-subheader>
         <v-list-item
           v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+          color="#947EC3"
+        >
+          <v-list-item-action>
+            <fa :icon="item.icon" size="lg" color="#947EC3" />
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" class="" />
+          </v-list-item-content>
+        </v-list-item>
+        <v-divider />
+        <v-subheader>ส่งกลับ/ส่งต่อ</v-subheader>
+        <v-list-item
+          v-for="(item, i) in items_to"
           :key="i"
           :to="item.to"
           router
@@ -157,8 +175,20 @@ export default {
         },
         {
           icon: ['fas', 'fa-square-poll-horizontal'],
-          title: 'ประเมินผล',
+          title: 'สรุป',
           to: '/evaluate',
+        },
+      ],
+      items_to: [
+        {
+          icon: ['fas', 'user-nurse'],
+          title: 'SPPBส่งกลับพยาบาล',
+          to: '/sppb_out',
+        },
+        {
+          icon: ['fas', 'right-from-bracket'],
+          title: 'Oxford Knee..ส่งต่อ',
+          to: '/oxford_knee_score_out',
         },
       ],
       miniVariant: false,
@@ -172,6 +202,10 @@ export default {
 }
 </script>
 <style scoped>
+.max-v-list-height {
+  max-height: 400px;
+  overflow-y: auto;
+}
 /* google font */
 #app {
   font-family: 'Trirong', serif;

@@ -148,7 +148,7 @@
             </v-col>
           </v-row>
 
-          <!-- <v-row>
+          <v-row>
             <v-col cols="12" md="10"
               ><h3 class="textlabel text-h4 mb-2">รวมคะแนน</h3>
             </v-col>
@@ -157,7 +157,7 @@
                 <span class="white--text text-h5">{{ total | json }}</span>
               </v-avatar>
             </v-col>
-          </v-row> -->
+          </v-row>
           <!-- <v-row>
             <v-col cols="12" md="3"
               ><h3 class="textlabel text-h4 mb-2">ผลการประเมิน</h3>

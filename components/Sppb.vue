@@ -9,7 +9,7 @@
           </v-card-title>
 
           <v-divider />
-          <!-- <v-alert
+          <v-alert
             dense
             color="#EEF3D2"
             icon="mdi-bullhorn-variant-outline"
@@ -17,8 +17,11 @@
             class="text-h6"
           >
             เกณฑ์การประเมิน <br />
-            คะแนนรวมตั้งแต่ 4 คะแนนขึ้นไป หมายถึง มีความเสี่ยงต่อภาวะหกล้ม<br />
-          </v-alert> -->
+            คะแนนรวม 0-3 คะแนนขึ้นไป แปลผล severe limitaiton<br />
+            คะแนนรวม 4-6 คะแนนขึ้นไป แปลผล moderate limitation<br />
+            คะแนนรวม 7-9 คะแนนขึ้นไป แปลผล mild limtation<br />
+            คะแนนรวม 10-12 คะแนนขึ้นไป แปลผล minimal limitation<br />
+          </v-alert>
         </v-card-text>
         <v-card-text>
           <!-- ----1----- -->
@@ -108,7 +111,7 @@
               </v-avatar>
             </v-col>
           </v-row>
-          <!-- <v-row>
+          <v-row>
             <v-col cols="12" md="3"
               ><h3 class="textlabel text-h4 mb-2">ผลการประเมิน</h3>
             </v-col>
@@ -117,12 +120,23 @@
                 {{ result }}
               </v-chip>
             </v-col>
-          </v-row> -->
+          </v-row>
+
+          <v-row>
+            <v-col cols="12" md="3"
+              ><h3 class="textlabel text-h4 mb-2">ส่งต่อ</h3>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-chip class="white--text text-h4" color="#FFD124">
+                {{ outto }}
+              </v-chip>
+            </v-col>
+          </v-row>
 
           <v-row
             ><v-col cols="12">
               <div class="text-center">
-                <v-btn rounded color="#6A67CE" x-large dark @click="save_tug">
+                <v-btn rounded color="#6A67CE" x-large dark @click="save_sppb">
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
@@ -159,13 +173,21 @@ export default {
         parseInt(this.sppb4)
       )
     },
-    // result: function () {
-    //   if (this.total < 4) return '-'
-    //   else if (this.total >= 4) return 'มีความเสี่ยงต่อภาวะหกล้ม'
-    // },
+    result: function () {
+      if (this.total >= 1 && this.total <= 3) return 'servere limitaiton'
+      else if (this.total >= 4 && this.total <= 6) return 'moderate limitaiton'
+      else if (this.total >= 7 && this.total <= 9) return 'mild limitaiton'
+      else if (this.total >= 10 && this.total <= 12) return 'minimal limitaiton'
+    },
+    outto: function () {
+      if (this.total >= 1 && this.total <= 3) return 'พบนักกายภาพ'
+      else if (this.total >= 4 && this.total <= 12) return 'พบพยาบาล'
+    },
   },
   methods: {
-    save_sppb() {},
+    save_sppb() {
+      alert('sppb')
+    },
   },
 }
 </script>
