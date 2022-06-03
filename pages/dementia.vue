@@ -55,7 +55,7 @@
                 </v-btn>
             
                  <v-btn  class="white--text" color="#066163">
-                  <p class="text-h6 mb-1 ml-1">หัวข้อ {{e1}}</p>
+                  <p class="text-h6 mb-1 ml-1">ฟอร์ม {{e1}}</p>
                 </v-btn>
                 </v-card-text>
               </v-card>
@@ -74,7 +74,7 @@
                   <fa :icon="['fas', 'circle-right']" size="2x" /><p class="text-h6 mb-1 ml-1">TMSE</p>
                 </v-btn>
                <v-btn  class="white--text" color="#066163">
-                  <p class="text-h6 mb-1 ml-1">หัวข้อ {{e1}}</p>
+                  <p class="text-h6 mb-1 ml-1">ฟอร์ม {{e1}}</p>
                 </v-btn>
             
                 </v-card-text>
@@ -94,7 +94,7 @@
                   <fa :icon="['fas', 'circle-right']" size="2x" /><p class="text-h6 mb-1 ml-1">MOCA</p>
                 </v-btn>
                 <v-btn  class="white--text" color="#066163">
-                  <p class="text-h6 mb-1 ml-1">หัวข้อ {{e1}}</p>
+                  <p class="text-h6 mb-1 ml-1">ฟอร์ม {{e1}}</p>
                 </v-btn>
                   </v-card-text>
               </v-card>
@@ -112,7 +112,7 @@
                   <fa :icon="['fas', 'circle-right']" size="2x" /><p class="text-h6 mb-1 ml-1">Mini-Cog</p>
                 </v-btn>
                  <v-btn class="white--text" color="#066163">
-                  <p class="text-h6 mb-1 ml-1">หัวข้อ {{e1}}</p>
+                  <p class="text-h6 mb-1 ml-1">ฟอร์ม {{e1}}</p>
                 </v-btn>
                   </v-card-text>
               </v-card>
@@ -125,16 +125,10 @@
 </template>
 
 <script>
-import Frail_Scale from '~/components/Frail-Scale.vue'
 import Mini_Cog from '~/components/Mini_Cog.vue'
 import Tmse from '~/components/Tmse.vue'
 import Tgds from '~/components/Tgds.vue'
 import Moca from '~/components/Moca.vue'
-
-import Msra from '~/components/Msra.vue'
-import Knee_Screen from '~/components/Knee-Screen.vue'
-import Knee_Score from '~/components/Knee-Score.vue'
-import Short_Fbs_I from '~/components/Short-Fbs-I.vue'
 
 export default {
   name: 'demetia',
@@ -145,15 +139,10 @@ export default {
     }
   },
   components: {
-    Frail_Scale,
     Mini_Cog,
     Tmse,
     Tgds,
     Moca,
-    Msra,
-    Knee_Screen,
-    Knee_Score,
-    Short_Fbs_I,
   },
   mounted() {},
   methods: {

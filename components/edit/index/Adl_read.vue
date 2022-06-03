@@ -276,7 +276,7 @@
             </v-col>
           </v-row>
 
-          <v-row
+          <!-- <v-row
             ><v-col cols="12">
               <div class="text-center">
                 <v-btn rounded color="#6A67CE" x-large dark @click="save_adl">
@@ -285,7 +285,7 @@
                 </v-btn>
               </div></v-col
             ></v-row
-          >
+          > -->
         </v-card-text>
       </v-card>
     </v-col>

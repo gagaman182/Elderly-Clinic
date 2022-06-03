@@ -38,7 +38,7 @@
       </v-card>
 
       <v-list class="max-v-list-height">
-        <v-subheader>REPORTS</v-subheader>
+        <v-subheader>ฟอร์ม</v-subheader>
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -142,11 +142,11 @@ export default {
       drawer: true,
       fixed: false,
       items: [
-        {
-          icon: ['fas', 'person-cane'],
-          title: 'รวม',
-          to: '/clinic',
-        },
+        // {
+        //   icon: ['fas', 'person-cane'],
+        //   title: 'รวม',
+        //   to: '/clinic',
+        // },
         // {
         //   icon: ['fas', 'person-cane'],
         //   title: 'บันทึกข้อมูล',
@@ -182,12 +182,12 @@ export default {
       items_to: [
         {
           icon: ['fas', 'user-nurse'],
-          title: 'SPPBส่งกลับพยาบาล',
+          title: 'SPPB ส่งกลับพยาบาล',
           to: '/sppb_out',
         },
         {
           icon: ['fas', 'right-from-bracket'],
-          title: 'Oxford Knee..ส่งต่อ',
+          title: 'Oxford Knee ส่งต่อ',
           to: '/oxford_knee_score_out',
         },
       ],

@@ -333,16 +333,16 @@
               ></v-textarea>
             </v-col>
           </v-row>
-          <v-row
-            ><v-col cols="12">
+          <!-- <v-row>
+            <v-col cols="12">
               <div class="text-center">
                 <v-btn rounded color="#6A67CE" x-large dark @click="save_regis">
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
-              </div></v-col
-            ></v-row
-          >
+              </div>
+            </v-col>
+          </v-row> -->
         </v-card-text>
       </v-card>
       <v-dialog v-model="dialog" width="600">
@@ -403,7 +403,6 @@ export default {
   name: 'Regis',
   data() {
     return {
-      uhid: '',
       cmus: [
         'ศูนย์แพทยชุมชนสามตำบล',
         'ศูนย์แพทยชุมชนควนลัง',
@@ -469,8 +468,6 @@ export default {
       ],
       refer_cmu_detail_show: true,
       walkin: '',
-      dementia: '',
-      falling: '',
       disease: 'n',
       disease_detail: '',
       disease_show: true,
@@ -480,7 +477,6 @@ export default {
       dialog: false,
       dementia: '',
       falling: '',
-      message: '',
     }
   },
   mounted() {
@@ -600,41 +596,7 @@ export default {
       }
     },
     save_regis() {
-      if (!this.cmu) {
-        this.$swal({
-          title: 'แจ้งเตือน',
-          text: 'ระบุข้อมูลไม่ครบ',
-          icon: 'error',
-          confirmButtonText: 'ตกลง',
-        })
-      } else {
-        const { v4: uuidv4 } = require('uuid')
-        this.uhid = uuidv4()
-
-        axios
-          .post(`${this.$axios.defaults.baseURL}index/regis_add.php`, {
-            uhid: this.uhid,
-            cmu: this.cmu,
-          })
-          .then((response) => {
-            this.message = response.data
-            if (this.message[0].message === 'เพิ่มข้อมูลสำเร็จ') {
-              this.$swal({
-                title: 'สถานะการเพิ่ม',
-                text: this.message[0].message,
-                icon: 'success',
-                confirmButtonText: 'ตกลง',
-              })
-            } else {
-              this.$swal({
-                title: 'สถานะการเพิ่ม',
-                text: this.message[0].message,
-                icon: 'error',
-                confirmButtonText: 'ตกลง',
-              })
-            }
-          })
-      }
+      alert('save')
     },
   },
 }
