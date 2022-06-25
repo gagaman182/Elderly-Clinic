@@ -18,11 +18,15 @@
           height="100%"
           src="https://hatyaihospital.go.th/web/site2019/images/2020-slide.jpg"
         ></v-img> -->
-        <v-img
+        <!-- <v-img
           height="100%"
           src="https://video.fhdy2-1.fna.fbcdn.net/v/t1.6435-9/67191996_2857987410896818_594038395588575232_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeGamdQsL8Y2UCOsHHiRSjIQY9mcHcSYHwFj2ZwdxJgfAYiTp7zYmclIsZcm8AEst7pbHliJSLQJeb-o49c0oVMk&_nc_ohc=yVtqUMYMk88AX_OeGKN&_nc_oc=AQn1kHbfEkWCzE9l7yShf6CO9NlOgP6tx9fekBwZsuQqDa2kKT3KKiLYqCfEG_nhqXo5ejmjGnr34tOxzrLNYBK0&_nc_ht=video.fhdy2-1.fna&oh=00_AT-zbx2h7k21FJNCeQngbR_c8zIjDSagMTPGsbFiyuPKhw&oe=62B2690F
 "
-        ></v-img>
+        ></v-img> -->
+
+        <v-row class="fill-height" align="center" justify="center">
+          <v-img :src="myImage"></v-img>
+        </v-row>
 
         <!-- <v-list-item
           color="rgba(0, 0, 0, .4)"
@@ -138,6 +142,7 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
+      myImage: require('@/assets/pcc_logo.jpg'),
       clipped: true,
       drawer: true,
       fixed: false,
@@ -202,20 +207,22 @@ export default {
 }
 </script>
 <style scoped>
-.max-v-list-height {
+/* .max-v-list-height {
   max-height: 400px;
   overflow-y: auto;
-}
+} */
 /* google font */
 #app {
   font-family: 'Trirong', serif;
 }
+
 img {
   width: 3%;
   height: auto;
   display: block;
   margin-right: 15px;
 }
+
 .logohead {
   margin-top: 15px;
   margin-bottom: 15px;

@@ -8,7 +8,7 @@
               :icon="['fas', 'person-walking-with-cane']"
               class="text-h4 mr-2"
             />
-            บันทึกข้อมูลทั่วไป
+            บันทึกข้อมูลทั่วไป {{ person_data }}
           </v-toolbar>
           <v-stepper v-model="e1">
             <v-stepper-header>
@@ -33,7 +33,7 @@
               <v-stepper-content step="1">
                 <v-card>
                   <v-card-text>
-                    <Regis />
+                    <Regis @sendcid="ciduse" />
                   </v-card-text>
                   <v-card-text>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
@@ -101,6 +101,7 @@ export default {
   data() {
     return {
       e1: 1,
+      person_data: '',
     }
   },
   components: {
@@ -109,7 +110,12 @@ export default {
     Frax_Score,
   },
   mounted() {},
-  methods: {},
+  methods: {
+    ciduse(data) {
+      alert(data)
+      this.person_data = data
+    },
+  },
 }
 </script>
 

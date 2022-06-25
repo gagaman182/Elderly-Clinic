@@ -34,6 +34,7 @@
                 :close-on-content-click="false"
                 max-width="290"
               >
+                <!-- :close-on-content-click="true" ถ้าไม่ใช้ปุ่มตกลงให้เลือกเป็น true -->
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
                     solo

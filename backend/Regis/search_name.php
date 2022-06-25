@@ -1,22 +1,20 @@
 <?php
 header('Content-Type:application/json');
-
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: PUT');
 header('Access-Control-Allow-Headers: Acess-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization');
+include '../conn.php';
 $data = json_decode(file_get_contents('php://input'), true);
 
-$amps = $data['amps'];
+$search = $data['search'];
+$data_search = $data['data_search'];
 
-include '../conn.php';
+if ($search == 'cid') {
 
-
-
-$sql = "select * from l_tambon WHERE LEFT(code,4) = '" . $amps . "' and l_tambon.name not LIKE '%*%'
-     
-      ";
-
-
+  $sql = "SELECT concat(name,' ',surname) as fullname,age from regis where cid = '" . $data_search . "' ";
+} else {
+  $sql = "SELECT concat(name,' ',surname) as fullname,age  from regis where hn = '" . $data_search . "' ";
+}
 $return_arr = array();
 
 if ($result = mysqli_query($conn, $sql)) {

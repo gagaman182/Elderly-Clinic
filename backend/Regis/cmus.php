@@ -1,11 +1,13 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 
+
 include '../conn.php';
 
 
 
-$sql = "SELECT * from l_province
+$sql = "SELECT * from cmus
+      
      
       ";
 
