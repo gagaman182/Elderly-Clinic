@@ -5,8 +5,10 @@
       <v-card>
         <v-card-text>
           <v-card-title>
-            ทะเบียนผู้สูงอายุ <v-spacer></v-spacer>
-
+            ทะเบียนผู้สูงอายุ<v-spacer></v-spacer>
+ <v-btn class="mx-2" fab dark color="#243A73" @click="refresh">
+              <v-icon dark> mdi-refresh </v-icon>
+            </v-btn>
             <v-btn class="mx-2" fab dark color="#6A67CE" @click="dialog = true">
               <v-icon dark> mdi-card-search </v-icon>
             </v-btn>
@@ -371,6 +373,8 @@
                 <v-autocomplete
                   v-model="hn_list"
                   :items="hn_lists"
+                  item-text="hn"
+                  item-value="hn"
                   dense
                   outlined
                   @change="hn_search()"
@@ -381,6 +385,8 @@
                 <v-autocomplete
                   v-model="cid_list"
                   :items="cid_lists"
+                  item-text="cid"
+                  item-value="cid"
                   dense
                   outlined
                   @change="cid_search()"
@@ -506,6 +512,8 @@ export default {
       assessor_show: '-',
       cid_show: '-',
       hn_show: '-',
+      assessor_date_show: '',
+      regis_selects: '',
     }
   },
   mounted() {
@@ -547,10 +555,12 @@ export default {
         .get(`${this.$axios.defaults.baseURL}Regis/search_cid_hn.php`)
         .then((response) => {
           this.cid_searchs = response.data
-          this.cid_searchs.forEach((id) => {
-            this.hn_lists = id.hn
-            this.cid_lists = id.cid
-          })
+          // this.cid_searchs.forEach((id) => {
+          //   this.hn_lists = id.hn
+          //   this.cid_lists = id.cid
+          // })
+          this.hn_lists = this.cid_searchs
+          this.cid_lists = this.cid_searchs
         })
     },
     //cmus
@@ -671,120 +681,152 @@ export default {
     },
     //บันทึก
     save_regis() {
-      if (
-        !this.cmu &&
-        !this.assessor_date &&
-        !this.cid &&
-        !this.hn &&
-        !this.this.cmu &&
-        !this.this.assessor
-      ) {
-        this.$swal({
-          title: 'แจ้งเตือน',
-          text: 'ระบุข้อมูลไม่ครบ',
-          icon: 'error',
-          confirmButtonText: 'ตกลง',
-        })
+      if (this.regis_selects) {
+        this.regis_update()
       } else {
-        const { v4: uuidv4 } = require('uuid')
-        this.uhid = uuidv4()
-
         if (
-          this.name == '' ||
-          this.surname == '' ||
-          this.birthday == '' ||
-          this.age == '' ||
-          this.tel == '' ||
-          this.address == '' ||
-          this.moo == '' ||
-          this.chw_code == '' ||
-          this.amp_code == '' ||
-          this.tmb_code == '' ||
-          this.refer_pcu == '' ||
-          this.refer_pcu_detail == '' ||
-          this.refer_cmu == '' ||
-          this.refer_cmu_detail == '' ||
-          this.walkin == '' ||
-          this.dementia == '' ||
-          this.falling == '' ||
-          this.disease == '' ||
-          this.disease_detail == '' ||
-          this.drug == '' ||
-          this.drug_detail == ''
+          !this.cmu &&
+          !this.assessor_date &&
+          !this.cid &&
+          !this.hn &&
+          !this.this.cmu &&
+          !this.this.assessor
         ) {
-          this.name = '-'
-          this.surname = '-'
-          this.birthday = '-'
-          this.age = '-'
-          this.tel = '-'
-          this.address = '-'
-          this.moo = '-'
-          this.chw_code = '-'
-          this.amp_code = '-'
-          this.tmb_code = '-'
-          this.refer_pcu = '-'
-          this.refer_pcu_detail = '-'
-          this.refer_cmu = '-'
-          this.refer_cmu_detail = '-'
-          this.walkin = '-'
-          this.dementia = '-'
-          this.falling = '-'
-          this.disease = '-'
-          this.disease_detail = '-'
-          this.drug = '-'
-          this.drug_detail = '-'
-        }
-        axios
-          .post(`${this.$axios.defaults.baseURL}Regis/regis_add.php`, {
-            uhid: this.uhid,
-            cmu: this.cmu,
-            assessor: this.assessor,
-            assessor_date: this.assessor_date,
-            cid: this.cid,
-            hn: this.hn,
-            name: this.name,
-            surname: this.surname,
-            birthday: this.birthday,
-            age: this.age,
-            tel: this.tel,
-            address: this.address,
-            moo: this.moo,
-            chw_code: this.chw_code,
-            amp_code: this.amp_code,
-            tmb_code: this.tmb_code,
-            refer_pcu: this.refer_pcu,
-            refer_pcu_detail: this.refer_pcu_detail,
-            refer_cmu: this.refer_cmu,
-            refer_cmu_detail: this.refer_cmu_detail,
-            walkin: this.walkin,
-            dementia: this.dementia,
-            falling: this.falling,
-            disease: this.disease,
-            disease_detail: this.disease_detail,
-            drug: this.drug,
-            drug_detail: this.drug_detail,
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
           })
-          .then((response) => {
-            this.message = response.data
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
 
-            if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
-              this.$swal({
-                title: 'สถานะการเพิ่ม',
-                text: this.message[0].message,
-                icon: 'success',
-                confirmButtonText: 'ตกลง',
-              })
-              this.clear_form()
-            } else {
-              this.$swal({
-                title: 'สถานะการเพิ่ม',
-                text: this.message[0].message,
-                icon: 'error',
-                confirmButtonText: 'ตกลง',
-              })
-            }
-          })
+          if (this.name == '') {
+            this.name = '-'
+          }
+          if (this.surname == '') {
+            this.surname = '-'
+          }
+          if (this.birthday == '') {
+            this.birthday = '-'
+          }
+          if (this.age == '') {
+            this.age = '-'
+          }
+          if (this.tel == '') {
+            this.tel = '-'
+          }
+          if (this.address == '') {
+            this.address = '-'
+          }
+          if (this.moo == '') {
+            this.moo = '-'
+          }
+          if (this.chw_code == '') {
+            this.chw_code = '-'
+          }
+          if (this.amp_code == '') {
+            this.amp_code = '-'
+          }
+          if (this.tmb_code == '') {
+            this.tmb_code = '-'
+          }
+          if (this.refer_pcu == '') {
+            this.refer_pcu = false
+          }
+          if (this.refer_pcu_detail == '') {
+            this.refer_pcu_detail = '-'
+          }
+          if (this.refer_cmu == '') {
+            this.refer_cmu = false
+          }
+          if (this.refer_cmu_detail == '') {
+            this.refer_cmu_detail = '-'
+          }
+          if (this.walkin == '') {
+            this.walkin = false
+          }
+          if (this.dementia == '') {
+            this.dementia = false
+          }
+          if (this.falling == '') {
+            this.falling = false
+          }
+          if (this.disease == '') {
+            this.disease = 'n'
+          }
+          if (this.disease_detail == '') {
+            this.disease_detail = '-'
+          }
+          if (this.drug == '') {
+            this.drug = 'n'
+          }
+
+          if (this.drug_detail == '') {
+            this.drug_detail = '-'
+          }
+
+          axios
+            .post(`${this.$axios.defaults.baseURL}Regis/regis_add.php`, {
+              uhid: this.uhid,
+              cmu: this.cmu,
+              assessor: this.assessor,
+              assessor_date: this.assessor_date,
+              cid: this.cid,
+              hn: this.hn,
+              name: this.name,
+              surname: this.surname,
+              birthday: this.birthday,
+              age: this.age,
+              tel: this.tel,
+              address: this.address,
+              moo: this.moo,
+              chw_code: this.chw_code,
+              amp_code: this.amp_code,
+              tmb_code: this.tmb_code,
+              refer_pcu: this.refer_pcu,
+              refer_pcu_detail: this.refer_pcu_detail,
+              refer_cmu: this.refer_cmu,
+              refer_cmu_detail: this.refer_cmu_detail,
+              walkin: this.walkin,
+              dementia: this.dementia,
+              falling: this.falling,
+              disease: this.disease,
+              disease_detail: this.disease_detail,
+              drug: this.drug,
+              drug_detail: this.drug_detail,
+            })
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+                // this.clear_form()
+                this.save_search() //save แล้วแสดงรายชื่อ และเอา cid หรือ hn ไปใช้ต่อเลย
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
       }
+    },
+    refresh() {
+      // this.$router.go()
+
+      this.$emit('regisclearindex', 'clear')
+      this.clear_form()
+      //this.clear_txt_dialog()
     },
     clear_form() {
       this.cmu = ''
@@ -793,7 +835,8 @@ export default {
         parseISO(new Date().toISOString()),
         'yyyy-MM-dd'
       )
-      this.cid = ''
+      // this.assessor_date = ''
+      this.cid = '0'
       this.hn = ''
       this.name = ''
       this.surname = ''
@@ -827,6 +870,8 @@ export default {
       this.cid_show = ''
     },
     search() {
+      this.regis_select() //เรียกข้อมูลมาโชว์หน้า regis
+      this.call_index() //เรียกข้อมูลมาโชว์หน้า adl frax score จาก index ไปเรียกต่อ
       if (!this.hn_list) {
         this.$emit('sendcid', this.name_age_show)
         this.dialog = false
@@ -837,7 +882,174 @@ export default {
         this.clear_txt_dialog()
       }
     },
+    call_index() {
+      this.$emit('call_adl_frax_score', this.name_age_show)
+    },
+    regis_select() {
+      // alert(this.cid_show)
+      // alert(this.hn_show)
+      // alert(this.assessor_date_show)
+      axios
+        .post(`${this.$axios.defaults.baseURL}Regis/regis_select.php`, {
+          cid: this.cid_show,
+          hn: this.hn_show,
+          assessor_date: this.assessor_date,
+        })
+        .then((response) => {
+          this.regis_selects = response.data
+          this.uhid = this.regis_selects[0].uhid
+          this.cmu = this.regis_selects[0].cmu
 
+          this.assessor = this.regis_selects[0].assessor
+          this.assessor_date = this.regis_selects[0].assessor_date
+          this.cid = this.regis_selects[0].cid
+          this.hn = this.regis_selects[0].hn
+
+          if (this.regis_selects[0].name == '-') {
+            this.regis_selects[0].name = ''
+          }
+          if (this.regis_selects[0].surname == '-') {
+            this.regis_selects[0].surname = ''
+          }
+          if (this.regis_selects[0].birthday == '-') {
+            this.regis_selects[0].birthday = ''
+          }
+          if (this.regis_selects[0].age == '-') {
+            this.regis_selects[0].age = ''
+          }
+          if (this.regis_selects[0].tel == '-') {
+            this.regis_selects[0].tel = ''
+          }
+          if (this.regis_selects[0].address == '-') {
+            this.regis_selects[0].address = ''
+          }
+          if (this.regis_selects[0].moo == '-') {
+            this.regis_selects[0].moo = ''
+          }
+          if (this.regis_selects[0].chw_code == '-') {
+            this.regis_selects[0].chw_code = ''
+          }
+          if (this.regis_selects[0].amp_code == '-') {
+            this.regis_selects[0].amp_code = ''
+          }
+          if (this.regis_selects[0].tmb_code == '-') {
+            this.regis_selects[0].tmb_code = ''
+          }
+          if (this.regis_selects[0].refer_pcu == false) {
+            this.regis_selects[0].refer_pcu = ''
+          }
+          if (this.regis_selects[0].refer_pcu_detail == '-') {
+            this.regis_selects[0].refer_pcu_detail = ''
+          }
+
+          if (this.regis_selects[0].refer_cmu == false) {
+            this.regis_selects[0].refer_cmu = ''
+          }
+          if (this.regis_selects[0].refer_cmu_detail == '-') {
+            this.regis_selects[0].refer_cmu_detail = ''
+          }
+          if (this.regis_selects[0].walkin == false) {
+            this.regis_selects[0].walkin = ''
+          }
+          if (this.regis_selects[0].dementia == false) {
+            this.regis_selects[0].dementia = ''
+          }
+          if (this.regis_selects[0].falling == false) {
+            this.regis_selects[0].falling = ''
+          }
+          if (this.regis_selects[0].disease == 'n') {
+            this.regis_selects[0].disease = ''
+          }
+          if (this.regis_selects[0].disease_detail == '-') {
+            this.regis_selects[0].disease_detail = ''
+          }
+          if (this.regis_selects[0].drug == 'n') {
+            this.regis_selects[0].drug = ''
+          }
+          if (this.regis_selects[0].drug_detail == '-') {
+            this.regis_selects[0].drug_detail = ''
+          }
+
+          this.name = this.regis_selects[0].name
+          this.surname = this.regis_selects[0].surname
+          this.birthday = this.regis_selects[0].birthday
+          this.age = this.regis_selects[0].age
+          this.tel = this.regis_selects[0].tel
+          this.address = this.regis_selects[0].address
+          this.moo = this.regis_selects[0].moo
+          this.chw_code = this.regis_selects[0].chw_code
+          this.amp_code = this.regis_selects[0].amp_code
+          this.tmb_code = this.regis_selects[0].tmb_code
+          this.refer_pcu = this.regis_selects[0].refer_pcu
+          this.refer_pcu_detail = this.regis_selects[0].refer_pcu_detail
+          this.walkin = this.regis_selects[0].walkin
+          this.dementia = this.regis_selects[0].dementia
+          this.falling = this.regis_selects[0].falling
+          this.disease = this.regis_selects[0].disease
+          this.disease_detail = this.regis_selects[0].disease_detail
+          this.drug = this.regis_selects[0].drug
+          this.drug_detail = this.regis_selects[0].drug_detail
+        })
+    },
+    regis_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูล',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(`${this.$axios.defaults.baseURL}Regis/regis_update.php`, {
+            uhid: this.uhid,
+            cmu: this.cmu,
+            assessor: this.assessor,
+            assessor_date: this.assessor_date,
+            cid: this.cid,
+            hn: this.hn,
+            name: this.name,
+            surname: this.surname,
+            birthday: this.birthday,
+            age: this.age,
+            tel: this.tel,
+            address: this.address,
+            moo: this.moo,
+            chw_code: this.chw_code,
+            amp_code: this.amp_code,
+            tmb_code: this.tmb_code,
+            refer_pcu: this.refer_pcu,
+            refer_pcu_detail: this.refer_pcu_detail,
+            refer_cmu: this.refer_cmu,
+            refer_cmu_detail: this.refer_cmu_detail,
+            walkin: this.walkin,
+            dementia: this.dementia,
+            falling: this.falling,
+            disease: this.disease,
+            disease_detail: this.disease_detail,
+            drug: this.drug,
+            drug_detail: this.drug_detail,
+          })
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
+    },
     async cid_search() {
       // alert(this.cid_list)
       // this.search(this.cid_list)
@@ -855,6 +1067,8 @@ export default {
           this.assessor_show = this.name_age_show[0].assessor
           this.cid_show = this.name_age_show[0].cid
           this.hn_show = this.name_age_show[0].hn
+          this.assessor_date_show = this.name_age_show[0].assessor_date
+          //this.clear_form() //หน้า regis clear เพราะไปเลือกจากการค้นหา
         })
     },
     async hn_search() {
@@ -872,6 +1086,30 @@ export default {
           this.assessor_show = this.name_age_show[0].assessor
           this.cid_show = this.name_age_show[0].cid
           this.hn_show = this.name_age_show[0].hn
+          this.assessor_date_show = this.name_age_show[0].assessor_date
+          this.clear_form() //หน้า regis clear เพราะไปเลือกจากการค้นหา
+        })
+    },
+    async save_search() {
+      // this.search(this.hn_list)
+      //ใช้ hn และ cid จากหน้าบันทึกมาใช้เลย
+
+      await axios
+        .post(`${this.$axios.defaults.baseURL}Regis/search_name.php`, {
+          search: 'cid',
+          data_search: this.cid,
+        })
+        .then((response) => {
+          this.name_age_show = response.data
+          this.name_show = this.name_age_show[0].fullname
+          this.age_show = this.name_age_show[0].age
+          this.name_cmu_show = this.name_age_show[0].name
+          this.assessor_show = this.name_age_show[0].assessor
+          this.cid_show = this.name_age_show[0].cid
+          this.hn_show = this.name_age_show[0].hn
+          this.assessor_date_show = this.name_age_show[0].assessor_date
+
+          this.$emit('sendcid', this.name_age_show) //่ส่งค่าไป index
         })
     },
   },

@@ -64,17 +64,150 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Frax-Score',
   data() {
     return {
+      uhid: '',
       frax1: '',
       frax2: '',
       frax3: '',
+      hn: '',
+      cid: '',
+
+      assessor_date: '',
+      frax_score_selects: '',
     }
   },
   methods: {
-    save_frax() {},
+    save_frax() {
+      if (this.frax_score_selects) {
+        this.frax_score_update()
+      } else {
+        if (
+          !this.frax1 ||
+          !this.frax2 ||
+          !this.frax3 ||
+          !this.hn ||
+          !this.cid ||
+          !this.assessor_date
+        ) {
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
+          })
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
+
+          axios
+            .post(
+              `${this.$axios.defaults.baseURL}Frax_score/frax_score_add.php`,
+              {
+                uhid: this.uhid,
+                frax1: this.frax1,
+                frax2: this.frax2,
+                frax3: this.frax3,
+                hn: this.hn,
+                cid: this.cid,
+                assessor_date: this.assessor_date,
+                assessor: this.assessor,
+              }
+            )
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
+      }
+    },
+    receive_cidhn(value) {
+      // alert(value[0].hn)
+      this.hn = value[0].hn
+      this.cid = value[0].cid
+      this.assessor_date = value[0].assessor_date
+    },
+    frax_score_select(value) {
+      axios
+        .post(
+          `${this.$axios.defaults.baseURL}Frax_score/frax_score_select.php`,
+          {
+            cid: value[0].cid,
+            hn: value[0].hn,
+            assessor_date: value[0].assessor_date,
+          }
+        )
+        .then((response) => {
+          this.frax_score_selects = response.data
+          this.uhid = this.frax_score_selects[0].uhid
+          this.frax1 = this.frax_score_selects[0].frax1
+          this.frax2 = this.frax_score_selects[0].frax2
+          this.frax3 = this.frax_score_selects[0].frax3
+          this.hn = this.frax_score_selects[0].hn
+          this.cid = this.frax_score_selects[0].cid
+          this.assessor_date = this.frax_score_selects[0].assessor_date
+        })
+    },
+    frax_score_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูล',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(
+            `${this.$axios.defaults.baseURL}Frax_score/frax_score_update.php`,
+            {
+              uhid: this.uhid,
+              frax1: this.frax1,
+              frax2: this.frax2,
+              frax3: this.frax3,
+              hn: this.hn,
+              cid: this.cid,
+              assessor_date: this.assessor_date,
+            }
+          )
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
+    },
   },
 }
 </script>

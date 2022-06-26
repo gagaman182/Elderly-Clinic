@@ -7,7 +7,7 @@
           <v-card-title>
             แบบประเมินผู้สูงอายุตามกลุ่มศักยภาพ
             ตามความสามารถในการประกอบกิจวัตรประจำวัน (Barthel Activities of Daily
-            Living: ADL) {{ name }}
+            Living: ADL)
           </v-card-title>
           <v-divider />
           <v-alert
@@ -293,10 +293,12 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Adl',
   data() {
     return {
+      uhid: '',
       adl1: '',
       adl2: '',
       adl3: '',
@@ -307,32 +309,166 @@ export default {
       adl8: '',
       adl9: '',
       adl10: '',
-      name: '',
+      hn: '',
+      cid: '',
+
+      assessor_date: '',
+      adl_selects: '',
     }
   },
   mounted() {},
   methods: {
     save_adl() {
-      if (
-        !this.adl1 ||
-        !this.adl2 ||
-        !this.adl3 ||
-        !this.adl4 ||
-        !this.adl5 ||
-        !this.adl6 ||
-        !this.adl7 ||
-        !this.adl8 ||
-        !this.adl9 ||
-        !this.adl10
-      ) {
-        alert('กรอกข้อมูลไม่ครบ')
+      if (this.adl_selects) {
+        this.adl_update()
       } else {
-        alert(this.total)
+        if (
+          !this.adl1 ||
+          !this.adl2 ||
+          !this.adl3 ||
+          !this.adl4 ||
+          !this.adl5 ||
+          !this.adl6 ||
+          !this.adl7 ||
+          !this.adl8 ||
+          !this.adl9 ||
+          !this.adl10 ||
+          !this.hn ||
+          !this.cid ||
+          !this.assessor_date
+        ) {
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
+          })
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
+
+          axios
+            .post(`${this.$axios.defaults.baseURL}Adl/adl_add.php`, {
+              uhid: this.uhid,
+              adl1: this.adl1,
+              adl2: this.adl2,
+              adl3: this.adl3,
+              adl4: this.adl4,
+              adl5: this.adl5,
+              adl6: this.adl6,
+              adl7: this.adl7,
+              adl8: this.adl8,
+              adl9: this.adl9,
+              adl10: this.adl10,
+              hn: this.hn,
+              cid: this.cid,
+              assessor_date: this.assessor_date,
+              total: this.total,
+              result: this.result,
+            })
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
       }
     },
     receive_cidhn(value) {
-      alert(value[0].hn)
-      this.name = value[0].hn
+      // alert(value[0].hn)
+      this.hn = value[0].hn
+      this.cid = value[0].cid
+      this.assessor_date = value[0].assessor_date
+    },
+    adl_select(value) {
+      axios
+        .post(`${this.$axios.defaults.baseURL}Adl/adl_select.php`, {
+          cid: value[0].cid,
+          hn: value[0].hn,
+          assessor_date: value[0].assessor_date,
+        })
+        .then((response) => {
+          this.adl_selects = response.data
+          this.uhid = this.adl_selects[0].uhid
+          this.adl1 = this.adl_selects[0].adl1
+          this.adl2 = this.adl_selects[0].adl2
+          this.adl3 = this.adl_selects[0].adl3
+          this.adl4 = this.adl_selects[0].adl4
+          this.adl5 = this.adl_selects[0].adl5
+          this.adl6 = this.adl_selects[0].adl6
+          this.adl7 = this.adl_selects[0].adl7
+          this.adl8 = this.adl_selects[0].adl8
+          this.adl9 = this.adl_selects[0].adl9
+          this.adl10 = this.adl_selects[0].adl10
+          this.hn = this.adl_selects[0].hn
+          this.cid = this.adl_selects[0].cid
+          this.assessor_date = this.adl_selects[0].assessor_date
+
+          this.total = this.adl_selects[0].total
+          this.result = this.adl_selects[0].result
+        })
+    },
+    adl_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูล',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(`${this.$axios.defaults.baseURL}Adl/adl_update.php`, {
+            uhid: this.uhid,
+            adl1: this.adl1,
+            adl2: this.adl2,
+            adl3: this.adl3,
+            adl4: this.adl4,
+            adl5: this.adl5,
+            adl6: this.adl6,
+            adl7: this.adl7,
+            adl8: this.adl8,
+            adl9: this.adl9,
+            adl10: this.adl10,
+            total: this.total,
+            result: this.result,
+            hn: this.hn,
+            cid: this.cid,
+            assessor_date: this.assessor_date,
+          })
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
     },
   },
   computed: {

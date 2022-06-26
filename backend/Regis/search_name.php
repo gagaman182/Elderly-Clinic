@@ -17,7 +17,8 @@ if ($search == 'cid') {
   cmus.name,
   regis.assessor,
   regis.hn,
-  regis.cid
+  regis.cid,
+  regis.assessor_date
 FROM
 	regis
 INNER JOIN cmus on regis.cmu = cmus.id where cid = '" . $data_search . "' ";
@@ -28,7 +29,8 @@ INNER JOIN cmus on regis.cmu = cmus.id where cid = '" . $data_search . "' ";
   cmus.name,
   regis.assessor,
   regis.hn,
-  regis.cid
+  regis.cid,
+  regis.assessor_date
 FROM
 	regis
 INNER JOIN cmus on regis.cmu = cmus.id where hn = '" . $data_search . "' ";

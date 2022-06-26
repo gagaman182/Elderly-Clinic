@@ -11,7 +11,7 @@
             บันทึกข้อมูลทั่วไป
           </v-toolbar>
 
-          <v-card-text>
+          <v-card-text v-if="person_show">
             <v-alert outlined color="purple">
               <div class="text-h6">ข้อมูลผู้สูงอายุ</div>
 
@@ -73,7 +73,9 @@
               <v-stepper-content step="1">
                 <v-card>
                   <v-card-text>
-                    <Regis @sendcid="ciduse" />
+                    <Regis @sendcid="ciduse"
+                     @regisclearindex="clear_index_person" 
+                     @call_adl_frax_score ="adl_frax_score_select" />
                   </v-card-text>
                   <v-card-text>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
@@ -89,7 +91,7 @@
               <v-stepper-content step="2">
                 <v-card>
                   <v-card-text>
-                    <Adl ref="sendcidhn" />
+                    <Adl ref="sendcidhnadl" />
                   </v-card-text>
                   <v-card-text>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
@@ -108,7 +110,7 @@
               <v-stepper-content step="3">
                 <v-card>
                   <v-card-text>
-                    <Frax_Score />
+                    <Frax_Score  ref="sendcidhnfraxscore"/>
                   </v-card-text>
                   <v-card-text>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
@@ -141,6 +143,7 @@ export default {
   data() {
     return {
       e1: 1,
+      person_show: false,
       person_data: '',
       name_show: '-',
       age_show: '-',
@@ -168,7 +171,24 @@ export default {
       this.cid_show = this.person_data[0].cid
       this.hn_show = this.person_data[0].hn
 
-      this.$refs.sendcidhn.receive_cidhn(this.person_data)
+      this.person_show = true
+
+      this.$refs.sendcidhnadl.receive_cidhn(this.person_data)
+      this.$refs.sendcidhnfraxscore.receive_cidhn(this.person_data)
+    },
+    clear_index_person() {
+      this.name_show = ''
+      this.age_show = ''
+      this.name_cmu_show = ''
+      this.assessor_show = ''
+      this.cid_show = ''
+      this.hn_show = ''
+      this.person_show = false
+    },
+    adl_frax_score_select(data) {
+      this.person_data = data
+      this.$refs.sendcidhnadl.adl_select(this.person_data)
+      this.$refs.sendcidhnfraxscore.frax_score_select(this.person_data)
     },
   },
 }
