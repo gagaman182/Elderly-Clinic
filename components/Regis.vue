@@ -389,7 +389,9 @@
 
             <p class="text-h6">รายละเอียด</p>
             <div class="text-h6 text--primary">
-              ชื่อ-นามสกุล : {{ this.name_show }} อายุ: {{ this.age_show }} ปี
+              <div class="d-flex flex-row ">HN : <div class="font-weight-bold blue--text"> {{ this.hn_show }}</div> เลขบัตรประชาชน: <div class="font-weight-bold blue--text">{{ this.cid_show }}</div></div> </br>
+              <div class="d-flex flex-row ">ชื่อ-นามสกุล : <div class="font-weight-bold blue--text"> {{ this.name_show }}</div> อายุ: <div class="font-weight-bold blue--text">{{ this.age_show }}</div> ปี</div> </br>
+             <div class="d-flex flex-row "> ศูนย์บริการ : <div class="font-weight-bold blue--text">{{ this.name_cmu_show }}</div> ผู้ประเมิน: <div class="font-weight-bold blue--text">{{ this.assessor_show }}</div></div>
             </div>
           </v-card-text>
           <v-card-actions>
@@ -500,6 +502,10 @@ export default {
       name_age_show: '',
       name_show: '-',
       age_show: '-',
+      name_cmu_show: '-',
+      assessor_show: '-',
+      cid_show: '-',
+      hn_show: '-',
     }
   },
   mounted() {
@@ -817,14 +823,16 @@ export default {
       this.name_age_show = ''
       this.name_show = ''
       this.age_show = ''
+      this.hn_show = ''
+      this.cid_show = ''
     },
     search() {
       if (!this.hn_list) {
-        this.$emit('sendcid', this.cid_list)
+        this.$emit('sendcid', this.name_age_show)
         this.dialog = false
         this.clear_txt_dialog()
       } else {
-        this.$emit('sendcid', this.hn_list)
+        this.$emit('sendcid', this.name_age_show)
         this.dialog = false
         this.clear_txt_dialog()
       }
@@ -843,6 +851,10 @@ export default {
           this.name_age_show = response.data
           this.name_show = this.name_age_show[0].fullname
           this.age_show = this.name_age_show[0].age
+          this.name_cmu_show = this.name_age_show[0].name
+          this.assessor_show = this.name_age_show[0].assessor
+          this.cid_show = this.name_age_show[0].cid
+          this.hn_show = this.name_age_show[0].hn
         })
     },
     async hn_search() {
@@ -856,6 +868,10 @@ export default {
           this.name_age_show = response.data
           this.name_show = this.name_age_show[0].fullname
           this.age_show = this.name_age_show[0].age
+          this.name_cmu_show = this.name_age_show[0].name
+          this.assessor_show = this.name_age_show[0].assessor
+          this.cid_show = this.name_age_show[0].cid
+          this.hn_show = this.name_age_show[0].hn
         })
     },
   },

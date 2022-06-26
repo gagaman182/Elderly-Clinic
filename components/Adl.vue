@@ -7,7 +7,7 @@
           <v-card-title>
             แบบประเมินผู้สูงอายุตามกลุ่มศักยภาพ
             ตามความสามารถในการประกอบกิจวัตรประจำวัน (Barthel Activities of Daily
-            Living: ADL)
+            Living: ADL) {{ name }}
           </v-card-title>
           <v-divider />
           <v-alert
@@ -307,6 +307,7 @@ export default {
       adl8: '',
       adl9: '',
       adl10: '',
+      name: '',
     }
   },
   mounted() {},
@@ -328,6 +329,10 @@ export default {
       } else {
         alert(this.total)
       }
+    },
+    receive_cidhn(value) {
+      alert(value[0].hn)
+      this.name = value[0].hn
     },
   },
   computed: {

@@ -8,8 +8,48 @@
               :icon="['fas', 'person-walking-with-cane']"
               class="text-h4 mr-2"
             />
-            บันทึกข้อมูลทั่วไป {{ person_data }}
+            บันทึกข้อมูลทั่วไป
           </v-toolbar>
+
+          <v-card-text>
+            <v-alert outlined color="purple">
+              <div class="text-h6">ข้อมูลผู้สูงอายุ</div>
+
+              <div class="text-h6 text--primary">
+                 <div class="d-flex flex-row">
+                  HN :
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.hn_show }}
+                  </div>
+                  เลขบัตรประชาชน :
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.cid_show }}
+                  </div>
+                
+                </div></br>
+                <div class="d-flex flex-row">
+                  
+                  ชื่อ-นามสกุล :
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.name_show }}
+                  </div>
+                  อายุ:
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.age_show }}
+                  </div>
+                  ปี ศูนย์บริการ :
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.name_cmu_show }}
+                  </div>
+                  ผู้ประเมิน:
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.assessor_show }}
+                  </div>
+                </div>
+              </div>
+            </v-alert>
+          </v-card-text>
+
           <v-stepper v-model="e1">
             <v-stepper-header>
               <v-stepper-step :complete="e1 > 1" step="1" color="#B689C0">
@@ -49,7 +89,7 @@
               <v-stepper-content step="2">
                 <v-card>
                   <v-card-text>
-                    <Adl />
+                    <Adl ref="sendcidhn" />
                   </v-card-text>
                   <v-card-text>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
@@ -102,6 +142,12 @@ export default {
     return {
       e1: 1,
       person_data: '',
+      name_show: '-',
+      age_show: '-',
+      name_cmu_show: '-',
+      assessor_show: '-',
+      cid_show: '-',
+      hn_show: '-',
     }
   },
   components: {
@@ -112,8 +158,17 @@ export default {
   mounted() {},
   methods: {
     ciduse(data) {
-      alert(data)
       this.person_data = data
+      // alert(this.person_data[0].age)
+
+      this.name_show = this.person_data[0].fullname
+      this.age_show = this.person_data[0].age
+      this.name_cmu_show = this.person_data[0].name
+      this.assessor_show = this.person_data[0].assessor
+      this.cid_show = this.person_data[0].cid
+      this.hn_show = this.person_data[0].hn
+
+      this.$refs.sendcidhn.receive_cidhn(this.person_data)
     },
   },
 }

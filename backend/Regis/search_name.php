@@ -11,9 +11,27 @@ $data_search = $data['data_search'];
 
 if ($search == 'cid') {
 
-  $sql = "SELECT concat(name,' ',surname) as fullname,age from regis where cid = '" . $data_search . "' ";
+  $sql = "SELECT
+	concat(regis.NAME, ' ', regis.surname)AS fullname,
+	regis.age,
+  cmus.name,
+  regis.assessor,
+  regis.hn,
+  regis.cid
+FROM
+	regis
+INNER JOIN cmus on regis.cmu = cmus.id where cid = '" . $data_search . "' ";
 } else {
-  $sql = "SELECT concat(name,' ',surname) as fullname,age  from regis where hn = '" . $data_search . "' ";
+  $sql = "SELECT
+	concat(regis.NAME, ' ', regis.surname)AS fullname,
+	regis.age,
+  cmus.name,
+  regis.assessor,
+  regis.hn,
+  regis.cid
+FROM
+	regis
+INNER JOIN cmus on regis.cmu = cmus.id where hn = '" . $data_search . "' ";
 }
 $return_arr = array();
 
