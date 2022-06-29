@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     save_frax() {
-      if (this.frax_score_selects) {
+      if (this.frax_score_selects.length > 0) {
         this.frax_score_update()
       } else {
         if (
@@ -207,6 +207,15 @@ export default {
             }
           })
       }
+    },
+    clear_form() {
+      this.uhid = ''
+      this.frax1 = ''
+      this.frax2 = ''
+      this.frax3 = ''
+      this.hn = ''
+      this.cid = ''
+      this.assessor_date = ''
     },
   },
 }

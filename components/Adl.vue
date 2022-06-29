@@ -311,7 +311,6 @@ export default {
       adl10: '',
       hn: '',
       cid: '',
-
       assessor_date: '',
       adl_selects: '',
     }
@@ -319,7 +318,7 @@ export default {
   mounted() {},
   methods: {
     save_adl() {
-      if (this.adl_selects) {
+      if (this.adl_selects.length > 0) {
         this.adl_update()
       } else {
         if (
@@ -469,6 +468,24 @@ export default {
             }
           })
       }
+    },
+    clear_form() {
+      this.uhid = ''
+      this.adl1 = ''
+      this.adl2 = ''
+      this.adl3 = ''
+      this.adl4 = ''
+      this.adl5 = ''
+      this.adl6 = ''
+      this.adl7 = ''
+      this.adl8 = ''
+      this.adl9 = ''
+      this.adl10 = ''
+      this.total = ''
+      this.result = ''
+      this.hn = ''
+      this.cid = ''
+      this.assessor_date = ''
     },
   },
   computed: {

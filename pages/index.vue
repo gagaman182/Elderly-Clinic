@@ -184,6 +184,8 @@ export default {
       this.cid_show = ''
       this.hn_show = ''
       this.person_show = false
+      this.$refs.sendcidhnadl.clear_form()
+      this.$refs.sendcidhnfraxscore.clear_form()
     },
     adl_frax_score_select(data) {
       this.person_data = data

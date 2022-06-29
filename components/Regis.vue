@@ -529,7 +529,7 @@ export default {
     this.fetch_refer_cmu()
     //refer from pcus
     this.fetch_refer_pcu()
-
+    //ดึง list cid and hn
     this.fecth_search_cid()
   },
   computed: {
@@ -829,6 +829,7 @@ export default {
       //this.clear_txt_dialog()
     },
     clear_form() {
+      this.$emit('regisclearindex', 'clear')
       this.cmu = ''
       this.assessor = ''
       this.assessor_date = format(
@@ -888,12 +889,12 @@ export default {
     regis_select() {
       // alert(this.cid_show)
       // alert(this.hn_show)
-      // alert(this.assessor_date_show)
+      // alert(this.assessor_date)
       axios
         .post(`${this.$axios.defaults.baseURL}Regis/regis_select.php`, {
           cid: this.cid_show,
           hn: this.hn_show,
-          assessor_date: this.assessor_date,
+          assessor_date: this.assessor_date_show,
         })
         .then((response) => {
           this.regis_selects = response.data
@@ -1068,7 +1069,7 @@ export default {
           this.cid_show = this.name_age_show[0].cid
           this.hn_show = this.name_age_show[0].hn
           this.assessor_date_show = this.name_age_show[0].assessor_date
-          //this.clear_form() //หน้า regis clear เพราะไปเลือกจากการค้นหา
+          this.clear_form() //หน้า regis clear เพราะไปเลือกจากการค้นหา
         })
     },
     async hn_search() {

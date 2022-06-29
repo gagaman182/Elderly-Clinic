@@ -318,6 +318,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Tgds',
   data() {
@@ -337,6 +338,10 @@ export default {
       tgds13: '',
       tgds14: '',
       tgds15: '',
+      hn: '',
+      cid: '',
+      assessor_date: '',
+      tgds_selects: '',
     }
   },
   computed: {
@@ -384,7 +389,200 @@ export default {
     },
   },
   methods: {
-    save_tgds() {},
+    receive_cidhn(value) {
+      // alert(value[0].hn)
+      this.hn = value[0].hn
+      this.cid = value[0].cid
+      this.assessor_date = value[0].assessor_date
+    },
+    tgds_select(value) {
+      axios
+        .post(`${this.$axios.defaults.baseURL}Tgds/tgds_select.php`, {
+          cid: value[0].cid,
+          hn: value[0].hn,
+          assessor_date: value[0].assessor_date,
+        })
+        .then((response) => {
+          this.tgds_selects = response.data
+          this.uhid = this.tgds_selects[0].uhid
+          this.tgds1 = this.tgds_selects[0].tgds1
+          this.tgds2 = this.tgds_selects[0].tgds2
+          this.tgds3 = this.tgds_selects[0].tgds3
+          this.tgds4 = this.tgds_selects[0].tgds4
+          this.tgds5 = this.tgds_selects[0].tgds5
+          this.tgds6 = this.tgds_selects[0].tgds6
+          this.tgds7 = this.tgds_selects[0].tgds7
+          this.tgds8 = this.tgds_selects[0].tgds8
+          this.tgds9 = this.tgds_selects[0].tgds9
+          this.tgds10 = this.tgds_selects[0].tgds10
+          this.tgds11 = this.tgds_selects[0].tgds11
+          this.tgds12 = this.tgds_selects[0].tgds12
+          this.tgds13 = this.tgds_selects[0].tgds13
+          this.tgds14 = this.tgds_selects[0].tgds14
+          this.tgds15 = this.tgds_selects[0].tgds15
+          this.hn = this.tgds_selects[0].hn
+          this.cid = this.tgds_selects[0].cid
+          this.assessor_date = this.tgds_selects[0].assessor_date
+          // this.total = this.tgds_selects[0].total
+          // this.result = this.tgds_selects[0].result
+        })
+    },
+    tgds_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูลupdate',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(`${this.$axios.defaults.baseURL}Tgds/tgds_update.php`, {
+            uhid: this.uhid,
+            tgds1: this.tgds1,
+            tgds2: this.tgds2,
+            tgds3: this.tgds3,
+            tgds4: this.tgds4,
+            tgds5: this.tgds5,
+            tgds6: this.tgds6,
+            tgds7: this.tgds7,
+            tgds8: this.tgds8,
+            tgds9: this.tgds9,
+            tgds10: this.tgds10,
+            tgds11: this.tgds11,
+            tgds12: this.tgds12,
+            tgds13: this.tgds13,
+            tgds14: this.tgds14,
+            tgds15: this.tgds15,
+            total: this.total,
+            result: this.result,
+            hn: this.hn,
+            cid: this.cid,
+            assessor_date: this.assessor_date,
+          })
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
+    },
+    save_tgds() {
+      if (this.tgds_selects.length > 0) {
+        this.tgds_update()
+      } else {
+        if (
+          !this.hn ||
+          !this.cid ||
+          !this.assessor_date ||
+          !this.tgds1 ||
+          !this.tgds2 ||
+          !this.tgds3 ||
+          !this.tgds4 ||
+          !this.tgds5 ||
+          !this.tgds6 ||
+          !this.tgds7 ||
+          !this.tgds8 ||
+          !this.tgds9 ||
+          !this.tgds10 ||
+          !this.tgds11 ||
+          !this.tgds12 ||
+          !this.tgds13 ||
+          !this.tgds14 ||
+          !this.tgds15
+        ) {
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
+          })
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
+
+          axios
+            .post(`${this.$axios.defaults.baseURL}Tgds/tgds_add.php`, {
+              uhid: this.uhid,
+              tgds1: this.tgds1,
+              tgds2: this.tgds2,
+              tgds3: this.tgds3,
+              tgds4: this.tgds4,
+              tgds5: this.tgds5,
+              tgds6: this.tgds6,
+              tgds7: this.tgds7,
+              tgds8: this.tgds8,
+              tgds9: this.tgds9,
+              tgds10: this.tgds10,
+              tgds11: this.tgds11,
+              tgds12: this.tgds12,
+              tgds13: this.tgds13,
+              tgds14: this.tgds14,
+              tgds15: this.tgds15,
+              total: this.total,
+              result: this.result,
+              hn: this.hn,
+              cid: this.cid,
+              assessor_date: this.assessor_date,
+            })
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
+      }
+    },
+    clear_form() {
+      this.uhid = ''
+      this.tgds1 = ''
+      this.tgds2 = ''
+      this.tgds3 = ''
+      this.tgds4 = ''
+      this.tgds5 = ''
+      this.tgds6 = ''
+      this.tgds7 = ''
+      this.tgds8 = ''
+      this.tgds9 = ''
+      this.tgds10 = ''
+      this.tgds11 = ''
+      this.tgds12 = ''
+      this.tgds13 = ''
+      this.tgds14 = ''
+      this.tgds15 = ''
+      this.hn = ''
+      this.cid = ''
+      this.assessor_date = ''
+      this.total = ''
+      this.result = ''
+    },
   },
 }
 </script>
