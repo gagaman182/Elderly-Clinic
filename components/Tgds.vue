@@ -423,8 +423,8 @@ export default {
           this.hn = this.tgds_selects[0].hn
           this.cid = this.tgds_selects[0].cid
           this.assessor_date = this.tgds_selects[0].assessor_date
-          // this.total = this.tgds_selects[0].total
-          // this.result = this.tgds_selects[0].result
+          this.total = this.tgds_selects[0].total
+          this.result = this.tgds_selects[0].result
         })
     },
     tgds_update: function () {

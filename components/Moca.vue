@@ -43,10 +43,10 @@
                 NAMING
               </v-card-subtitle>
             </v-col>
-            <v-col cols="12" md="8">
+            <v-col cols="12" md="9">
               <img src="@/assets/moca2_50.png" />
             </v-col>
-            <v-col cols="12" md="4">
+            <v-col cols="12" md="3">
               <v-text-field
                 class="mr-8 mt-15 text-h5"
                 outlined
@@ -302,6 +302,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Moca',
   data() {
@@ -318,6 +319,10 @@ export default {
       moca7: '0',
       moca8: '0',
       moca_all: '0',
+      hn: '',
+      cid: '',
+      assessor_date: '',
+      moca_selects: '',
     }
   },
   methods: {
@@ -355,8 +360,157 @@ export default {
         parseInt(this.moca7) +
         parseInt(this.moca8)
     },
+    receive_cidhn(value) {
+      //alert(value[0].hn)
+      this.hn = value[0].hn
+      this.cid = value[0].cid
+      this.assessor_date = value[0].assessor_date
+    },
     save_moca() {
-      alert(this.moca_all)
+      if (this.moca_selects.length > 0) {
+        this.moca_update()
+      } else {
+        if (!this.hn || !this.cid || !this.assessor_date) {
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
+          })
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
+
+          axios
+            .post(`${this.$axios.defaults.baseURL}Moca/moca_add.php`, {
+              uhid: this.uhid,
+              moca1: this.moca1,
+              moca2: this.moca2,
+              moca4_1: this.moca4_1,
+              moca4_2: this.moca4_2,
+              moca4_3: this.moca4_3,
+              moca5_1: this.moca5_1,
+              moca5_2: this.moca5_2,
+              moca6: this.moca6,
+              moca7: this.moca7,
+              moca8: this.moca8,
+              moca_all: this.moca_all,
+              hn: this.hn,
+              cid: this.cid,
+              assessor_date: this.assessor_date,
+            })
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
+      }
+    },
+    moca_select(value) {
+      axios
+        .post(`${this.$axios.defaults.baseURL}Moca/moca_select.php`, {
+          cid: value[0].cid,
+          hn: value[0].hn,
+          assessor_date: value[0].assessor_date,
+        })
+        .then((response) => {
+          this.moca_selects = response.data
+          this.uhid = this.moca_selects[0].uhid
+          this.moca1 = this.moca_selects[0].moca1
+          this.moca2 = this.moca_selects[0].moca2
+          this.moca4_1 = this.moca_selects[0].moca4_1
+          this.moca4_2 = this.moca_selects[0].moca4_2
+          this.moca4_3 = this.moca_selects[0].moca4_3
+          this.moca5_1 = this.moca_selects[0].moca5_1
+          this.moca5_2 = this.moca_selects[0].moca5_2
+          this.moca6 = this.moca_selects[0].moca6
+          this.moca7 = this.moca_selects[0].moca7
+          this.moca8 = this.moca_selects[0].moca8
+          this.moca_all = this.moca_selects[0].moca_all
+
+          this.hn = this.moca_selects[0].hn
+          this.cid = this.moca_selects[0].cid
+          this.assessor_date = this.moca_selects[0].assessor_date
+        })
+    },
+    moca_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูลupdate',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(`${this.$axios.defaults.baseURL}Moca/moca_update.php`, {
+            uhid: this.uhid,
+            moca1: this.moca1,
+            moca2: this.moca2,
+            moca4_1: this.moca4_1,
+            moca4_2: this.moca4_2,
+            moca4_3: this.moca4_3,
+            moca5_1: this.moca5_1,
+            moca5_2: this.moca5_2,
+            moca6: this.moca6,
+            moca7: this.moca7,
+            moca8: this.moca8,
+            moca_all: this.moca_all,
+            hn: this.hn,
+            cid: this.cid,
+            assessor_date: this.assessor_date,
+          })
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
+    },
+    clear_form() {
+      this.uhid = ''
+      this.moca1 = '0'
+      this.moca2 = '0'
+      this.moca4_1 = '0'
+      this.moca4_2 = '00'
+      this.moca4_3 = '0'
+      this.moca5_1 = '00'
+      this.moca5_2 = '0'
+      this.moca6 = '0'
+      this.moca7 = '00'
+      this.moca8 = '0'
+      this.moca_all = '0'
+      this.hn = ''
+      this.cid = ''
+      this.assessor_date = ''
     },
   },
 }

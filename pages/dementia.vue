@@ -127,7 +127,7 @@
             <v-stepper-content step="3">
               <v-card>
                 <v-card-text>
-                  <Tmse />
+                  <Tmse   ref="sendcidtmse"/>
                 </v-card-text>
                   <v-card-text>
                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
@@ -145,7 +145,7 @@
             <v-stepper-content step="4">
               <v-card>
                 <v-card-text>
-                  <Moca />
+                  <Moca ref="sendcidmoca"/>
                 </v-card-text>
                   <v-card-text>
                 <v-btn class="white--text" color="#6A67CE" @click="e1 = 3">
@@ -221,6 +221,8 @@ export default {
 
       this.$refs.sendcidhnminicog.receive_cidhn(this.person_data)
       this.$refs.sendcidtgds.receive_cidhn(this.person_data)
+      this.$refs.sendcidtmse.receive_cidhn(this.person_data)
+      this.$refs.sendcidmoca.receive_cidhn(this.person_data)
 
       //alert(this.person_data[0].hn)
       // this.$refs.sendcidhnfraxscore.receive_cidhn(this.person_data)
@@ -241,6 +243,8 @@ export default {
       this.person_data = data
       this.$refs.sendcidhnminicog.mini_cog_select(this.person_data)
       this.$refs.sendcidtgds.tgds_select(this.person_data)
+      this.$refs.sendcidtmse.tmse_select(this.person_data)
+      this.$refs.sendcidmoca.moca_select(this.person_data)
 
       // this.$refs.sendcidhnfraxscore.frax_score_select(this.person_data)
     },

@@ -259,7 +259,7 @@ export default {
       minicog1_1: '',
       minicog1_2: '',
       minicog1_3: '',
-      minicog2: '',
+      minicog2: '0',
       minicog3: '0',
       minicog3_1: '0',
       minicog3_2: '0',

@@ -614,7 +614,11 @@ export default {
       imageUrl: '',
       imageFile: null,
       imageName: '',
-      cid: '3901101272704',
+      // cid: '3901101272704',
+      hn: '',
+      cid: '',
+      assessor_date: '',
+      tmse_selects: '',
     }
   },
   methods: {
@@ -775,7 +779,281 @@ export default {
           })
       }
     },
-    save_tmse() {},
+    receive_cidhn(value) {
+      //alert(value[0].hn)
+      this.hn = value[0].hn
+      this.cid = value[0].cid
+      this.assessor_date = value[0].assessor_date
+    },
+    save_tmse() {
+      if (this.tmse_selects.length > 0) {
+        this.tmse_update()
+      } else {
+        if (!this.hn || !this.cid || !this.assessor_date) {
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
+          })
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
+
+          axios
+            .post(`${this.$axios.defaults.baseURL}Tmse/tmse_add.php`, {
+              uhid: this.uhid,
+              tmse1_1: this.tmse1_1,
+              tmse1_1_detail: this.tmse1_1_detail,
+              tmse1_2: this.tmse1_2,
+              tmse1_2_detail: this.tmse1_2_detail,
+              tmse1_3: this.tmse1_3,
+              tmse1_3_detail: this.tmse1_3_detail,
+              tmse1_4: this.tmse1_4,
+              tmse1_4_detail: this.tmse1_4_detail,
+              tmse1_5: this.tmse1_5,
+              tmse1_5_detail: this.tmse1_5_detail,
+              tmse1_6: this.tmse1_6,
+              tmse1_6_detail: this.tmse1_6_detail,
+              tmse2_1: this.tmse2_1,
+              tmse2_2: this.tmse2_2,
+              tmse2_3: this.tmse2_3,
+              tmse3_1: this.tmse3_1,
+              tmse3_2: this.tmse3_2,
+              tmse3_3: this.tmse3_3,
+              tmse3_4: this.tmse3_4,
+              tmse3_5: this.tmse3_5,
+              tmse4_1: this.tmse4_1,
+              tmse4_2: this.tmse4_2,
+              tmse4_3: this.tmse4_3,
+              tmse5_1: this.tmse5_1,
+              tmse5_1_detail: this.tmse5_1_detail,
+              tmse5_2: this.tmse5_2,
+              tmse5_2_detail: this.tmse5_2_detail,
+              tmse5_3: this.tmse5_3,
+              tmse5_3_detail: this.tmse5_3_detail,
+              tmse5_4_1: this.tmse5_4_1,
+              tmse5_4_2: this.tmse5_4_2,
+              tmse5_4_3: this.tmse5_4_3,
+              tmse5_5: this.tmse5_5,
+              tmse5_5_detail: this.tmse5_5_detail,
+              tmse5_6: this.tmse5_6,
+              tmse5_7: this.tmse5_7,
+              tmse5_7_detail: this.tmse5_7_detail,
+              tmse6_1: this.tmse6_1,
+              tmse6_2: this.tmse6_2,
+              tmse6_3: this.tmse6_3,
+              hn: this.hn,
+              cid: this.cid,
+              assessor_date: this.assessor_date,
+              total: this.total,
+              result: this.result,
+            })
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
+      }
+    },
+    tmse_select(value) {
+      axios
+        .post(`${this.$axios.defaults.baseURL}Tmse/tmse_select.php`, {
+          cid: value[0].cid,
+          hn: value[0].hn,
+          assessor_date: value[0].assessor_date,
+        })
+        .then((response) => {
+          this.tmse_selects = response.data
+          this.uhid = this.tmse_selects[0].uhid
+          this.tmse1_1 = this.tmse_selects[0].tmse1_1
+          this.tmse1_1_detail = this.tmse_selects[0].tmse1_1_detail
+          this.tmse1_2 = this.tmse_selects[0].tmse1_2
+          this.tmse1_2_detail = this.tmse_selects[0].tmse1_2_detail
+          this.tmse1_3 = this.tmse_selects[0].tmse1_3
+          this.tmse1_3_detail = this.tmse_selects[0].tmse1_3_detail
+          this.tmse1_4 = this.tmse_selects[0].tmse1_4
+          this.tmse1_4_detail = this.tmse_selects[0].tmse1_4_detail
+          this.tmse1_5 = this.tmse_selects[0].tmse1_5
+          this.tmse1_5_detail = this.tmse_selects[0].tmse1_5_detail
+          this.tmse1_6 = this.tmse_selects[0].tmse1_6
+          this.tmse1_6_detail = this.tmse_selects[0].tmse1_6_detail
+          this.tmse2_1 = this.tmse_selects[0].tmse2_1
+          this.tmse2_2 = this.tmse_selects[0].tmse2_2
+          this.tmse2_3 = this.tmse_selects[0].tmse2_3
+          this.tmse3_1 = this.tmse_selects[0].tmse3_1
+          this.tmse3_2 = this.tmse_selects[0].tmse3_2
+          this.tmse3_3 = this.tmse_selects[0].tmse3_3
+          this.tmse3_4 = this.tmse_selects[0].tmse3_4
+          this.tmse3_5 = this.tmse_selects[0].tmse3_5
+          this.tmse4_1 = this.tmse_selects[0].tmse4_1
+          this.tmse4_2 = this.tmse_selects[0].tmse4_2
+          this.tmse4_3 = this.tmse_selects[0].tmse4_3
+          this.tmse5_1 = this.tmse_selects[0].tmse5_1
+          this.tmse5_1_detail = this.tmse_selects[0].tmse5_1_detail
+          this.tmse5_2 = this.tmse_selects[0].tmse5_2
+          this.tmse5_2_detail = this.tmse_selects[0].tmse5_2_detail
+          this.tmse5_3 = this.tmse_selects[0].tmse5_3
+          this.tmse5_3_detail = this.tmse_selects[0].tmse5_3_detail
+          this.tmse5_4_1 = this.tmse_selects[0].tmse5_4_1
+          this.tmse5_4_2 = this.tmse_selects[0].tmse5_4_2
+          this.tmse5_4_3 = this.tmse_selects[0].tmse5_4_3
+          this.tmse5_5 = this.tmse_selects[0].tmse5_5
+          this.tmse5_5_detail = this.tmse_selects[0].tmse5_5_detail
+          this.tmse5_6 = this.tmse_selects[0].tmse5_6
+          this.tmse5_7 = this.tmse_selects[0].tmse5_7
+          this.tmse5_7_detail = this.tmse_selects[0].tmse5_7_detail
+          this.tmse6_1 = this.tmse_selects[0].tmse6_1
+          this.tmse6_2 = this.tmse_selects[0].tmse6_2
+          this.tmse6_3 = this.tmse_selects[0].tmse6_3
+          this.hn = this.tmse_selects[0].hn
+          this.cid = this.tmse_selects[0].cid
+          this.assessor_date = this.tmse_selects[0].assessor_date
+          this.total = this.tmse_selects[0].total
+          this.result = this.tmse_selects[0].result
+        })
+    },
+    tmse_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูลupdate',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(`${this.$axios.defaults.baseURL}Tmse/tmse_update.php`, {
+            uhid: this.uhid,
+            tmse1_1: this.tmse1_1,
+            tmse1_1_detail: this.tmse1_1_detail,
+            tmse1_2: this.tmse1_2,
+            tmse1_2_detail: this.tmse1_2_detail,
+            tmse1_3: this.tmse1_3,
+            tmse1_3_detail: this.tmse1_3_detail,
+            tmse1_4: this.tmse1_4,
+            tmse1_4_detail: this.tmse1_4_detail,
+            tmse1_5: this.tmse1_5,
+            tmse1_5_detail: this.tmse1_5_detail,
+            tmse1_6: this.tmse1_6,
+            tmse1_6_detail: this.tmse1_6_detail,
+            tmse2_1: this.tmse2_1,
+            tmse2_2: this.tmse2_2,
+            tmse2_3: this.tmse2_3,
+            tmse3_1: this.tmse3_1,
+            tmse3_2: this.tmse3_2,
+            tmse3_3: this.tmse3_3,
+            tmse3_4: this.tmse3_4,
+            tmse3_5: this.tmse3_5,
+            tmse4_1: this.tmse4_1,
+            tmse4_2: this.tmse4_2,
+            tmse4_3: this.tmse4_3,
+            tmse5_1: this.tmse5_1,
+            tmse5_1_detail: this.tmse5_1_detail,
+            tmse5_2: this.tmse5_2,
+            tmse5_2_detail: this.tmse5_2_detail,
+            tmse5_3: this.tmse5_3,
+            tmse5_3_detail: this.tmse5_3_detail,
+            tmse5_4_1: this.tmse5_4_1,
+            tmse5_4_2: this.tmse5_4_2,
+            tmse5_4_3: this.tmse5_4_3,
+            tmse5_5: this.tmse5_5,
+            tmse5_5_detail: this.tmse5_5_detail,
+            tmse5_6: this.tmse5_6,
+            tmse5_7: this.tmse5_7,
+            tmse5_7_detail: this.tmse5_7_detail,
+            tmse6_1: this.tmse6_1,
+            tmse6_2: this.tmse6_2,
+            tmse6_3: this.tmse6_3,
+            hn: this.hn,
+            cid: this.cid,
+            assessor_date: this.assessor_date,
+            total: this.total,
+            result: this.result,
+          })
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
+    },
+    clear_form() {
+      this.uhid = ''
+      this.tmse1_1 = '0'
+      this.tmse1_1_detail = ''
+      this.tmse1_2 = '0'
+      this.tmse1_2_detail = ''
+      this.tmse1_3 = '0'
+      this.tmse1_3_detail = ''
+      this.tmse1_4 = '0'
+      this.tmse1_4_detail = ''
+      this.tmse1_5 = '0'
+      this.tmse1_5_detail = ''
+      this.tmse1_6 = '0'
+      this.tmse1_6_detail = ''
+      this.tmse2_1 = '0'
+      this.tmse2_2 = '0'
+      this.tmse2_3 = '0'
+      this.tmse3_1 = '0'
+      this.tmse3_2 = '0'
+      this.tmse3_3 = '0'
+      this.tmse3_4 = '0'
+      this.tmse3_5 = '0'
+      this.tmse4_1 = '0'
+      this.tmse4_2 = '0'
+      this.tmse4_3 = '0'
+      this.tmse5_1 = '0'
+      this.tmse5_1_detail = ''
+      this.tmse5_2 = '0'
+      this.tmse5_2_detail = ''
+      this.tmse5_3 = '0'
+      this.tmse5_3_detail = ''
+      this.tmse5_4_1 = '0'
+      this.tmse5_4_2 = '0'
+      this.tmse5_4_3 = '0'
+      this.tmse5_5 = '0'
+      this.tmse5_5_detail = ''
+      this.tmse5_6 = '0'
+      this.tmse5_7 = '0'
+      this.tmse5_7_detail = ''
+      this.tmse6_1 = '0'
+      this.tmse6_2 = '0'
+      this.tmse6_3 = '0'
+      this.hn = ''
+      this.cid = ''
+      this.assessor_date = ''
+      this.total = ''
+      this.result = ''
+    },
   },
   computed: {
     total: function () {
