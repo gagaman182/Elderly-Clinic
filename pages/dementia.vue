@@ -179,7 +179,7 @@ export default {
     return {
       e1: 1,
       to_tgds: false,
-      person_show: true,
+      person_show: false,
       person_data: '',
       name_show: '-',
       age_show: '-',
@@ -237,11 +237,13 @@ export default {
       this.person_show = false
       this.$refs.sendcidhnminicog.clear_form()
       this.$refs.sendcidtgds.clear_form()
+      this.$refs.sendcidtmse.clear_form()
+      this.$refs.sendcidmoca.clear_form()
       this.to_tgds = false
     },
     adl_frax_score_select(data) {
       this.person_data = data
-      this.$refs.sendcidhnminicog.mini_cog_select(this.person_data)
+      // this.$refs.sendcidhnminicog.mini_cog_select(this.person_data)
       this.$refs.sendcidtgds.tgds_select(this.person_data)
       this.$refs.sendcidtmse.tmse_select(this.person_data)
       this.$refs.sendcidmoca.moca_select(this.person_data)

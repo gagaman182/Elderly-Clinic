@@ -6,6 +6,44 @@
           <fa :icon="['fas', 'person-falling']" class="text-h4 mr-2" />
           Falling
         </v-toolbar>
+           <v-card-text v-if="person_show">
+            <v-alert outlined color="purple">
+              <div class="text-h6">ข้อมูลผู้สูงอายุ</div>
+
+              <div class="text-h6 text--primary">
+                 <div class="d-flex flex-row">
+                  HN :
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.hn_show }}
+                  </div>
+                  เลขบัตรประชาชน :
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.cid_show }}
+                  </div>
+                
+                </div></br>
+                <div class="d-flex flex-row">
+                  
+                  ชื่อ-นามสกุล :
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.name_show }}
+                  </div>
+                  อายุ:
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.age_show }}
+                  </div>
+                  ปี ศูนย์บริการ :
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.name_cmu_show }}
+                  </div>
+                  ผู้ประเมิน:
+                  <div class="text-h6 purple--text ml-2 mr-2">
+                    {{ this.assessor_show }}
+                  </div>
+                </div>
+              </div>
+            </v-alert>
+          </v-card-text>
 
         <div class="mt-2 mb-2">
           <v-alert
@@ -83,7 +121,12 @@
               <v-card>
                 <v-card-text>
                   <!-- <Fall @miniclog="miniclog_return" /> -->
-                  <Fall />
+                  <Fall
+                    @sendcid="ciduse"
+                    @regisclearindex="clear_index_person"
+                    @call_adl_frax_score="adl_frax_score_select"
+                    ref="sendcidhnfall"
+                  />
                 </v-card-text>
                 <v-card-text>
                   <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
@@ -101,7 +144,7 @@
             <v-stepper-content step="2">
               <v-card>
                 <v-card-text>
-                  <Short_Fbs_I />
+                  <Short_Fbs_I    ref="sendcidhnshort_fbs_i"/>
                 </v-card-text>
                 <v-card-text>
                   <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
@@ -122,7 +165,7 @@
             <v-stepper-content step="3">
               <v-card>
                 <v-card-text>
-                  <Tug />
+                  <Tug ref="sendcidhntug"/>
                 </v-card-text>
                 <v-card-text>
                   <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
@@ -142,7 +185,7 @@
             <v-stepper-content step="4">
               <v-card>
                 <v-card-text>
-                  <Knee_Score />
+                  <Knee_Score ref="sendcidhnkneescore"/>
                 </v-card-text>
                 <v-card-text>
                   <v-btn class="white--text" color="#6A67CE" @click="e1 = 3">
@@ -162,7 +205,7 @@
             <v-stepper-content step="5">
               <v-card>
                 <v-card-text>
-                  <Risk_fall />
+                  <Risk_fall ref="sendcidhnriskfall"/>
                 </v-card-text>
                 <v-card-text>
                   <v-btn class="white--text" color="#6A67CE" @click="e1 = 4">
@@ -182,7 +225,7 @@
             <v-stepper-content step="6">
               <v-card>
                 <v-card-text>
-                  <Sppb />
+                  <Sppb ref="sendcidhnsppb"/>
                 </v-card-text>
                 <v-card-text>
                   <v-btn class="white--text" color="#6A67CE" @click="e1 = 5">
@@ -220,6 +263,14 @@ export default {
     return {
       e1: 1,
       to_tgds: false,
+      person_show: false,
+      person_data: '',
+      name_show: '-',
+      age_show: '-',
+      name_cmu_show: '-',
+      assessor_show: '-',
+      cid_show: '-',
+      hn_show: '-',
     }
   },
   components: {
@@ -241,6 +292,56 @@ export default {
     //     this.to_tgds = false
     //   }
     // },
+    ciduse(data) {
+      this.person_data = data
+      //alert(this.person_data[0].age)
+
+      this.name_show = this.person_data[0].fullname
+      this.age_show = this.person_data[0].age
+      this.name_cmu_show = this.person_data[0].name
+      this.assessor_show = this.person_data[0].assessor
+      this.cid_show = this.person_data[0].cid
+      this.hn_show = this.person_data[0].hn
+
+      this.person_show = true
+
+      this.$refs.sendcidhnfall.receive_cidhn(this.person_data)
+      this.$refs.sendcidhnshort_fbs_i.receive_cidhn(this.person_data)
+      this.$refs.sendcidhntug.receive_cidhn(this.person_data)
+      this.$refs.sendcidhnkneescore.receive_cidhn(this.person_data)
+      this.$refs.sendcidhnriskfall.receive_cidhn(this.person_data)
+      this.$refs.sendcidhnsppb.receive_cidhn(this.person_data)
+
+      //alert(this.person_data[0].hn)
+      // this.$refs.sendcidhnfraxscore.receive_cidhn(this.person_data)
+    },
+    clear_index_person() {
+      this.name_show = ''
+      this.age_show = ''
+      this.name_cmu_show = ''
+      this.assessor_show = ''
+      this.cid_show = ''
+      this.hn_show = ''
+      this.person_show = false
+      this.$refs.sendcidhnshort_fbs_i.clear_form()
+      this.$refs.sendcidhntug.clear_form()
+      this.$refs.sendcidhnkneescore.clear_form()
+      this.$refs.sendcidhnriskfall.clear_form()
+      this.$refs.sendcidhnsppb.clear_form()
+      this.to_tgds = false
+    },
+    adl_frax_score_select(data) {
+      this.person_data = data
+      this.$refs.sendcidhnshort_fbs_i.short_fbs_i_select(this.person_data)
+      this.$refs.sendcidhntug.tug_select(this.person_data)
+      this.$refs.sendcidhnkneescore.knee_score_select(this.person_data)
+      this.$refs.sendcidhnriskfall.riskfall_select(this.person_data)
+      this.$refs.sendcidhnsppb.sppb_select(this.person_data)
+      // this.$refs.sendcidtmse.tmse_select(this.person_data)
+      // this.$refs.sendcidmoca.moca_select(this.person_data)
+
+      // this.$refs.sendcidhnfraxscore.frax_score_select(this.person_data)
+    },
   },
 }
 </script>

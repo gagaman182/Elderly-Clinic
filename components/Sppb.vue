@@ -150,6 +150,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Sppb',
   data() {
@@ -158,6 +159,10 @@ export default {
       sppb2: '',
       sppb3: '',
       sppb4: '',
+      hn: '',
+      cid: '',
+      assessor_date: '',
+      sppb_selects: '',
     }
   },
   computed: {
@@ -185,8 +190,140 @@ export default {
     },
   },
   methods: {
+    receive_cidhn(value) {
+      // alert(value[0].hn)
+      this.hn = value[0].hn
+      this.cid = value[0].cid
+      this.assessor_date = value[0].assessor_date
+    },
+    sppb_select(value) {
+      axios
+        .post(`${this.$axios.defaults.baseURL}Sppb/sppb_select.php`, {
+          cid: value[0].cid,
+          hn: value[0].hn,
+          assessor_date: value[0].assessor_date,
+        })
+        .then((response) => {
+          this.sppb_selects = response.data
+          this.uhid = this.sppb_selects[0].uhid
+          this.sppb1 = this.sppb_selects[0].sppb1
+          this.sppb2 = this.sppb_selects[0].sppb2
+          this.sppb3 = this.sppb_selects[0].sppb3
+          this.sppb4 = this.sppb_selects[0].sppb4
+
+          this.hn = this.sppb_selects[0].hn
+          this.cid = this.sppb_selects[0].cid
+          this.assessor_date = this.sppb_selects[0].assessor_date
+          this.total = this.sppb_selects[0].total
+          this.result = this.sppb_selects[0].result
+        })
+    },
+    sppb_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูลupdate',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(`${this.$axios.defaults.baseURL}Sppb/sppb_update.php`, {
+            uhid: this.uhid,
+            sppb1: this.sppb1,
+            sppb2: this.sppb2,
+            sppb3: this.sppb3,
+            sppb4: this.sppb4,
+
+            total: this.total,
+            result: this.result,
+            hn: this.hn,
+            cid: this.cid,
+            assessor_date: this.assessor_date,
+          })
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
+    },
     save_sppb() {
-      alert('sppb')
+      if (this.sppb_selects.length > 0) {
+        this.sppb_update()
+      } else {
+        if (!this.hn || !this.cid || !this.assessor_date) {
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
+          })
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
+
+          axios
+            .post(`${this.$axios.defaults.baseURL}Sppb/sppb_add.php`, {
+              uhid: this.uhid,
+              sppb1: this.sppb1,
+              sppb2: this.sppb2,
+              sppb3: this.sppb3,
+              sppb4: this.sppb4,
+
+              total: this.total,
+              result: this.result,
+              hn: this.hn,
+              cid: this.cid,
+              assessor_date: this.assessor_date,
+            })
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
+      }
+    },
+    clear_form() {
+      this.uhid = ''
+      this.sppb1 = ''
+      this.sppb2 = ''
+      this.sppb3 = ''
+      this.sppb4 = ''
+
+      this.hn = ''
+      this.cid = ''
+      this.assessor_date = ''
+      this.total = ''
+      this.result = ''
     },
   },
 }

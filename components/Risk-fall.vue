@@ -4,7 +4,7 @@
     <v-col>
       <v-card>
         <v-card-text>
-          <v-card-title> ปนะเมินบ้านเสี่ยงล้ม </v-card-title>
+          <v-card-title> ประเมินบ้านเสี่ยงล้ม </v-card-title>
 
           <v-divider />
           <v-alert
@@ -212,7 +212,11 @@ export default {
       riskfall8: '0',
       riskfall9: '0',
       riskfall10: '0',
-      riskfall_all: '0',
+      riskfall_all: '',
+      hn: '',
+      cid: '',
+      assessor_date: '',
+      riskfall_selects: '',
     }
   },
   methods: {
@@ -249,8 +253,173 @@ export default {
         parseInt(this.riskfall10)
     },
 
+    receive_cidhn(value) {
+      // alert(value[0].hn)
+      this.hn = value[0].hn
+      this.cid = value[0].cid
+      this.assessor_date = value[0].assessor_date
+    },
+    riskfall_select(value) {
+      axios
+        .post(`${this.$axios.defaults.baseURL}Risk_fall/risk_fall_select.php`, {
+          cid: value[0].cid,
+          hn: value[0].hn,
+          assessor_date: value[0].assessor_date,
+        })
+        .then((response) => {
+          this.riskfall_selects = response.data
+          this.uhid = this.riskfall_selects[0].uhid
+          this.riskfall1 = this.riskfall_selects[0].riskfall1
+          this.riskfall2 = this.riskfall_selects[0].riskfall2
+          this.riskfall3 = this.riskfall_selects[0].riskfall3
+          this.riskfall4 = this.riskfall_selects[0].riskfall4
+          this.riskfall5 = this.riskfall_selects[0].riskfall5
+          this.riskfall6 = this.riskfall_selects[0].riskfall6
+          this.riskfall7 = this.riskfall_selects[0].riskfall7
+          this.riskfall8 = this.riskfall_selects[0].riskfall8
+          this.riskfall9 = this.riskfall_selects[0].riskfall9
+          this.riskfall10 = this.riskfall_selects[0].riskfall10
+
+          this.hn = this.riskfall_selects[0].hn
+          this.cid = this.riskfall_selects[0].cid
+          this.assessor_date = this.riskfall_selects[0].assessor_date
+          this.total = this.riskfall_selects[0].total
+          this.result = this.riskfall_selects[0].result
+        })
+    },
+    riskfall_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูลupdate',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(
+            `${this.$axios.defaults.baseURL}Risk_fall/risk_fall_update.php`,
+            {
+              uhid: this.uhid,
+              riskfall1: this.riskfall1,
+              riskfall2: this.riskfall2,
+              riskfall3: this.riskfall3,
+              riskfall4: this.riskfall4,
+              riskfall5: this.riskfall5,
+              riskfall6: this.riskfall6,
+              riskfall7: this.riskfall7,
+              riskfall8: this.riskfall8,
+              riskfall9: this.riskfall9,
+              riskfall10: this.riskfall10,
+              riskfall_all: this.riskfall_all,
+
+              total: this.total,
+              result: this.result,
+              hn: this.hn,
+              cid: this.cid,
+              assessor_date: this.assessor_date,
+            }
+          )
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
+    },
     save_risk_fall() {
-      alert('save')
+      if (this.riskfall_selects.length > 0) {
+        this.riskfall_update()
+      } else {
+        if (!this.hn || !this.cid || !this.assessor_date) {
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
+          })
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
+
+          axios
+            .post(
+              `${this.$axios.defaults.baseURL}Risk_fall/risk_fall_add.php`,
+              {
+                uhid: this.uhid,
+                riskfall1: this.riskfall1,
+                riskfall2: this.riskfall2,
+                riskfall3: this.riskfall3,
+                riskfall4: this.riskfall4,
+                riskfall5: this.riskfall5,
+                riskfall6: this.riskfall6,
+                riskfall7: this.riskfall7,
+                riskfall8: this.riskfall8,
+                riskfall9: this.riskfall9,
+                riskfall10: this.riskfall10,
+                riskfall_all: this.riskfall_all,
+
+                total: this.total,
+                result: this.result,
+                hn: this.hn,
+                cid: this.cid,
+                assessor_date: this.assessor_date,
+              }
+            )
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
+      }
+    },
+    clear_form() {
+      this.uhid = ''
+      this.riskfall1 = '0'
+      this.riskfall2 = '0'
+      this.riskfall3 = '0'
+      this.riskfall4 = '0'
+      this.riskfall5 = '0'
+      this.riskfall6 = '0'
+      this.riskfall7 = '0'
+      this.riskfall8 = '0'
+      this.riskfall9 = '0'
+      this.riskfall10 = '0'
+      this.riskfall_all = ''
+
+      this.hn = ''
+      this.cid = ''
+      this.assessor_date = ''
+      this.total = ''
+      this.result = ''
     },
   },
   computed: {
@@ -270,7 +439,8 @@ export default {
         )
     },
     result: function () {
-      if (this.total >= 1 && this.total <= 2) return 'บ้านควรระวัง'
+      if (this.total == 0) return '-'
+      else if (this.total >= 1 && this.total <= 2) return 'บ้านควรระวัง'
       else if (this.total >= 3 && this.total <= 4) return 'บ้านควรเร่งแก้ไข'
       else if (this.total >= 5) return 'บ้านอันตรายควรปรับปรุงด่วน'
     },

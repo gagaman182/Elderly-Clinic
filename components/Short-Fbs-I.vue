@@ -171,7 +171,13 @@
           <v-row
             ><v-col cols="12">
               <div class="text-center">
-                <v-btn rounded color="#6A67CE" x-large dark @click="save_short">
+                <v-btn
+                  rounded
+                  color="#6A67CE"
+                  x-large
+                  dark
+                  @click="short_fbs_i_save()"
+                >
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
@@ -185,6 +191,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Short-Fbs-I',
   data() {
@@ -196,6 +203,10 @@ export default {
       fbsi5: '',
       fbsi6: '',
       fbsi7: '',
+      hn: '',
+      cid: '',
+      assessor_date: '',
+      short_fbs_i_selects: '',
     }
   },
   computed: {
@@ -227,7 +238,170 @@ export default {
     },
   },
   methods: {
-    save_short() {},
+    receive_cidhn(value) {
+      //alert(value[0].hn)
+      this.hn = value[0].hn
+      this.cid = value[0].cid
+      this.assessor_date = value[0].assessor_date
+    },
+    short_fbs_i_save() {
+      if (this.short_fbs_i_selects.length > 0) {
+        this.short_fbs_i_update()
+      } else {
+        if (
+          !this.hn ||
+          !this.cid ||
+          !this.assessor_date ||
+          !this.fbsi1 ||
+          !this.fbsi2 ||
+          !this.fbsi3 ||
+          !this.fbsi4 ||
+          !this.fbsi5 ||
+          !this.fbsi6 ||
+          !this.fbsi7
+        ) {
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
+          })
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
+
+          axios
+            .post(
+              `${this.$axios.defaults.baseURL}Short_fbs_i/short_fbs_i_add.php`,
+              {
+                uhid: this.uhid,
+                fbsi1: this.fbsi1,
+                fbsi2: this.fbsi2,
+                fbsi3: this.fbsi3,
+                fbsi4: this.fbsi4,
+                fbsi5: this.fbsi5,
+                fbsi6: this.fbsi6,
+                fbsi7: this.fbsi7,
+                total: this.total,
+
+                hn: this.hn,
+                cid: this.cid,
+                assessor_date: this.assessor_date,
+              }
+            )
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
+      }
+    },
+    short_fbs_i_select(value) {
+      axios
+        .post(
+          `${this.$axios.defaults.baseURL}Short_fbs_i/short_fbs_i_select.php`,
+          {
+            cid: value[0].cid,
+            hn: value[0].hn,
+            assessor_date: value[0].assessor_date,
+          }
+        )
+        .then((response) => {
+          this.short_fbs_i_selects = response.data
+          this.uhid = this.short_fbs_i_selects[0].uhid
+          this.fbsi1 = this.short_fbs_i_selects[0].fbsi1
+          this.fbsi2 = this.short_fbs_i_selects[0].fbsi2
+          this.fbsi3 = this.short_fbs_i_selects[0].fbsi3
+          this.fbsi4 = this.short_fbs_i_selects[0].fbsi4
+          this.fbsi5 = this.short_fbs_i_selects[0].fbsi5
+          this.fbsi6 = this.short_fbs_i_selects[0].fbsi6
+          this.fbsi7 = this.short_fbs_i_selects[0].fbsi7
+
+          this.total = this.short_fbs_i_selects[0].total
+
+          this.hn = this.short_fbs_i_selects[0].hn
+          this.cid = this.short_fbs_i_selects[0].cid
+          this.assessor_date = this.short_fbs_i_selects[0].assessor_date
+        })
+    },
+    short_fbs_i_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูลupdate',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(
+            `${this.$axios.defaults.baseURL}Short_fbs_i/short_fbs_i_update.php`,
+            {
+              uhid: this.uhid,
+              fbsi1: this.fbsi1,
+              fbsi2: this.fbsi2,
+              fbsi3: this.fbsi3,
+              fbsi4: this.fbsi4,
+              fbsi5: this.fbsi5,
+              fbsi6: this.fbsi6,
+              fbsi7: this.fbsi7,
+              total: this.total,
+
+              hn: this.hn,
+              cid: this.cid,
+              assessor_date: this.assessor_date,
+            }
+          )
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
+    },
+    clear_form() {
+      this.uhid = ''
+      this.fbsi1 = ''
+      this.fbsi2 = ''
+      this.fbsi3 = ''
+      this.fbsi4 = ''
+      this.fbsi5 = ''
+      this.fbsi6 = ''
+      this.fbsi7 = ''
+      this.total = ''
+
+      this.hn = ''
+      this.cid = ''
+      this.assessor_date = ''
+    },
   },
 }
 </script>

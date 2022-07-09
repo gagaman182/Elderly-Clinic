@@ -6,15 +6,18 @@ header('Access-Control-Allow-Methods: PUT');
 header('Access-Control-Allow-Headers: Acess-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization');
 $data = json_decode(file_get_contents('php://input'), true);
 $uhid = $data['uhid'];
-$frax1 = $data['frax1'];
-$frax2 = $data['frax2'];
-$frax3 = $data['frax3'];
+$sppb1 = $data['sppb1'];
+$sppb2 = $data['sppb2'];
+$sppb3 = $data['sppb3'];
+$sppb4 = $data['sppb4'];
 
+
+
+$total = $data['total'];
+$result = $data['result'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-//$assessor = $data['assessor'];
-
 
 
 
@@ -25,9 +28,11 @@ include '../conn.php';
 if (!empty($uhid)) {
 
 
-  $strvisit  = "  INSERT INTO frax_score(uhid,frax1,frax2,frax3,hn,cid,assessor_date,dateadd) 
-      VALUES('" . $uhid . "','" . $frax1 . "','" . $frax2 . "','" . $frax3 . "','" . $hn . "','" . $cid . "',
-      '" . $assessor_date . "',CURRENT_TIMESTAMP)";
+  $strvisit  = "  INSERT INTO sppb(uhid,sppb1,sppb2,sppb3,sppb4,hn,cid,assessor_date,total,result,dateadd) 
+      VALUES('" . $uhid . "','" . $sppb1 . "','" . $sppb2 . "',
+      '" . $sppb3 . "','" . $sppb4 . "','" . $hn . "',
+      '" . $cid . "','" . $assessor_date . "','" . $total . "',
+      '" . $result . "',CURRENT_TIMESTAMP)";
 
 
 

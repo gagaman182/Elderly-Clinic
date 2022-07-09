@@ -114,7 +114,6 @@ export default {
                 hn: this.hn,
                 cid: this.cid,
                 assessor_date: this.assessor_date,
-                assessor: this.assessor,
               }
             )
             .then((response) => {

@@ -388,7 +388,7 @@
                   color="#6A67CE"
                   x-large
                   dark
-                  @click="save_kneescore"
+                  @click="save_knee_score"
                 >
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
@@ -403,6 +403,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'Knee-Score',
   data() {
@@ -419,6 +420,10 @@ export default {
       knee_score10: '',
       knee_score11: '',
       knee_score12: '',
+      hn: '',
+      cid: '',
+      assessor_date: '',
+      knee_score_selects: '',
     }
   },
   mounted() {},
@@ -471,12 +476,198 @@ export default {
     },
   },
   methods: {
-    save_kneescore() {},
+    receive_cidhn(value) {
+      // alert(value[0].hn)
+      this.hn = value[0].hn
+      this.cid = value[0].cid
+      this.assessor_date = value[0].assessor_date
+    },
+    knee_score_select(value) {
+      axios
+        .post(
+          `${this.$axios.defaults.baseURL}Knee_score/knee_score_select.php`,
+          {
+            cid: value[0].cid,
+            hn: value[0].hn,
+            assessor_date: value[0].assessor_date,
+          }
+        )
+        .then((response) => {
+          this.knee_score_selects = response.data
+          this.uhid = this.knee_score_selects[0].uhid
+          this.knee_score1 = this.knee_score_selects[0].knee_score1
+          this.knee_score2 = this.knee_score_selects[0].knee_score2
+          this.knee_score3 = this.knee_score_selects[0].knee_score3
+          this.knee_score4 = this.knee_score_selects[0].knee_score4
+          this.knee_score5 = this.knee_score_selects[0].knee_score5
+          this.knee_score6 = this.knee_score_selects[0].knee_score6
+          this.knee_score7 = this.knee_score_selects[0].knee_score7
+          this.knee_score8 = this.knee_score_selects[0].knee_score8
+          this.knee_score9 = this.knee_score_selects[0].knee_score9
+          this.knee_score10 = this.knee_score_selects[0].knee_score10
+          this.knee_score11 = this.knee_score_selects[0].knee_score11
+          this.knee_score12 = this.knee_score_selects[0].knee_score12
+
+          this.hn = this.knee_score_selects[0].hn
+          this.cid = this.knee_score_selects[0].cid
+          this.assessor_date = this.knee_score_selects[0].assessor_date
+          this.total = this.knee_score_selects[0].total
+          this.result = this.knee_score_selects[0].result
+        })
+    },
+    knee_score_update: function () {
+      if (!this.uhid) {
+        this.$swal({
+          title: 'แจ้งเตือน',
+          text: 'ไม่พบข้อมูลupdate',
+          icon: 'error',
+          confirmButtonText: 'ตกลง',
+        })
+      } else {
+        axios
+          .put(
+            `${this.$axios.defaults.baseURL}Knee_score/knee_score_update.php`,
+            {
+              uhid: this.uhid,
+              knee_score1: this.knee_score1,
+              knee_score2: this.knee_score2,
+              knee_score3: this.knee_score3,
+              knee_score4: this.knee_score4,
+              knee_score5: this.knee_score5,
+              knee_score6: this.knee_score6,
+              knee_score7: this.knee_score7,
+              knee_score8: this.knee_score8,
+              knee_score9: this.knee_score9,
+              knee_score10: this.knee_score10,
+              knee_score11: this.knee_score11,
+              knee_score12: this.knee_score12,
+
+              total: this.total,
+              result: this.result,
+              hn: this.hn,
+              cid: this.cid,
+              assessor_date: this.assessor_date,
+            }
+          )
+          .then((response) => {
+            this.message = response.data
+            if (this.message[0].message === 'แก้ไขข้อมูลสำเร็จ') {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].message,
+                icon: 'success',
+                confirmButtonText: 'ตกลง',
+              })
+            } else {
+              this.$swal({
+                title: 'สถานะการแก้ไข',
+                text: this.message[0].Message,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+              })
+            }
+          })
+      }
+    },
+    save_knee_score() {
+      if (this.knee_score_selects.length > 0) {
+        this.knee_score_update()
+      } else {
+        if (
+          !this.hn ||
+          !this.cid ||
+          !this.assessor_date ||
+          !this.knee_score1 ||
+          !this.knee_score2 ||
+          !this.knee_score3 ||
+          !this.knee_score4 ||
+          !this.knee_score5 ||
+          !this.knee_score6 ||
+          !this.knee_score7 ||
+          !this.knee_score8 ||
+          !this.knee_score9 ||
+          !this.knee_score10 ||
+          !this.knee_score11 ||
+          !this.knee_score12
+        ) {
+          this.$swal({
+            title: 'แจ้งเตือน',
+            text: 'ระบุข้อมูลไม่ครบ',
+            icon: 'error',
+            confirmButtonText: 'ตกลง',
+          })
+        } else {
+          const { v4: uuidv4 } = require('uuid')
+          this.uhid = uuidv4()
+
+          axios
+            .post(
+              `${this.$axios.defaults.baseURL}Knee_score/knee_score_add.php`,
+              {
+                uhid: this.uhid,
+                knee_score1: this.knee_score1,
+                knee_score2: this.knee_score2,
+                knee_score3: this.knee_score3,
+                knee_score4: this.knee_score4,
+                knee_score5: this.knee_score5,
+                knee_score6: this.knee_score6,
+                knee_score7: this.knee_score7,
+                knee_score8: this.knee_score8,
+                knee_score9: this.knee_score9,
+                knee_score10: this.knee_score10,
+                knee_score11: this.knee_score11,
+                knee_score12: this.knee_score12,
+
+                total: this.total,
+                result: this.result,
+                hn: this.hn,
+                cid: this.cid,
+                assessor_date: this.assessor_date,
+              }
+            )
+            .then((response) => {
+              this.message = response.data
+
+              if (this.message[0].message == 'เพิ่มข้อมูลสำเร็จ') {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'success',
+                  confirmButtonText: 'ตกลง',
+                })
+              } else {
+                this.$swal({
+                  title: 'สถานะการเพิ่ม',
+                  text: this.message[0].message,
+                  icon: 'error',
+                  confirmButtonText: 'ตกลง',
+                })
+              }
+            })
+        }
+      }
+    },
+    clear_form() {
+      this.uhid = ''
+      this.knee_score1 = ''
+      this.knee_score2 = ''
+      this.knee_score3 = ''
+      this.knee_score4 = ''
+      this.knee_score5 = ''
+      this.knee_score6 = ''
+      this.knee_score7 = ''
+      this.knee_score8 = ''
+      this.knee_score9 = ''
+      this.knee_score10 = ''
+      this.knee_score11 = ''
+      this.knee_score12 = ''
+
+      this.hn = ''
+      this.cid = ''
+      this.assessor_date = ''
+      this.total = ''
+      this.result = ''
+    },
   },
-  //   watch: {
-  //   result: function () {
-  //     this.fullName = this.total
-  //   },
-  // },
 }
 </script>
