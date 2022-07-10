@@ -72,6 +72,15 @@
             <v-stepper-items>
               <v-stepper-content step="1">
                 <v-card>
+                   <v-card-text>
+                    <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
+                      <fa :icon="['fas', 'circle-right']" size="2x" />
+                         <p class="text-h6 mb-1 ml-1">ADL</p>
+                    </v-btn>
+                    <v-btn class="white--text" color="#066163">
+                      <p class="text-h6 mb-1 ml-1">หัวข้อ {{ e1 }}</p>
+                    </v-btn>
+                  </v-card-text>
                   <v-card-text>
                     <Regis @sendcid="ciduse"
                      @regisclearindex="clear_index_person" 
@@ -90,15 +99,30 @@
 
               <v-stepper-content step="2">
                 <v-card>
+                   <v-card-text>
+                    <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
+                      <fa :icon="['fas', 'circle-left']" size="2x" />
+                         <p class="text-h6 mb-1 ml-1">ลงทะเบียน</p>
+                    </v-btn>
+                    <v-btn class="white--text" color="#6A67CE" @click="e1 = 3">
+                      <fa :icon="['fas', 'circle-right']" size="2x" />
+                         <p class="text-h6 mb-1 ml-1">FRAX-SCORE</p>
+                    </v-btn>
+                    <v-btn class="white--text" color="#066163">
+                      <p class="text-h6 mb-1 ml-1">หัวข้อ {{ e1 }}</p>
+                    </v-btn>
+                  </v-card-text>
                   <v-card-text>
                     <Adl ref="sendcidhnadl" />
                   </v-card-text>
                   <v-card-text>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
                       <fa :icon="['fas', 'circle-left']" size="2x" />
+                         <p class="text-h6 mb-1 ml-1">ลงทะเบียน</p>
                     </v-btn>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 3">
                       <fa :icon="['fas', 'circle-right']" size="2x" />
+                          <p class="text-h6 mb-1 ml-1">FRAX-SCORE</p>
                     </v-btn>
                     <v-btn class="white--text" color="#066163">
                       <p class="text-h6 mb-1 ml-1">หัวข้อ {{ e1 }}</p>
@@ -109,15 +133,30 @@
 
               <v-stepper-content step="3">
                 <v-card>
+                    <v-card-text>
+                    <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
+                      <fa :icon="['fas', 'circle-left']" size="2x" />
+                         <p class="text-h6 mb-1 ml-1">ADL</p>
+                    </v-btn>
+                    <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
+                      <fa :icon="['fas', 'circle-right']" size="2x" />
+                         <p class="text-h6 mb-1 ml-1">ลงทะเบียน</p>
+                    </v-btn>
+                    <v-btn class="white--text" color="#066163">
+                      <p class="text-h6 mb-1 ml-1">หัวข้อ {{ e1 }}</p>
+                    </v-btn>
+                  </v-card-text>
                   <v-card-text>
                     <Frax_Score  ref="sendcidhnfraxscore"/>
                   </v-card-text>
                   <v-card-text>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
                       <fa :icon="['fas', 'circle-left']" size="2x" />
+                         <p class="text-h6 mb-1 ml-1">ADL</p>
                     </v-btn>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
                       <fa :icon="['fas', 'circle-right']" size="2x" />
+                         <p class="text-h6 mb-1 ml-1">ลงทะเบียน</p>
                     </v-btn>
                     <v-btn class="white--text" color="#066163">
                       <p class="text-h6 mb-1 ml-1">หัวข้อ {{ e1 }}</p>
@@ -129,6 +168,7 @@
           </v-stepper>
         </v-card-text>
       </v-card>
+     
     </v-col>
   </v-row>
 </template>
@@ -158,6 +198,7 @@ export default {
     Adl,
     Frax_Score,
   },
+
   mounted() {},
   methods: {
     ciduse(data) {
@@ -172,6 +213,7 @@ export default {
       this.hn_show = this.person_data[0].hn
 
       this.person_show = true
+      this.overlay = false
 
       this.$refs.sendcidhnadl.receive_cidhn(this.person_data)
       this.$refs.sendcidhnfraxscore.receive_cidhn(this.person_data)

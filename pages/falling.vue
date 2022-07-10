@@ -120,6 +120,16 @@
             <v-stepper-content step="1">
               <v-card>
                 <v-card-text>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
+                    <fa :icon="['fas', 'circle-right']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">Short_Fbs_I</p>
+                  </v-btn>
+
+                  <v-btn class="white--text" color="#066163">
+                    <p class="text-h6 mb-1 ml-1">ฟอร์ม {{ e1 }}</p>
+                  </v-btn>
+                </v-card-text>
+                <v-card-text>
                   <!-- <Fall @miniclog="miniclog_return" /> -->
                   <Fall
                     @sendcid="ciduse"
@@ -143,6 +153,19 @@
 
             <v-stepper-content step="2">
               <v-card>
+                 <v-card-text>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
+                    <fa :icon="['fas', 'circle-left']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">ประวัติการหกล้ม</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 3">
+                    <fa :icon="['fas', 'circle-right']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">TUGT</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#066163">
+                    <p class="text-h6 mb-1 ml-1">ฟอร์ม {{ e1 }}</p>
+                  </v-btn>
+                </v-card-text>
                 <v-card-text>
                   <Short_Fbs_I    ref="sendcidhnshort_fbs_i"/>
                 </v-card-text>
@@ -164,6 +187,19 @@
 
             <v-stepper-content step="3">
               <v-card>
+                  <v-card-text>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
+                    <fa :icon="['fas', 'circle-left']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">Short_Fbs_I</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 4">
+                    <fa :icon="['fas', 'circle-right']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">Oxford Knee Score</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#066163">
+                    <p class="text-h6 mb-1 ml-1">ฟอร์ม {{ e1 }}</p>
+                  </v-btn>
+                </v-card-text>
                 <v-card-text>
                   <Tug ref="sendcidhntug"/>
                 </v-card-text>
@@ -184,6 +220,19 @@
             </v-stepper-content>
             <v-stepper-content step="4">
               <v-card>
+                 <v-card-text>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 3">
+                    <fa :icon="['fas', 'circle-left']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">TUGT</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 5">
+                    <fa :icon="['fas', 'circle-right']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">บ้านเสี่ยงล้ม</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#066163">
+                    <p class="text-h6 mb-1 ml-1">ฟอร์ม {{ e1 }}</p>
+                  </v-btn>
+                </v-card-text>
                 <v-card-text>
                   <Knee_Score ref="sendcidhnkneescore"/>
                 </v-card-text>
@@ -204,6 +253,19 @@
             </v-stepper-content>
             <v-stepper-content step="5">
               <v-card>
+                 <v-card-text>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 4">
+                    <fa :icon="['fas', 'circle-left']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">Oxford Knee Score</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 6">
+                    <fa :icon="['fas', 'circle-right']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">SPPB</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#066163">
+                    <p class="text-h6 mb-1 ml-1">ฟอร์ม {{ e1 }}</p>
+                  </v-btn>
+                </v-card-text>
                 <v-card-text>
                   <Risk_fall ref="sendcidhnriskfall"/>
                 </v-card-text>
@@ -224,6 +286,19 @@
             </v-stepper-content>
             <v-stepper-content step="6">
               <v-card>
+                 <v-card-text>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 5">
+                    <fa :icon="['fas', 'circle-left']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">SPPB</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
+                    <fa :icon="['fas', 'circle-right']" size="2x" />
+                    <p class="text-h6 mb-1 ml-1">ประวัติการหกล้ม</p>
+                  </v-btn>
+                  <v-btn class="white--text" color="#066163">
+                    <p class="text-h6 mb-1 ml-1">ฟอร์ม {{ e1 }}</p>
+                  </v-btn>
+                </v-card-text>
                 <v-card-text>
                   <Sppb ref="sendcidhnsppb"/>
                 </v-card-text>

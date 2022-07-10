@@ -516,6 +516,7 @@ export default {
       regis_selects: '',
     }
   },
+
   mounted() {
     // ดึงตำบล
     this.fecth_tmb_code()
@@ -531,6 +532,33 @@ export default {
     this.fetch_refer_pcu()
     //ดึง list cid and hn
     this.fecth_search_cid()
+
+    // ข้อมูลส่งมาจากหน้าหมอ
+    if (this.$route.query == null) {
+      //alert('nothing')
+    } else {
+      //console.log(this.$route.query)
+      //แบบนี้ใช้กับ this.$router.resolve dataเป้น  query ทำ new tab
+      var output = []
+      output[0] = this.$route.query
+      this.name_age_show = output
+
+      this.cid_show = this.name_age_show[0].cid
+      this.hn_show = this.name_age_show[0].hn
+      this.assessor_date_show = this.name_age_show[0].assessor_date
+
+      //แสดงรายชื่อของหน้า main ด้วย
+      this.$emit('sendcid', this.name_age_show)
+
+      //แบบนี้ใช้กับ this.$router.push dataเป้น params
+      // console.log(this.$route.params.index)
+      // this.name_age_show = this.$route.params.index
+      // this.cid_show = this.$route.params.index[0].cid
+      // this.hn_show = this.$route.params.index[0].hn
+      // this.assessor_date_show = this.$route.params.index[0].assessor_date
+      this.regis_select() //เรียกข้อมูลมาโชว์หน้า regis
+      this.call_index() //เรียกข้อมูลมาโชว์หน้า adl frax score จาก index ไปเรียกต่อ
+    }
   },
   computed: {
     computedDateFormattedMomentjs() {
@@ -548,6 +576,16 @@ export default {
       val && setTimeout(() => (this.activePicker = 'YEAR'))
     },
   },
+  // created() {
+  //   if (!this.$route.params) {
+  //     alert('nothing')
+  //   } else {
+  //     alert('ok')
+  //     alert(JSON.stringify(this.$route.params))
+  //     this.regis_select() //เรียกข้อมูลมาโชว์หน้า regis
+  //     this.call_index() //เรียกข้อมูลมาโชว์หน้า adl frax score จาก index ไปเรียกต่อ
+  //   }
+  // },
   methods: {
     // idcard and hn
     async fecth_search_cid() {

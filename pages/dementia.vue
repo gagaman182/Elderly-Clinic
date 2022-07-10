@@ -84,6 +84,15 @@
           <v-stepper-items>
             <v-stepper-content step="1">
               <v-card>
+                   <v-card-text>
+                <v-btn v-if ="to_tgds" class="white--text" color="#6A67CE" @click="e1 = 2">
+                  <fa :icon="['fas', 'circle-right']" size="2x" /><p class="text-h6 mb-1 ml-1">TGDS-15</p>
+                </v-btn>
+            
+                 <v-btn  class="white--text" color="#066163">
+                  <p class="text-h6 mb-1 ml-1">ฟอร์ม {{e1}}</p>
+                </v-btn>
+                </v-card-text>
                 <v-card-text>
                   <Mini_Cog 
                   @miniclog="miniclog_return" 
@@ -106,6 +115,18 @@
 
             <v-stepper-content step="2">
               <v-card>
+                 <v-card-text>
+                <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
+                  <fa :icon="['fas', 'circle-left']" size="2x" /><p class="text-h6 mb-1 ml-1">Mini-Cog</p>
+                </v-btn>
+                <v-btn class="white--text" color="#6A67CE" @click="e1 = 3">
+                  <fa :icon="['fas', 'circle-right']" size="2x" /><p class="text-h6 mb-1 ml-1">TMSE</p>
+                </v-btn>
+               <v-btn  class="white--text" color="#066163">
+                  <p class="text-h6 mb-1 ml-1">ฟอร์ม {{e1}}</p>
+                </v-btn>
+            
+                </v-card-text>
                 <v-card-text>
                   <Tgds ref="sendcidtgds"/>
                 </v-card-text>
@@ -126,6 +147,17 @@
 
             <v-stepper-content step="3">
               <v-card>
+                 <v-card-text>
+                 <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
+                  <fa :icon="['fas', 'circle-left']" size="2x" /><p class="text-h6 mb-1 ml-1">TGDS-15</p>
+                </v-btn>
+                <v-btn class="white--text" color="#6A67CE" @click="e1 = 4">
+                  <fa :icon="['fas', 'circle-right']" size="2x" /><p class="text-h6 mb-1 ml-1">MOCA</p>
+                </v-btn>
+                <v-btn  class="white--text" color="#066163">
+                  <p class="text-h6 mb-1 ml-1">ฟอร์ม {{e1}}</p>
+                </v-btn>
+                  </v-card-text>
                 <v-card-text>
                   <Tmse   ref="sendcidtmse"/>
                 </v-card-text>
@@ -144,6 +176,17 @@
             </v-stepper-content>
             <v-stepper-content step="4">
               <v-card>
+                    <v-card-text>
+                <v-btn class="white--text" color="#6A67CE" @click="e1 = 3">
+                  <fa :icon="['fas', 'circle-left']" size="2x" /><p class="text-h6 mb-1 ml-1">TMSE</p>
+                </v-btn>
+                <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
+                  <fa :icon="['fas', 'circle-right']" size="2x" /><p class="text-h6 mb-1 ml-1">Mini-Cog</p>
+                </v-btn>
+                 <v-btn class="white--text" color="#066163">
+                  <p class="text-h6 mb-1 ml-1">ฟอร์ม {{e1}}</p>
+                </v-btn>
+                  </v-card-text>
                 <v-card-text>
                   <Moca ref="sendcidmoca"/>
                 </v-card-text>

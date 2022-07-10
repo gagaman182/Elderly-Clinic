@@ -219,6 +219,7 @@ export default {
       riskfall_selects: '',
     }
   },
+
   methods: {
     risk_fall_check_1() {
       if (!this.riskfall1) {
@@ -268,6 +269,7 @@ export default {
         })
         .then((response) => {
           this.riskfall_selects = response.data
+
           this.uhid = this.riskfall_selects[0].uhid
           this.riskfall1 = this.riskfall_selects[0].riskfall1
           this.riskfall2 = this.riskfall_selects[0].riskfall2
@@ -279,12 +281,13 @@ export default {
           this.riskfall8 = this.riskfall_selects[0].riskfall8
           this.riskfall9 = this.riskfall_selects[0].riskfall9
           this.riskfall10 = this.riskfall_selects[0].riskfall10
+          this.riskfall_all = this.riskfall_selects[0].riskfall_all
 
           this.hn = this.riskfall_selects[0].hn
           this.cid = this.riskfall_selects[0].cid
           this.assessor_date = this.riskfall_selects[0].assessor_date
-          this.total = this.riskfall_selects[0].total
-          this.result = this.riskfall_selects[0].result
+          // this.total = this.riskfall_selects[0].total
+          // this.result = this.riskfall_selects[0].result
         })
     },
     riskfall_update: function () {
