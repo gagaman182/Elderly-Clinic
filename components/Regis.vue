@@ -534,30 +534,40 @@ export default {
     this.fecth_search_cid()
 
     // ข้อมูลส่งมาจากหน้าหมอ
-    if (this.$route.query == null) {
+    if (!this.$route.query) {
       //alert('nothing')
     } else {
       //console.log(this.$route.query)
       //แบบนี้ใช้กับ this.$router.resolve dataเป้น  query ทำ new tab
       var output = []
       output[0] = this.$route.query
-      this.name_age_show = output
 
-      this.cid_show = this.name_age_show[0].cid
-      this.hn_show = this.name_age_show[0].hn
-      this.assessor_date_show = this.name_age_show[0].assessor_date
+      if (!output[0].fullname) {
+      } else {
+        const datadecode = {
+          fullname: window.atob(output[0].fullname),
+          age: window.atob(output[0].age),
+          // name: window.atob(output[0].name),
+          assessor: window.atob(output[0].assessor),
+          cid: window.atob(output[0].cid),
+          hn: window.atob(output[0].hn),
+          assessor_date: window.atob(output[0].assessor_date),
+        }
+        var output2 = []
+        output2[0] = datadecode
+        this.name_age_show = output2
+        console.log(this.name_age_show)
 
-      //แสดงรายชื่อของหน้า main ด้วย
-      this.$emit('sendcid', this.name_age_show)
+        this.cid_show = this.name_age_show[0].cid
+        this.hn_show = this.name_age_show[0].hn
+        this.assessor_date_show = this.name_age_show[0].assessor_date
 
-      //แบบนี้ใช้กับ this.$router.push dataเป้น params
-      // console.log(this.$route.params.index)
-      // this.name_age_show = this.$route.params.index
-      // this.cid_show = this.$route.params.index[0].cid
-      // this.hn_show = this.$route.params.index[0].hn
-      // this.assessor_date_show = this.$route.params.index[0].assessor_date
-      this.regis_select() //เรียกข้อมูลมาโชว์หน้า regis
-      this.call_index() //เรียกข้อมูลมาโชว์หน้า adl frax score จาก index ไปเรียกต่อ
+        //แสดงรายชื่อของหน้า main ด้วย
+        this.$emit('sendcid', this.name_age_show)
+
+        this.regis_select() //เรียกข้อมูลมาโชว์หน้า regis
+        this.call_index()
+      } //เรียกข้อมูลมาโชว์หน้า adl frax score จาก index ไปเรียกต่อ
     }
   },
   computed: {

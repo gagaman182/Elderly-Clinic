@@ -328,13 +328,13 @@ export default {
         //   params: { index: this.name_age_show },
         // })
         const datasend = {
-          fullname: this.name_age_show[0].fullname,
-          age: this.name_age_show[0].age,
-          name: this.name_age_show[0].name,
-          assessor: this.name_age_show[0].assessor,
-          cid: this.name_age_show[0].cid,
-          hn: this.name_age_show[0].hn,
-          assessor_date: this.name_age_show[0].assessor_date,
+          fullname: window.btoa(this.name_age_show[0].fullname),
+          age: window.btoa(this.name_age_show[0].age),
+          // name: window.btoa(this.name_age_show[0].name),
+          assessor: window.btoa(this.name_age_show[0].assessor),
+          cid: window.btoa(this.name_age_show[0].cid),
+          hn: window.btoa(this.name_age_show[0].hn),
+          assessor_date: window.btoa(this.name_age_show[0].assessor_date),
         }
         let routeData = this.$router.resolve({
           name: 'index',
@@ -357,13 +357,13 @@ export default {
         //   params: { index: this.name_age_show },
         // })
         const datasend = {
-          fullname: this.name_age_show[0].fullname,
-          age: this.name_age_show[0].age,
-          name: this.name_age_show[0].name,
-          assessor: this.name_age_show[0].assessor,
-          cid: this.name_age_show[0].cid,
-          hn: this.name_age_show[0].hn,
-          assessor_date: this.name_age_show[0].assessor_date,
+          fullname: window.btoa(this.name_age_show[0].fullname),
+          age: window.btoa(this.name_age_show[0].age),
+          // name: window.btoa(this.name_age_show[0].name),
+          assessor: window.btoa(this.name_age_show[0].assessor),
+          cid: window.btoa(this.name_age_show[0].cid),
+          hn: window.btoa(this.name_age_show[0].hn),
+          assessor_date: window.btoa(this.name_age_show[0].assessor_date),
         }
         let routeData = this.$router.resolve({
           name: 'dementia',
@@ -386,13 +386,13 @@ export default {
         //   params: { index: this.name_age_show },
         // })
         const datasend = {
-          fullname: this.name_age_show[0].fullname,
-          age: this.name_age_show[0].age,
-          name: this.name_age_show[0].name,
-          assessor: this.name_age_show[0].assessor,
-          cid: this.name_age_show[0].cid,
-          hn: this.name_age_show[0].hn,
-          assessor_date: this.name_age_show[0].assessor_date,
+          fullname: window.btoa(this.name_age_show[0].fullname),
+          age: window.btoa(this.name_age_show[0].age),
+          // name: window.btoa(this.name_age_show[0].name),
+          assessor: window.btoa(this.name_age_show[0].assessor),
+          cid: window.btoa(this.name_age_show[0].cid),
+          hn: window.btoa(this.name_age_show[0].hn),
+          assessor_date: window.btoa(this.name_age_show[0].assessor_date),
         }
         let routeData = this.$router.resolve({
           name: 'falling',
