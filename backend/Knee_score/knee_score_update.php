@@ -19,6 +19,7 @@ $knee_score11 = $data['knee_score11'];
 $knee_score12 = $data['knee_score12'];
 $total = $data['total'];
 $result = $data['result'];
+$outto = $data['outto'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
@@ -48,6 +49,7 @@ knee_score12 = '" . $knee_score12 . "',
 
 total = '" . $total . "',
 result = '" . $result . "',
+outto = '" . $outto . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "' 
 

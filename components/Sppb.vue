@@ -216,6 +216,7 @@ export default {
           this.assessor_date = this.sppb_selects[0].assessor_date
           this.total = this.sppb_selects[0].total
           this.result = this.sppb_selects[0].result
+          this.outto = this.sppb_selects[0].outto
         })
     },
     sppb_update: function () {
@@ -237,6 +238,7 @@ export default {
 
             total: this.total,
             result: this.result,
+            outto: this.outto,
             hn: this.hn,
             cid: this.cid,
             assessor_date: this.assessor_date,
@@ -286,6 +288,7 @@ export default {
 
               total: this.total,
               result: this.result,
+              outto: this.outto,
               hn: this.hn,
               cid: this.cid,
               assessor_date: this.assessor_date,

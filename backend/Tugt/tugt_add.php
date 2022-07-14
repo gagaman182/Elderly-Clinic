@@ -8,9 +8,11 @@ $data = json_decode(file_get_contents('php://input'), true);
 $uhid = $data['uhid'];
 $tug1 = $data['tug1'];
 $tug2 = $data['tug2'];
+
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
+$result = $data['result'];
 
 
 
@@ -21,9 +23,9 @@ include '../conn.php';
 if (!empty($uhid)) {
 
 
-  $strvisit  = "  INSERT INTO tugt(uhid,tug1,tug2,hn,cid,assessor_date,dateadd) 
+  $strvisit  = "  INSERT INTO tugt(uhid,tug1,tug2,hn,cid,assessor_date,result,dateadd) 
       VALUES('" . $uhid . "','" . $tug1 . "','" . $tug2 . "','" . $hn . "',
-      '" . $cid . "','" . $assessor_date . "',CURRENT_TIMESTAMP)";
+      '" . $cid . "','" . $assessor_date . "','" . $result . "',CURRENT_TIMESTAMP)";
 
 
 

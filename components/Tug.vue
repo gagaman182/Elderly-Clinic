@@ -51,6 +51,17 @@
               </v-avatar>
             </v-col>
           </v-row>
+          <v-row>
+            <v-col cols="12" md="3"
+              ><h3 class="textlabel text-h4 mb-2">ผลการประเมิน</h3>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-chip class="white--text text-h4" color="#79DAE8">
+                {{ result }}
+                {{ bar }}
+              </v-chip>
+            </v-col>
+          </v-row>
           <v-row
             ><v-col cols="12">
               <div class="text-center">
@@ -117,6 +128,7 @@ export default {
               hn: this.hn,
               cid: this.cid,
               assessor_date: this.assessor_date,
+              result: this.result,
             })
             .then((response) => {
               this.message = response.data
@@ -175,6 +187,7 @@ export default {
             hn: this.hn,
             cid: this.cid,
             assessor_date: this.assessor_date,
+            result: this.result,
           })
           .then((response) => {
             this.message = response.data
@@ -203,6 +216,13 @@ export default {
       this.hn = ''
       this.cid = ''
       this.assessor_date = ''
+    },
+  },
+  computed: {
+    result: function () {
+      if (this.tug2 > 12) return 'มีภาวะเสี่ยงภาวะหกล้ม'
+      else if (this.tug2 >= 1 && this.tug2 <= 12) return 'ปกติ'
+      else if (this.tug2 == 0) return '-'
     },
   },
 }

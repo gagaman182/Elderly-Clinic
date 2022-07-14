@@ -10,6 +10,7 @@ $tug2 = $data['tug2'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
+$result = $data['result'];
 
 
 
@@ -23,6 +24,8 @@ include '../conn.php';
 $sql = "UPDATE tugt
 SET tug1 = '" . $tug1 . "',
 tug2 = '" . $tug2 . "',
+result = '" . $result . "',
+
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "' 
 

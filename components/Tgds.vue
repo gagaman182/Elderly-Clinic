@@ -385,7 +385,7 @@ export default {
     result: function () {
       if (this.total >= 6 && this.total < 11) return 'บ่งบอกว่ามีภาวะซึมเศร้า '
       else if (this.total >= 11) return 'มีภาวะซึมเศร้าแน่นอน'
-      else if (this.total < 6) return '-'
+      else if (this.total < 6) return 'ปกติ'
     },
   },
   methods: {

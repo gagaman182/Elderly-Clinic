@@ -14,6 +14,7 @@ $sppb4 = $data['sppb4'];
 
 $total = $data['total'];
 $result = $data['result'];
+$outto = $data['outto'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
@@ -36,6 +37,7 @@ sppb4 = '" . $sppb4 . "',
 
 total = '" . $total . "',
 result = '" . $result . "',
+outto = '" . $outto . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "' 
 

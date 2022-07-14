@@ -60,82 +60,11 @@
     </v-card-title>
     <v-row>
       <v-col cols="12">
-        <e_adl  ref="callresult" @regisclearindex="clear_index_person" ></e_adl>
-        <v-card>
-          <v-subheader class="text-h6">
-            <fa :icon="['fas', 'user-doctor']" class="text-h5 mr-2" />
-            ข้อมูลทั่วไป
-          </v-subheader>
-
-          <v-list two-line>
-            <template v-for="n in regis">
-              <v-list-item :key="n">
-                <v-list-item-avatar color="pink accent-1"> </v-list-item-avatar>
-
-                <v-list-item-content>
-                  <v-list-item-title>หัวข้อ - {{ n }}</v-list-item-title>
-
-                  <v-list-item-subtitle>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Nihil repellendus distinctio similique
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-
-              <v-divider v-if="n !== 6" :key="`divider-${n}`" inset></v-divider>
-            </template>
-          </v-list>
-        </v-card>
-        <v-card>
-          <v-subheader class="text-h6">
-            <fa :icon="['fas', 'brain']" class="text-h5 mr-2" />
-            Dementia
-          </v-subheader>
-
-          <v-list two-line>
-            <template v-for="n in dementia">
-              <v-list-item :key="n">
-                <v-list-item-avatar color="pink accent-1"> </v-list-item-avatar>
-
-                <v-list-item-content>
-                  <v-list-item-title>หัวข้อ - {{ n }}</v-list-item-title>
-
-                  <v-list-item-subtitle>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Nihil repellendus distinctio similique
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-
-              <v-divider v-if="n !== 6" :key="`divider-${n}`" inset></v-divider>
-            </template>
-          </v-list>
-        </v-card>
-        <v-card>
-          <v-subheader class="text-h6">
-            <fa :icon="['fas', 'person-falling']" class="text-h5 mr-2" />
-            Falling
-          </v-subheader>
-
-          <v-list two-line>
-            <template v-for="n in falling">
-              <v-list-item :key="n">
-                <v-list-item-avatar color="pink accent-1"> </v-list-item-avatar>
-
-                <v-list-item-content>
-                  <v-list-item-title>หัวข้อ - {{ n }}</v-list-item-title>
-
-                  <v-list-item-subtitle>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Nihil repellendus distinctio similique
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-
-              <v-divider v-if="n !== 6" :key="`divider-${n}`" inset></v-divider>
-            </template>
-          </v-list>
-        </v-card>
+        <e_index  ref="callresultindex"  ></e_index>
+        <e_dementia ref="callresultdementia"  ></e_dementia>
+        <e_falling ref="callresultfall"  ></e_falling>
+       
+       
          <v-dialog v-model="dialogs" width="600">
         <v-card >
           <v-card-title class="text-h5 white--text deep-purple darken-1">
@@ -196,7 +125,9 @@
 
 <script>
 import axios from 'axios'
-import e_adl from '~/components/evaluate/e-index.vue'
+import e_index from '~/components/evaluate/e-index.vue'
+import e_dementia from '~/components/evaluate/e-dementia.vue'
+import e_falling from '~/components/evaluate/e-falling.vue'
 export default {
   name: 'Evaluate',
   data() {
@@ -226,18 +157,12 @@ export default {
       assessor_show: '',
       cid_show: '',
       hn_show: '',
-      // name_age_show_dialog: '',
-      // name_show_dialog: '',
-      // age_show_dialog: '',
-      // name_cmu_show_dialog: '',
-      // assessor_show_dialog: '',
-      // cid_show_dialog: '',
-      // hn_show_dialog: '',
-      // assessor_date_show_dialog: '',
     }
   },
   components: {
-    e_adl,
+    e_index,
+    e_dementia,
+    e_falling,
   },
   mounted() {
     //ดึง list cid and hn
@@ -264,17 +189,8 @@ export default {
             data_search: this.cid_list,
           })
           .then((response) => {
-            // this.name_age_show_dialog = response.data
-            // this.name_show_dialog = this.name_age_show_dialog[0].fullname
-            // this.age_show_dialog = this.name_age_show_dialog[0].age
-            // this.name_cmu_show_dialog = this.name_age_show_dialog[0].name
-            // this.assessor_show_dialog = this.name_age_show_dialog[0].assessor
-            // this.cid_show_dialog = this.name_age_show_dialog[0].cid
-            // this.hn_show_dialog = this.name_age_show_dialog[0].hn
-            // this.assessor_date_show_dialog =
-            //   this.name_age_show_dialog[0].assessor_date
-            //this.clear_form()
             if (response.data) {
+              this.clear_form()
               this.name_age_show = response.data
               this.name_show = this.name_age_show[0].fullname
               this.age_show = this.name_age_show[0].age
@@ -284,9 +200,6 @@ export default {
               this.hn_show = this.name_age_show[0].hn
               this.assessor_date_show = this.name_age_show[0].assessor_date
             }
-            //this.$refs.callresult.resultdata(response.data)
-            //this.dialogs = false
-            // this.$refs.callresult.fraxscoreresultdata(this.name_age_show)
           })
       }
     },
@@ -299,16 +212,7 @@ export default {
             data_search: this.hn_list,
           })
           .then((response) => {
-            // this.name_age_show_dialog = response.data
-            // this.name_show_dialog = this.name_age_show_dialog[0].fullname
-            // this.age_show_dialog = this.name_age_show_dialog[0].age
-            // this.name_cmu_show_dialog = this.name_age_show_dialog[0].name
-            // this.assessor_show_dialog = this.name_age_show_dialog[0].assessor
-            // this.cid_show_dialog = this.name_age_show_dialog[0].cid
-            // this.hn_show_dialog = this.name_age_show_dialog[0].hn
-            // this.assessor_date_show_dialog =
-            //   this.name_age_show_dialog[0].assessor_date
-            //this.clear_form()
+            this.clear_form()
             this.name_age_show = response.data
             this.name_show = this.name_age_show[0].fullname
             this.age_show = this.name_age_show[0].age
@@ -317,10 +221,6 @@ export default {
             this.cid_show = this.name_age_show[0].cid
             this.hn_show = this.name_age_show[0].hn
             this.assessor_date_show = this.name_age_show[0].assessor_date
-
-            //this.$refs.callresult.resultdata(response.data)
-            //this.dialogs = false
-            //this.$refs.callresult.fraxscoreresultdata(this.name_age_show)
           })
       }
     },
@@ -334,46 +234,26 @@ export default {
       this.hn_show = ''
       this.assessor_date_show = ''
     },
-    // clear_dialog_form() {
-    //   // this.cid_list = ''
-    //   // this.hn_list = ''
 
-    //   this.name_age_show_dialog = ''
-    //   this.name_show_dialog = ''
-    //   this.age_show_dialog = ''
-    //   this.name_cmu_show_dialog = ''
-    //   this.assessor_show_dialog = ''
-    //   this.cid_show_dialog = ''
-    //   this.hn_show_dialog = ''
-    //   this.assessor_date_show_dialog = ''
-    // },
     search() {
-      // if (this.hn_list) {
-      //   this.hn_search()
-      //   this.$refs.callresult.resultdata(this.name_age_show)
-      // } else if (this.cid_list) {
-      //   cid_search()
-      //   this.$refs.callresult.resultdata(this.name_age_show)
-      // }
-      //this.dialog = false
-      //this.clear_dialog_form()
-      //} else {
+      //index
+      this.$refs.callresultindex.adlresultdata(this.name_age_show)
+      this.$refs.callresultindex.fraxscoreresultdata(this.name_age_show)
+      //dementia
+      this.$refs.callresultdementia.minicogresultdata(this.name_age_show)
+      this.$refs.callresultdementia.tgdsresultdata(this.name_age_show)
+      this.$refs.callresultdementia.tmseresultdata(this.name_age_show)
+      this.$refs.callresultdementia.mocaresultdata(this.name_age_show)
+      //falling
+      this.$refs.callresultfall.fallresultdata(this.name_age_show)
+      this.$refs.callresultfall.shortfbsiresultdata(this.name_age_show)
+      this.$refs.callresultfall.tugtresultdata(this.name_age_show)
+      this.$refs.callresultfall.kneescoreresultdata(this.name_age_show)
+      this.$refs.callresultfall.riskfallresultdata(this.name_age_show)
+      this.$refs.callresultfall.sppbresultdata(this.name_age_show)
 
-      //this.dialog = false
-      //this.clear_dialog_form()
-      this.$refs.callresult.resultdata(this.name_age_show)
+      //close dialog
       this.dialogs = false
-    },
-    searchdata() {
-      // alert('search')
-      // this.dialogs = true
-      // this.$refs.callresult.clear_form()
-    },
-    clear_index_person() {
-      // this.dialog = false
-      // alert('emit')
-      // this.dialog = false
-      // alert('emit2')
     },
   },
 }
