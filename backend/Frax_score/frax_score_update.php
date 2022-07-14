@@ -11,6 +11,7 @@ $frax3 = $data['frax3'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
+$result = $data['result'];
 
 
 
@@ -25,6 +26,7 @@ $sql = "UPDATE frax_score
 SET frax1 = '" . $frax1 . "',
 frax2 = '" . $frax2 . "',
 frax3 = '" . $frax3 . "',
+result = '" . $result . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE cid = '" . $cid . "' 
 and hn = '" . $hn . "' 

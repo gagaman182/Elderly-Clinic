@@ -52,7 +52,7 @@
           <!-- <v-btn class="mx-2" fab dark color="#243A73" @click="refresh">
             <v-icon dark> mdi-refresh </v-icon>
           </v-btn> -->
-          <v-btn class="mx-2" fab dark color="#EB4747" @click="dialog = true">
+          <v-btn class="mx-2" fab dark color="#3EC70B" @click="dialog = true">
             <v-icon dark> mdi-card-search </v-icon>
           </v-btn>
         </v-card-title>
@@ -164,8 +164,8 @@
         </v-card-text>
       </v-card>
        <v-dialog v-model="dialog" width="600">
-        <v-card>
-          <v-card-title class="text-h5 white--text deep-purple darken-3">
+        <v-card >
+          <v-card-title class="text-h5 white--text deep-purple darken-1">
             ค้นหาทะเบียน
           </v-card-title>
 
@@ -261,41 +261,46 @@ export default {
     async cid_search() {
       // alert(this.cid_list)
       // this.search(this.cid_list)
-
-      await axios
-        .post(`${this.$axios.defaults.baseURL}Regis/search_name.php`, {
-          search: 'cid',
-          data_search: this.cid_list,
-        })
-        .then((response) => {
-          this.clear_form()
-          this.name_age_show = response.data
-          this.name_show = this.name_age_show[0].fullname
-          this.age_show = this.name_age_show[0].age
-          this.name_cmu_show = this.name_age_show[0].name
-          this.assessor_show = this.name_age_show[0].assessor
-          this.cid_show = this.name_age_show[0].cid
-          this.hn_show = this.name_age_show[0].hn
-          this.assessor_date_show = this.name_age_show[0].assessor_date
-        })
+      if (!this.cid_list) {
+      } else {
+        await axios
+          .post(`${this.$axios.defaults.baseURL}Regis/search_name.php`, {
+            search: 'cid',
+            data_search: this.cid_list,
+          })
+          .then((response) => {
+            this.clear_form()
+            this.name_age_show = response.data
+            this.name_show = this.name_age_show[0].fullname
+            this.age_show = this.name_age_show[0].age
+            this.name_cmu_show = this.name_age_show[0].name
+            this.assessor_show = this.name_age_show[0].assessor
+            this.cid_show = this.name_age_show[0].cid
+            this.hn_show = this.name_age_show[0].hn
+            this.assessor_date_show = this.name_age_show[0].assessor_date
+          })
+      }
     },
     async hn_search() {
-      await axios
-        .post(`${this.$axios.defaults.baseURL}Regis/search_name.php`, {
-          search: 'hn',
-          data_search: this.hn_list,
-        })
-        .then((response) => {
-          this.clear_form()
-          this.name_age_show = response.data
-          this.name_show = this.name_age_show[0].fullname
-          this.age_show = this.name_age_show[0].age
-          this.name_cmu_show = this.name_age_show[0].name
-          this.assessor_show = this.name_age_show[0].assessor
-          this.cid_show = this.name_age_show[0].cid
-          this.hn_show = this.name_age_show[0].hn
-          this.assessor_date_show = this.name_age_show[0].assessor_date
-        })
+      if (!this.hn_list) {
+      } else {
+        await axios
+          .post(`${this.$axios.defaults.baseURL}Regis/search_name.php`, {
+            search: 'hn',
+            data_search: this.hn_list,
+          })
+          .then((response) => {
+            this.clear_form()
+            this.name_age_show = response.data
+            this.name_show = this.name_age_show[0].fullname
+            this.age_show = this.name_age_show[0].age
+            this.name_cmu_show = this.name_age_show[0].name
+            this.assessor_show = this.name_age_show[0].assessor
+            this.cid_show = this.name_age_show[0].cid
+            this.hn_show = this.name_age_show[0].hn
+            this.assessor_date_show = this.name_age_show[0].assessor_date
+          })
+      }
     },
     clear_form() {
       this.name_age_show = ''
@@ -327,6 +332,7 @@ export default {
         //   name: 'index',
         //   params: { index: this.name_age_show },
         // })
+
         const datasend = {
           fullname: window.btoa(this.name_age_show[0].fullname),
           age: window.btoa(this.name_age_show[0].age),
@@ -356,6 +362,7 @@ export default {
         //   name: 'dementia',
         //   params: { index: this.name_age_show },
         // })
+
         const datasend = {
           fullname: window.btoa(this.name_age_show[0].fullname),
           age: window.btoa(this.name_age_show[0].age),
@@ -385,6 +392,7 @@ export default {
         //   name: 'falling',
         //   params: { index: this.name_age_show },
         // })
+
         const datasend = {
           fullname: window.btoa(this.name_age_show[0].fullname),
           age: window.btoa(this.name_age_show[0].age),

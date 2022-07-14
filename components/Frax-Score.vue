@@ -46,7 +46,16 @@
           <h3 class="textlabel mb-2">- โอกาสเสี่ยงของการเกิดกระดูกสะโพกหัก</h3>
           <v-text-field outlined dense v-model="frax3" label="ร้อยละ...">
           </v-text-field>
-
+          <v-row>
+            <v-col cols="12" md="3"
+              ><h3 class="textlabel text-h4 mb-2">ผลการประเมิน</h3>
+            </v-col>
+            <v-col cols="12" md="9">
+              <v-chip class="white--text text-h6" color="#79DAE8">
+                {{ result }}
+              </v-chip>
+            </v-col>
+          </v-row>
           <v-row
             ><v-col cols="12">
               <div class="text-center">
@@ -114,6 +123,7 @@ export default {
                 hn: this.hn,
                 cid: this.cid,
                 assessor_date: this.assessor_date,
+                result: this.result,
               }
             )
             .then((response) => {
@@ -163,6 +173,7 @@ export default {
           this.hn = this.frax_score_selects[0].hn
           this.cid = this.frax_score_selects[0].cid
           this.assessor_date = this.frax_score_selects[0].assessor_date
+          this.result = this.frax_score_selects[0].result
         })
     },
     frax_score_update: function () {
@@ -185,6 +196,7 @@ export default {
               hn: this.hn,
               cid: this.cid,
               assessor_date: this.assessor_date,
+              result: this.result,
             }
           )
           .then((response) => {
@@ -215,6 +227,17 @@ export default {
       this.hn = ''
       this.cid = ''
       this.assessor_date = ''
+      this.result = ''
+    },
+  },
+  computed: {
+    result: function () {
+      if (this.frax2 >= 20 && this.frax3 >= 3)
+        return 'โอกาสเสี่ยงของการเกิดกระดูกหักที่ตำแหน่งสำคัญ/โอกาสเสี่ยงของการเกิดกระดูกสะโพกหัก'
+      else if (this.frax2 >= 20)
+        return 'โอกาสเสี่ยงของการเกิดกระดูกหักที่ตำแหน่งสำคัญ'
+      else if (this.frax3 >= 3) return 'โอกาสเสี่ยงของการเกิดกระดูกสะโพกหัก'
+      else if (this.frax2 == 0 || this.frax3 == 0) return '-'
     },
   },
 }

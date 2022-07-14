@@ -52,7 +52,7 @@
             color="#92BA92"
             dark
           >
-            <div class="text-no-wrap secondary" style="width: 16rem">
+            <div class="secondary" style="width: 16rem">
               กรณีประเมินผล Oxford Knee Score
             </div>
             <div
@@ -74,16 +74,16 @@
               คะแนน น้อยกว่า 30 พบแพทย์
             </div>
             <br />
-            <div class="text-no-wrap secondary" style="width: 9rem">
+            <div class="secondary" style="width: 9rem">
               กรณีประเมินผล SPPB
             </div>
             <div
-              class="text-no-wrap blue--text text-h5 text-decoration-underline"
+              class="blue--text text-h5 text-decoration-underline"
             >
               ผลปกติ พบนักกายภาพ
             </div>
             <div
-              class="text-no-wrap red--text text-h5 text-decoration-underline"
+              class="red--text text-h5 text-decoration-underline"
             >
               ผลผิดปกติ ส่งกลับพยาบาล
             </div>
@@ -286,19 +286,6 @@
             </v-stepper-content>
             <v-stepper-content step="6">
               <v-card>
-                 <v-card-text>
-                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 5">
-                    <fa :icon="['fas', 'circle-left']" size="2x" />
-                    <p class="text-h6 mb-1 ml-1">SPPB</p>
-                  </v-btn>
-                  <v-btn class="white--text" color="#6A67CE" @click="e1 = 1">
-                    <fa :icon="['fas', 'circle-right']" size="2x" />
-                    <p class="text-h6 mb-1 ml-1">ประวัติการหกล้ม</p>
-                  </v-btn>
-                  <v-btn class="white--text" color="#066163">
-                    <p class="text-h6 mb-1 ml-1">ฟอร์ม {{ e1 }}</p>
-                  </v-btn>
-                </v-card-text>
                 <v-card-text>
                   <Sppb ref="sendcidhnsppb"/>
                 </v-card-text>
@@ -356,7 +343,9 @@ export default {
     Knee_Score,
     Sppb,
   },
-  mounted() {},
+  mounted() {
+    //alert(JSON.stringify(this.$route.query))
+  },
   methods: {
     // miniclog_return(data) {
     //   if (data >= 1 && data <= 3) {

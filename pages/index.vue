@@ -49,7 +49,19 @@
               </div>
             </v-alert>
           </v-card-text>
-
+        <div class="mt-2 mb-2">
+          <v-alert icon="mdi-comment-arrow-right " border="top" color="#3AB0FF" dark>
+          <div class=" secondary mb-2" style="width: 35rem">
+            ขั้นตอนการบันทึกข้อมูลจะต้องลงทะเบียนผู้สูงอายุก่อนแล้วจึงทำการประเมินในด้านต่างๆได้ 
+            </div>
+             </br>
+             <div class=" text-no-wrap  secondary" style="width: 40rem">
+            ไปที่เมนูค้นหาแล้วเลือกผู้สูงอายุที่ได้ทำการลงทะเบียนก่อนหน้านี้แล้วเริ่มการบันทึกข้อมูลการประเมินได้
+            </div>
+        
+         
+          </v-alert>
+        </div>
           <v-stepper v-model="e1">
             <v-stepper-header>
               <v-stepper-step :complete="e1 > 1" step="1" color="#B689C0">
@@ -84,11 +96,13 @@
                   <v-card-text>
                     <Regis @sendcid="ciduse"
                      @regisclearindex="clear_index_person" 
-                     @call_adl_frax_score ="adl_frax_score_select" />
+                     @call_adl_frax_score ="adl_frax_score_select"
+            
+                     ref="senddoctorregis" />
                   </v-card-text>
                   <v-card-text>
                     <v-btn class="white--text" color="#6A67CE" @click="e1 = 2">
-                      <fa :icon="['fas', 'circle-right']" size="2x" />
+                        <p class="text-h6 mb-1 ml-1">ADL</p>
                     </v-btn>
                     <v-btn class="white--text" color="#066163">
                       <p class="text-h6 mb-1 ml-1">หัวข้อ {{ e1 }}</p>
@@ -199,7 +213,12 @@ export default {
     Frax_Score,
   },
 
-  mounted() {},
+  mounted() {
+    // alert(JSON.stringify(this.$route.query))
+    //this.$refs.senddoctorregis.call_doctor_data(this.$route.query)
+    // if (this.$route.query) {
+    // }
+  },
   methods: {
     ciduse(data) {
       this.person_data = data

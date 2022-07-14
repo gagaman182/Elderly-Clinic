@@ -13,6 +13,7 @@ $frax3 = $data['frax3'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
+$result = $data['result'];
 //$assessor = $data['assessor'];
 
 
@@ -25,9 +26,9 @@ include '../conn.php';
 if (!empty($uhid)) {
 
 
-  $strvisit  = "  INSERT INTO frax_score(uhid,frax1,frax2,frax3,hn,cid,assessor_date,dateadd) 
+  $strvisit  = "  INSERT INTO frax_score(uhid,frax1,frax2,frax3,hn,cid,assessor_date,result,dateadd) 
       VALUES('" . $uhid . "','" . $frax1 . "','" . $frax2 . "','" . $frax3 . "','" . $hn . "','" . $cid . "',
-      '" . $assessor_date . "',CURRENT_TIMESTAMP)";
+      '" . $assessor_date . "','" . $result . "',CURRENT_TIMESTAMP)";
 
 
 

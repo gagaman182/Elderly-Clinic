@@ -361,7 +361,7 @@
       </v-card>
       <v-dialog v-model="dialog" width="600">
         <v-card>
-          <v-card-title class="text-h5 white--text deep-purple darken-3">
+          <v-card-title class="text-h5 white--text deep-purple darken-1">
             ค้นหาทะเบียน
           </v-card-title>
 
@@ -405,6 +405,7 @@
             <v-btn dark color="#6A67CE" @click="search()" depressed>
               ตกลง
             </v-btn>
+            {{doctor_data}}
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -514,6 +515,7 @@ export default {
       hn_show: '-',
       assessor_date_show: '',
       regis_selects: '',
+      doctor_data_all: '',
     }
   },
 
@@ -532,11 +534,20 @@ export default {
     this.fetch_refer_pcu()
     //ดึง list cid and hn
     this.fecth_search_cid()
-
+    //alert(this.$route.query.cid.length)
     // ข้อมูลส่งมาจากหน้าหมอ
+    //if (this.$route.query.cid.length == 0) {
     if (!this.$route.query) {
-      //alert('nothing')
+      this.$swal({
+        title: 'แจ้งเตือน',
+        text: 'ไม่มีข้อมูล',
+        icon: 'error',
+        confirmButtonText: 'ตกลง',
+      })
     } else {
+      //alert('have')
+      //alert(this.$route.query.cid)
+      //alert(JSON.stringify(this.$route.query))
       //console.log(this.$route.query)
       //แบบนี้ใช้กับ this.$router.resolve dataเป้น  query ทำ new tab
       var output = []
@@ -577,6 +588,9 @@ export default {
     computedDateFormattedMomentjs2() {
       return this.birthday ? moment(this.birthday).format('L') : ''
     },
+    doctor_data() {
+      return this.doctor_data_all
+    },
     // computedDateFormattedDatefns() {
     //   return this.date ? format(parseISO(this.date), 'EEEE, MMMM do yyyy') : ''
     // },
@@ -597,6 +611,12 @@ export default {
   //   }
   // },
   methods: {
+    // call_doctor_data(data) {
+    //   this.doctor_data_all = data
+    //   alert(JSON.stringify(this.doctor_data_all))
+
+    // },
+
     // idcard and hn
     async fecth_search_cid() {
       await axios
@@ -1102,42 +1122,47 @@ export default {
     async cid_search() {
       // alert(this.cid_list)
       // this.search(this.cid_list)
-
-      await axios
-        .post(`${this.$axios.defaults.baseURL}Regis/search_name.php`, {
-          search: 'cid',
-          data_search: this.cid_list,
-        })
-        .then((response) => {
-          this.name_age_show = response.data
-          this.name_show = this.name_age_show[0].fullname
-          this.age_show = this.name_age_show[0].age
-          this.name_cmu_show = this.name_age_show[0].name
-          this.assessor_show = this.name_age_show[0].assessor
-          this.cid_show = this.name_age_show[0].cid
-          this.hn_show = this.name_age_show[0].hn
-          this.assessor_date_show = this.name_age_show[0].assessor_date
-          this.clear_form() //หน้า regis clear เพราะไปเลือกจากการค้นหา
-        })
+      if (!this.cid_list) {
+      } else {
+        await axios
+          .post(`${this.$axios.defaults.baseURL}Regis/search_name.php`, {
+            search: 'cid',
+            data_search: this.cid_list,
+          })
+          .then((response) => {
+            this.name_age_show = response.data
+            this.name_show = this.name_age_show[0].fullname
+            this.age_show = this.name_age_show[0].age
+            this.name_cmu_show = this.name_age_show[0].name
+            this.assessor_show = this.name_age_show[0].assessor
+            this.cid_show = this.name_age_show[0].cid
+            this.hn_show = this.name_age_show[0].hn
+            this.assessor_date_show = this.name_age_show[0].assessor_date
+            this.clear_form() //หน้า regis clear เพราะไปเลือกจากการค้นหา
+          })
+      }
     },
     async hn_search() {
       // this.search(this.hn_list)
-      await axios
-        .post(`${this.$axios.defaults.baseURL}Regis/search_name.php`, {
-          search: 'hn',
-          data_search: this.hn_list,
-        })
-        .then((response) => {
-          this.name_age_show = response.data
-          this.name_show = this.name_age_show[0].fullname
-          this.age_show = this.name_age_show[0].age
-          this.name_cmu_show = this.name_age_show[0].name
-          this.assessor_show = this.name_age_show[0].assessor
-          this.cid_show = this.name_age_show[0].cid
-          this.hn_show = this.name_age_show[0].hn
-          this.assessor_date_show = this.name_age_show[0].assessor_date
-          this.clear_form() //หน้า regis clear เพราะไปเลือกจากการค้นหา
-        })
+      if (!this.hn_list) {
+      } else {
+        await axios
+          .post(`${this.$axios.defaults.baseURL}Regis/search_name.php`, {
+            search: 'hn',
+            data_search: this.hn_list,
+          })
+          .then((response) => {
+            this.name_age_show = response.data
+            this.name_show = this.name_age_show[0].fullname
+            this.age_show = this.name_age_show[0].age
+            this.name_cmu_show = this.name_age_show[0].name
+            this.assessor_show = this.name_age_show[0].assessor
+            this.cid_show = this.name_age_show[0].cid
+            this.hn_show = this.name_age_show[0].hn
+            this.assessor_date_show = this.name_age_show[0].assessor_date
+            this.clear_form() //หน้า regis clear เพราะไปเลือกจากการค้นหา
+          })
+      }
     },
     async save_search() {
       // this.search(this.hn_list)

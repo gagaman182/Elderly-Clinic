@@ -50,17 +50,17 @@
 
         <div class="mt-2 mb-2">
           <v-alert icon="mdi-comment-arrow-right " border="top" color="#E78EA9" dark>
-          <div class="text-no-wrap secondary mb-2" style="width: 26rem">
+          <div class=" secondary mb-2" style="width: 26rem">
               กรณีประเมินผล Mini-Cog ได้คะแนนมากกว่า >3 คะแนน = ปกติ 
             </div>
-            <div class="text-no-wrap blue--text text-h5 text-decoration-underline" >
+            <div class=" blue--text text-h5 text-decoration-underline" >
               ถือว่าประเมินเสร็จสิ้น
             </div>
             </br>
-             <div class="text-no-wrap secondary" style="width: 32rem">
+             <div class=" secondary" style="width: 32rem">
               กรณีประเมินผล Mini-Cog น้อยกว่าเท่ากับ ≤3 คะแนน = มีภาวะการรู้คิดบกพร่อง
             </div>
-              <div class="text-no-wrap red--text text-h5 text-decoration-underline" >
+              <div class=" red--text text-h5 text-decoration-underline" >
               ต้องประเมิน TGDS-15 , TMSE และ MOCA ด้วย
             </div>
             <br />
@@ -238,7 +238,9 @@ export default {
     Tgds,
     Moca,
   },
-  mounted() {},
+  mounted() {
+    //alert(JSON.stringify(this.$route.query))
+  },
   methods: {
     miniclog_return(data) {
       if (data >= 1 && data <= 3) {
