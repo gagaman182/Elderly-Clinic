@@ -10,7 +10,7 @@
             :icon="['fas', 'fa-square-poll-horizontal']"
             class="text-h4 mr-2"
           />
-          สรุปผลการประเมิน{{dialogs}}
+          สรุปผลการประเมิน
         </v-toolbar>
       </v-card-text>
        <v-card-text v-if="person_show">

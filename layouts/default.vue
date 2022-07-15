@@ -187,12 +187,12 @@ export default {
       items_to: [
         {
           icon: ['fas', 'user-nurse'],
-          title: 'SPPB ส่งกลับพยาบาล',
+          title: 'SPPB ส่งต่อ',
           to: '/sppb_out',
         },
         {
           icon: ['fas', 'right-from-bracket'],
-          title: 'Oxford Knee ส่งต่อ',
+          title: 'Oxford Knee..ส่งต่อ',
           to: '/oxford_knee_score_out',
         },
       ],
