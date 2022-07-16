@@ -516,10 +516,16 @@ export default {
       assessor_date_show: '',
       regis_selects: '',
       doctor_data_all: '',
+      session: '',
     }
+  },
+  beforeMount() {
+    this.session = JSON.parse(localStorage.getItem('token_elderly_clinic'))
+    // alert(this.session[0].fullname)
   },
 
   mounted() {
+    this.assessor = this.session[0].fullname
     // ดึงตำบล
     this.fecth_tmb_code()
     // ดึงอำเภอ
@@ -534,6 +540,7 @@ export default {
     this.fetch_refer_pcu()
     //ดึง list cid and hn
     this.fecth_search_cid()
+
     //alert(this.$route.query.cid.length)
     // ข้อมูลส่งมาจากหน้าหมอ
     //if (this.$route.query.cid.length == 0) {

@@ -94,6 +94,7 @@
       <!-- <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn> -->
+      <v-toolbar-title v-text="user" class="white--text mr-4" />
       <div class="text-center">
         <v-menu open-on-hover top offset-y>
           <template v-slot:activator="{ on, attrs }">
@@ -101,6 +102,7 @@
               <v-icon>mdi-menu</v-icon>
             </v-btn>
           </template>
+
           <v-list-item-group v-model="selectedItem">
             <v-list color="#6A67CE">
               <v-list-item
@@ -108,7 +110,9 @@
                 v-for="(item, index) in itemmenu"
                 :key="index"
               >
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
+                <v-list-item-title @click="logout()">{{
+                  item.title
+                }}</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-list-item-group>
@@ -138,6 +142,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'DefaultLayout',
   data() {
@@ -145,7 +150,7 @@ export default {
       myImage: require('@/assets/pcc_logo.jpg'),
       clipped: true,
       drawer: true,
-      fixed: false,
+      fixed: true,
       items: [
         // {
         //   icon: ['fas', 'person-cane'],
@@ -200,9 +205,112 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'คลินิกผู้สูงอายุ  โรงพยาบาลหาดใหญ่',
-      itemmenu: [{ title: 'ออกจากระบบ' }, { title: 'เข้าสู่ระบบ' }],
+      itemmenu: [{ title: 'ออกจากระบบ' }],
       selectedItem: '',
+      user: '',
+      token: '',
+      hours: '',
+      saved: '',
+      token_step2: '',
     }
+  },
+  methods: {
+    login() {
+      //check login
+      this.session = JSON.parse(localStorage.getItem('token'))
+
+      //ถ้าไม่มี session จาก ฐานข้อมูลคือไม่ได้ login ให้กลับไปหน้า /login
+      //--------------------------------------------------------
+      //alert(this.session[0].token)
+
+      axios
+        .post(`${this.$axios.defaults.baseURL}token_check_step2.php`, {
+          token_check_step2: this.session[0].token,
+        })
+
+        .then((response) => {
+          this.token_step2 = response.data
+
+          // if (this.session === null) {//แบบเก่า
+          //alert(JSON.stringify(this.token_step2))
+          // alert(this.token_step2[0].token)
+          // alert(this.session[0].token)
+          if (
+            //token จาก localStorage เทียบกับ token จาก database ตอน gen ครั้งแรก
+            this.token_step2[0].token != this.session[0].token
+          ) {
+            //ถ้า token ไม่เท่ากับ token ในฐานข้อมูลจะเข้าไม่ได้
+            this.removetoken() //ลบ token ด้วย
+            localStorage.clear()
+
+            this.$router.push('/login')
+          } else {
+            //alert(JSON.stringify(this.session))
+            //alert(JSON.stringify(this.session[0].fullname))
+            this.user = this.session[0].fullname
+            this.token = this.session[0].token
+
+            // แบบเก่า จับเวลาหมดอายุ
+            // login 2 ชม ถ้าเกินให้ออก แล้ว clear localstorage
+            // this.hours = 2
+            // this.saved = localStorage.getItem('saved')
+            // if (
+            //   this.saved &&
+            //   new Date().getTime() - this.saved > this.hours * 60 * 60 * 1000
+            // ) {
+            //   localStorage.clear()
+            //   this.$router.push('/login')
+            // }
+
+            //แบบใหม่ จับเวลาหมดอายุ
+            var hours = 1
+            var now = new Date().getTime()
+            var setupTime = localStorage.getItem('setupTime')
+            if (setupTime == null) {
+              localStorage.setItem('setupTime', now)
+            } else {
+              if (now - setupTime > hours * 60 * 60 * 1000) {
+                localStorage.clear()
+                localStorage.setItem('setupTime', now)
+                this.$router.push('/login')
+              }
+            }
+          }
+        })
+
+      //--------------------------------------------------------
+    },
+    logout() {
+      this.removetoken() //ลบ token ด้วย
+      localStorage.removeItem('token')
+      localStorage.clear()
+      //ไปลบหลัง delete token
+      //this.$router.push('/login')
+    },
+    removetoken() {
+      axios
+        .put(`${this.$axios.defaults.baseURL}token_delete.php`, {
+          token_delete: this.session[0].token,
+        })
+        .then((response) => {
+          this.message = response.data
+
+          if (this.message[0].message === 'ลบข้อมูลสำเร็จ') {
+            //หลัง delete token ไป หน้า login
+            this.$router.push('/login')
+          } else {
+            this.$swal({
+              title: 'สถานะการลบ',
+              text: this.message[0].message,
+              icon: 'error',
+              confirmButtonText: 'ตกลง',
+            })
+          }
+        })
+    },
+  },
+  beforeMount() {
+    this.login()
   },
 }
 </script>

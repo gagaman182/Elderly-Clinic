@@ -63,8 +63,8 @@ if ($conn->query($sql) === TRUE) {
 	$row_array['message'] = "แก้ไขข้อมูลสำเร็จ";
 	array_push($return_arr, $row_array);
 } else {
-	// $row_array['message'] =  "แก้ไขข้อมูลไม่สำเร็จ ";
-	$row_array['message'] = $conn->error;
+	$row_array['message'] =  "แก้ไขข้อมูลไม่สำเร็จ ";
+	//$row_array['message'] = $conn->error;
 	array_push($return_arr, $row_array);
 }
 
