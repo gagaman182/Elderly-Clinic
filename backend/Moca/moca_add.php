@@ -21,6 +21,7 @@ $moca_all = $data['moca_all'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
+$assessor = $data['assessor'];
 
 
 
@@ -35,10 +36,10 @@ if (!empty($uhid)) {
 
 
   $strvisit  = "  INSERT INTO moca(uhid,moca1,moca2,moca4_1,moca4_2,
-  moca4_3,moca5_1,moca5_2,moca6,moca7,moca8,moca_all,hn,cid,assessor_date,dateadd) 
+  moca4_3,moca5_1,moca5_2,moca6,moca7,moca8,moca_all,hn,cid,assessor_date,assessor,dateadd) 
       VALUES('" . $uhid . "','" . $moca1 . "','" . $moca2 . "','" . $moca4_1 . "','" . $moca4_2 . "',
       '" . $moca4_3 . "','" . $moca5_1 . "','" . $moca5_2 . "','" . $moca6 . "','" . $moca7 . "','" . $moca8 . "',
-      '" . $moca_all . "','" . $hn . "','" . $cid . "','" . $assessor_date . "',CURRENT_TIMESTAMP)";
+      '" . $moca_all . "','" . $hn . "','" . $cid . "','" . $assessor_date . "','" . $assessor . "',CURRENT_TIMESTAMP)";
 
 
 

@@ -19,7 +19,7 @@ $outto = $data['outto'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-
+$assessor = $data['assessor'];
 
 
 include '../conn.php';
@@ -29,10 +29,10 @@ include '../conn.php';
 if (!empty($uhid)) {
 
 
-  $strvisit  = "  INSERT INTO sppb(uhid,sppb1,sppb2,sppb3,sppb4,hn,cid,assessor_date,total,result,outto,dateadd) 
+  $strvisit  = "  INSERT INTO sppb(uhid,sppb1,sppb2,sppb3,sppb4,hn,cid,assessor_date,assessor,total,result,outto,dateadd) 
       VALUES('" . $uhid . "','" . $sppb1 . "','" . $sppb2 . "',
       '" . $sppb3 . "','" . $sppb4 . "','" . $hn . "',
-      '" . $cid . "','" . $assessor_date . "','" . $total . "',
+      '" . $cid . "','" . $assessor_date . "','" . $assessor . "','" . $total . "',
       '" . $result . "','" . $outto . "',CURRENT_TIMESTAMP)";
 
 

@@ -347,16 +347,21 @@
               ></v-textarea>
             </v-col>
           </v-row>
-          <v-row
-            ><v-col cols="12">
+          <v-row>
+            <v-col cols="12">
               <div class="text-center">
                 <v-btn rounded color="#6A67CE" x-large dark @click="save_regis">
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
               </div>
-            </v-col></v-row
-          >
+            </v-col>
+              <v-col cols="12">
+              <div class="text-right">
+              ผู้ประเมิน - {{assessor}}
+              </div>
+            </v-col>
+            </v-row>
         </v-card-text>
       </v-card>
       <v-dialog v-model="dialog" width="600">
@@ -407,6 +412,7 @@
             </v-btn>
             {{doctor_data}}
           </v-card-actions>
+       
         </v-card>
       </v-dialog>
     </v-col>
@@ -517,15 +523,20 @@ export default {
       regis_selects: '',
       doctor_data_all: '',
       session: '',
+      ssessor_new: '',
     }
   },
   beforeMount() {
-    this.session = JSON.parse(localStorage.getItem('token_elderly_clinic'))
+    //ดึงค่า user มาจาก localstorage
+    this.session = JSON.parse(localStorage.getItem('token'))
     // alert(this.session[0].fullname)
   },
 
   mounted() {
-    this.assessor = this.session[0].fullname
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
+    }
+
     // ดึงตำบล
     this.fecth_tmb_code()
     // ดึงอำเภอ
@@ -1080,7 +1091,7 @@ export default {
           .put(`${this.$axios.defaults.baseURL}Regis/regis_update.php`, {
             uhid: this.uhid,
             cmu: this.cmu,
-            assessor: this.assessor,
+            assessor: this.assessor_new,
             assessor_date: this.assessor_date,
             cid: this.cid,
             hn: this.hn,

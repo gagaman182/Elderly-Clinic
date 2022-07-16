@@ -310,6 +310,9 @@
                 </v-btn>
               </div>
             </v-col>
+            <v-col cols="12">
+              <div class="text-right">ผู้ประเมิน - {{ assessor }}</div>
+            </v-col>
           </v-row>
         </v-card-text>
       </v-card>
@@ -342,6 +345,18 @@ export default {
       cid: '',
       assessor_date: '',
       tgds_selects: '',
+      session: '',
+      assessor: '',
+      assessor_new: '',
+    }
+  },
+  beforeMount() {
+    this.session = JSON.parse(localStorage.getItem('token'))
+    // alert(this.session[0].fullname)
+  },
+  mounted() {
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
     }
   },
   computed: {
@@ -425,6 +440,7 @@ export default {
           this.assessor_date = this.tgds_selects[0].assessor_date
           this.total = this.tgds_selects[0].total
           this.result = this.tgds_selects[0].result
+          this.assessor = this.tgds_selects[0].assessor
         })
     },
     tgds_update: function () {
@@ -459,6 +475,7 @@ export default {
             hn: this.hn,
             cid: this.cid,
             assessor_date: this.assessor_date,
+            assessor: this.assessor_new,
           })
           .then((response) => {
             this.message = response.data
@@ -537,6 +554,7 @@ export default {
               hn: this.hn,
               cid: this.cid,
               assessor_date: this.assessor_date,
+              assessor: this.assessor,
             })
             .then((response) => {
               this.message = response.data

@@ -393,9 +393,12 @@
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
-              </div></v-col
-            ></v-row
-          >
+              </div>
+            </v-col>
+            <v-col cols="12">
+              <div class="text-right">ผู้ประเมิน - {{ assessor }}</div>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-col>
@@ -424,9 +427,21 @@ export default {
       cid: '',
       assessor_date: '',
       knee_score_selects: '',
+      session: '',
+      assessor: '',
+      assessor_new: '',
     }
   },
-  mounted() {},
+  beforeMount() {
+    //ดึงค่า user มาจาก localstorage
+    this.session = JSON.parse(localStorage.getItem('token'))
+    // alert(this.session[0].fullname)
+  },
+  mounted() {
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
+    }
+  },
   methods: {
     save_regis() {
       alert(this.total)
@@ -513,7 +528,8 @@ export default {
           this.assessor_date = this.knee_score_selects[0].assessor_date
           this.total = this.knee_score_selects[0].total
           this.result = this.knee_score_selects[0].result
-          this.outto = this.sppb_selects[0].outto
+          this.outto = this.knee_score_selects[0].outto
+          this.assessor = this.knee_score_selects[0].assessor
         })
     },
     knee_score_update: function () {
@@ -549,6 +565,7 @@ export default {
               hn: this.hn,
               cid: this.cid,
               assessor_date: this.assessor_date,
+              assessor: this.assessor_new,
             }
           )
           .then((response) => {
@@ -626,6 +643,7 @@ export default {
                 hn: this.hn,
                 cid: this.cid,
                 assessor_date: this.assessor_date,
+                assessor: this.assessor,
               }
             )
             .then((response) => {

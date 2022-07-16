@@ -50,6 +50,7 @@ $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
 $total = $data['total'];
 $result = $data['result'];
+$assessor = $data['assessor'];
 
 
 
@@ -103,6 +104,7 @@ tmse6_2 = '" . $tmse6_2 . "',
 tmse6_3 = '" . $tmse6_3 . "',
 total = '" . $total . "',
 result = '" . $result . "',
+assessor = '" . $assessor . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "' 
 

@@ -69,9 +69,12 @@
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
-              </div></v-col
-            ></v-row
-          >
+              </div>
+            </v-col>
+            <v-col cols="12">
+              <div class="text-right">ผู้ประเมิน - {{ assessor }}</div>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-col>
@@ -90,6 +93,19 @@ export default {
       cid: '',
       assessor_date: '',
       tug_selects: '',
+      session: '',
+      assessor: '',
+      assessor_new: '',
+    }
+  },
+  beforeMount() {
+    //ดึงค่า user มาจาก localstorage
+    this.session = JSON.parse(localStorage.getItem('token'))
+    // alert(this.session[0].fullname)
+  },
+  mounted() {
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
     }
   },
   methods: {
@@ -129,6 +145,7 @@ export default {
               cid: this.cid,
               assessor_date: this.assessor_date,
               result: this.result,
+              assessor: this.assessor,
             })
             .then((response) => {
               this.message = response.data
@@ -167,6 +184,7 @@ export default {
           this.hn = this.tug_selects[0].hn
           this.cid = this.tug_selects[0].cid
           this.assessor_date = this.tug_selects[0].assessor_date
+          this.assessor = this.tug_selects[0].assessor
         })
     },
     tug_update: function () {
@@ -188,6 +206,7 @@ export default {
             cid: this.cid,
             assessor_date: this.assessor_date,
             result: this.result,
+            assessor: this.assessor_new,
           })
           .then((response) => {
             this.message = response.data

@@ -11,6 +11,7 @@ $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
 $result = $data['result'];
+$assessor = $data['assessor'];
 
 
 
@@ -25,7 +26,7 @@ $sql = "UPDATE tugt
 SET tug1 = '" . $tug1 . "',
 tug2 = '" . $tug2 . "',
 result = '" . $result . "',
-
+assessor = '" . $assessor . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "' 
 

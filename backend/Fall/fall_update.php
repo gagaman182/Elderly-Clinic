@@ -10,6 +10,7 @@ $fall = $data['fall'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
+$assessor = $data['assessor'];
 
 
 
@@ -23,7 +24,7 @@ include '../conn.php';
 
 $sql = "UPDATE fall
 SET fall = '" . $fall . "',
-
+assessor = '" . $assessor . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "'  
 

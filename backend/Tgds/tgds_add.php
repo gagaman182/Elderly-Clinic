@@ -26,7 +26,7 @@ $result = $data['result'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-
+$assessor = $data['assessor'];
 
 
 include '../conn.php';
@@ -37,11 +37,11 @@ if (!empty($uhid)) {
 
 
   $strvisit  = "  INSERT INTO tgds(uhid,tgds1,tgds2,tgds3,tgds4,tgds5,tgds6,tgds7,tgds8,tgds9,tgds10,
-  tgds11,tgds12,tgds13,tgds14,tgds15,hn,cid,assessor_date,total,result,dateadd) 
+  tgds11,tgds12,tgds13,tgds14,tgds15,hn,cid,assessor_date,assessor,total,result,dateadd) 
       VALUES('" . $uhid . "','" . $tgds1 . "','" . $tgds2 . "','" . $tgds3 . "','" . $tgds4 . "','" . $tgds5 . "','" . $tgds6 . "',
       '" . $tgds7 . "','" . $tgds8 . "','" . $tgds9 . "','" . $tgds10 . "','" . $tgds11 . "',
       '" . $tgds12 . "','" . $tgds13 . "','" . $tgds14 . "','" . $tgds15 . "','" . $hn . "',
-      '" . $cid . "','" . $assessor_date . "','" . $total . "','" . $result . "',CURRENT_TIMESTAMP)";
+      '" . $cid . "','" . $assessor_date . "','" . $assessor . "','" . $total . "','" . $result . "',CURRENT_TIMESTAMP)";
 
 
 

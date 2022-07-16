@@ -189,6 +189,9 @@
                 </v-btn>
               </div>
             </v-col>
+            <v-col cols="12">
+              <div class="text-right">ผู้ประเมิน - {{ assessor }}</div>
+            </v-col>
           </v-row>
         </v-card-text>
       </v-card>
@@ -217,9 +220,21 @@ export default {
       cid: '',
       assessor_date: '',
       riskfall_selects: '',
+      session: '',
+      assessor: '',
+      assessor_new: '',
     }
   },
-
+  beforeMount() {
+    //ดึงค่า user มาจาก localstorage
+    this.session = JSON.parse(localStorage.getItem('token'))
+    // alert(this.session[0].fullname)
+  },
+  mounted() {
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
+    }
+  },
   methods: {
     risk_fall_check_1() {
       if (!this.riskfall1) {
@@ -286,6 +301,7 @@ export default {
           this.hn = this.riskfall_selects[0].hn
           this.cid = this.riskfall_selects[0].cid
           this.assessor_date = this.riskfall_selects[0].assessor_date
+          this.assessor = this.riskfall_selects[0].assessor
           // this.total = this.riskfall_selects[0].total
           // this.result = this.riskfall_selects[0].result
         })
@@ -321,6 +337,7 @@ export default {
               hn: this.hn,
               cid: this.cid,
               assessor_date: this.assessor_date,
+              assessor: this.assessor_new,
             }
           )
           .then((response) => {
@@ -380,6 +397,7 @@ export default {
                 hn: this.hn,
                 cid: this.cid,
                 assessor_date: this.assessor_date,
+                assessor: this.assessor,
               }
             )
             .then((response) => {

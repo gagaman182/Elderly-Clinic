@@ -18,7 +18,7 @@ $total = $data['total'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-
+$assessor = $data['assessor'];
 
 
 
@@ -31,10 +31,10 @@ if (!empty($uhid)) {
 
 
   $strvisit  = "  INSERT INTO short_fbs_i(uhid,fbsi1,fbsi2,fbsi3,fbsi4,fbsi5,fbsi6,fbsi7,
-  total,hn,cid,assessor_date,dateadd) 
+  total,hn,cid,assessor_date,assessor,dateadd) 
       VALUES('" . $uhid . "','" . $fbsi1 . "','" . $fbsi2 . "','" . $fbsi3 . "',
       '" . $fbsi4 . "','" . $fbsi5 . "','" . $fbsi6 . "','" . $fbsi7 . "',
-      '" . $total . "','" . $hn . "','" . $cid . "','" . $assessor_date . "',
+      '" . $total . "','" . $hn . "','" . $cid . "','" . $assessor_date . "','" . $assessor . "',
       CURRENT_TIMESTAMP)";
 
 

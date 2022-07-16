@@ -51,6 +51,8 @@ $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
 $total = $data['total'];
 $result = $data['result'];
+$assessor = $data['assessor'];
+
 
 
 
@@ -68,7 +70,7 @@ if (!empty($uhid)) {
   tmse2_1,tmse2_2,tmse2_3,tmse3_1,tmse3_2,tmse3_3,tmse3_4,tmse3_5,tmse4_1,tmse4_2,tmse4_3,
   tmse5_1,tmse5_1_detail,tmse5_2,tmse5_2_detail,tmse5_3,tmse5_3_detail,tmse5_4_1,tmse5_4_2,
   tmse5_4_3,tmse5_5,tmse5_5_detail,tmse5_6,tmse5_7,tmse5_7_detail,tmse6_1,tmse6_2,tmse6_3,
-  hn,cid,assessor_date,total,result,dateadd) 
+  hn,cid,assessor_date,assessor,total,result,dateadd) 
       VALUES('" . $uhid . "','" . $tmse1_1 . "','" . $tmse1_1_detail . "','" . $tmse1_2 . "','" . $tmse1_2_detail . "',
       '" . $tmse1_3 . "','" . $tmse1_3_detail . "','" . $tmse1_4 . "','" . $tmse1_4_detail . "','" . $tmse1_5 . "','" . $tmse1_5_detail . "',
       '" . $tmse1_6 . "','" . $tmse1_6_detail . "','" . $tmse2_1 . "','" . $tmse2_2 . "','" . $tmse2_3 . "',
@@ -77,7 +79,7 @@ if (!empty($uhid)) {
       '" . $tmse5_1 . "', '" . $tmse5_1_detail . "','" . $tmse5_2 . "', '" . $tmse5_2_detail . "','" . $tmse5_3 . "', '" . $tmse5_3_detail . "',
       '" . $tmse5_4_1 . "','" . $tmse5_4_2 . "','" . $tmse5_4_3 . "','" . $tmse5_5 . "', '" . $tmse5_5_detail . "', '" . $tmse5_6 . "', '" . $tmse5_7 . "',
       '" . $tmse5_7_detail . "','" . $tmse6_1 . "','" . $tmse6_2 . "','" . $tmse6_3 . "',
-      '" . $hn . "','" . $cid . "','" . $assessor_date . "','" . $total . "','" . $result . "',CURRENT_TIMESTAMP)";
+      '" . $hn . "','" . $cid . "','" . $assessor_date . "','" . $assessor . "','" . $total . "','" . $result . "',CURRENT_TIMESTAMP)";
 
 
 

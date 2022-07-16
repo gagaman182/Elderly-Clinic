@@ -20,6 +20,7 @@ $result = $data['result'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
+$assessor = $data['assessor'];
 
 
 
@@ -43,10 +44,12 @@ adl9 = '" . $adl9 . "',
 adl10 = '" . $adl10 . "',
 total = '" . $total . "',
 result = '" . $result . "',
+assessor = '" . $assessor . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE cid = '" . $cid . "' 
 and hn = '" . $hn . "' 
 and assessor_date = '" . $assessor_date . "'  
+
  and uhid = '" . $uhid . "' 
 
 ";

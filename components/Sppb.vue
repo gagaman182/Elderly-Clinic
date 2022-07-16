@@ -142,6 +142,9 @@
                 </v-btn>
               </div>
             </v-col>
+            <v-col cols="12">
+              <div class="text-right">ผู้ประเมิน - {{ assessor }}</div>
+            </v-col>
           </v-row>
         </v-card-text>
       </v-card>
@@ -163,6 +166,19 @@ export default {
       cid: '',
       assessor_date: '',
       sppb_selects: '',
+      session: '',
+      assessor: '',
+      assessor_new: '',
+    }
+  },
+  beforeMount() {
+    //ดึงค่า user มาจาก localstorage
+    this.session = JSON.parse(localStorage.getItem('token'))
+    // alert(this.session[0].fullname)
+  },
+  mounted() {
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
     }
   },
   computed: {
@@ -217,6 +233,7 @@ export default {
           this.total = this.sppb_selects[0].total
           this.result = this.sppb_selects[0].result
           this.outto = this.sppb_selects[0].outto
+          this.assessor = this.sppb_selects[0].assessor
         })
     },
     sppb_update: function () {
@@ -242,6 +259,7 @@ export default {
             hn: this.hn,
             cid: this.cid,
             assessor_date: this.assessor_date,
+            assessor: this.assessor_new,
           })
           .then((response) => {
             this.message = response.data
@@ -292,6 +310,7 @@ export default {
               hn: this.hn,
               cid: this.cid,
               assessor_date: this.assessor_date,
+              assessor: this.assessor,
             })
             .then((response) => {
               this.message = response.data

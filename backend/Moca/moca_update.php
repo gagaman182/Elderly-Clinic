@@ -20,7 +20,7 @@ $moca_all = $data['moca_all'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-
+$assessor = $data['assessor'];
 
 
 
@@ -42,6 +42,7 @@ moca6 = '" . $moca6 . "',
 moca7 = '" . $moca7 . "',
 moca8 = '" . $moca8 . "',
 moca_all = '" . $moca_all . "',
+assessor = '" . $assessor . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "' 
 

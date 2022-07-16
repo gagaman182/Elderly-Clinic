@@ -13,7 +13,7 @@ $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
 $result = $data['result'];
-
+$assessor = $data['assessor'];
 
 
 include '../conn.php';
@@ -23,9 +23,9 @@ include '../conn.php';
 if (!empty($uhid)) {
 
 
-  $strvisit  = "  INSERT INTO tugt(uhid,tug1,tug2,hn,cid,assessor_date,result,dateadd) 
+  $strvisit  = "  INSERT INTO tugt(uhid,tug1,tug2,hn,cid,assessor_date,assessor,result,dateadd) 
       VALUES('" . $uhid . "','" . $tug1 . "','" . $tug2 . "','" . $hn . "',
-      '" . $cid . "','" . $assessor_date . "','" . $result . "',CURRENT_TIMESTAMP)";
+      '" . $cid . "','" . $assessor_date . "','" . $assessor . "','" . $result . "',CURRENT_TIMESTAMP)";
 
 
 

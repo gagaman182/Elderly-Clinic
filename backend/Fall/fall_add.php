@@ -11,6 +11,7 @@ $fall = $data['fall'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
+$assessor = $data['assessor'];
 
 
 
@@ -23,9 +24,9 @@ include '../conn.php';
 if (!empty($uhid)) {
 
 
-  $strvisit  = "  INSERT INTO fall(uhid,fall,hn,cid,assessor_date,dateadd) 
+  $strvisit  = "  INSERT INTO fall(uhid,fall,hn,cid,assessor_date,assessor,dateadd) 
       VALUES('" . $uhid . "','" . $fall . "','" . $hn . "',
-      '" . $cid . "','" . $assessor_date . "',CURRENT_TIMESTAMP)";
+      '" . $cid . "','" . $assessor_date . "','" . $assessor . "',CURRENT_TIMESTAMP)";
 
 
 

@@ -56,14 +56,17 @@
               </v-chip>
             </v-col>
           </v-row>
-          <v-row
-            ><v-col cols="12">
+          <v-row>
+            <v-col cols="12">
               <div class="text-center">
                 <v-btn rounded color="#6A67CE" x-large dark @click="save_frax">
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
               </div>
+            </v-col>
+            <v-col cols="12">
+              <div class="text-right">ผู้ประเมิน - {{ assessor }}</div>
             </v-col>
           </v-row>
         </v-card-text>
@@ -84,9 +87,20 @@ export default {
       frax3: '',
       hn: '',
       cid: '',
-
       assessor_date: '',
       frax_score_selects: '',
+      session: '',
+      assessor: '',
+      assessor_new: '',
+    }
+  },
+  beforeMount() {
+    this.session = JSON.parse(localStorage.getItem('token'))
+    // alert(this.session[0].fullname)
+  },
+  mounted() {
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
     }
   },
   methods: {
@@ -123,6 +137,7 @@ export default {
                 hn: this.hn,
                 cid: this.cid,
                 assessor_date: this.assessor_date,
+                assessor: this.assessor,
                 result: this.result,
               }
             )
@@ -174,6 +189,7 @@ export default {
           this.cid = this.frax_score_selects[0].cid
           this.assessor_date = this.frax_score_selects[0].assessor_date
           this.result = this.frax_score_selects[0].result
+          this.assessor = this.frax_score_selects[0].assessor
         })
     },
     frax_score_update: function () {
@@ -197,6 +213,7 @@ export default {
               cid: this.cid,
               assessor_date: this.assessor_date,
               result: this.result,
+              assessor: this.assessor_new,
             }
           )
           .then((response) => {

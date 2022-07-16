@@ -17,7 +17,7 @@ $total = $data['total'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-
+$assessor = $data['assessor'];
 
 
 
@@ -37,7 +37,7 @@ fbsi5 = '" . $fbsi5 . "',
 fbsi6 = '" . $fbsi6 . "',
 fbsi7 = '" . $fbsi7 . "',
 total = '" . $total . "',
-
+assessor = '" . $assessor . "',
 
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "'  

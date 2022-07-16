@@ -25,7 +25,7 @@ $outto = $data['outto'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-
+$assessor = $data['assessor'];
 
 
 include '../conn.php';
@@ -36,11 +36,11 @@ if (!empty($uhid)) {
 
 
   $strvisit  = "  INSERT INTO knee_score(uhid,knee_score1,knee_score2,knee_score3,knee_score4,knee_score5,knee_score6,knee_score7,knee_score8,knee_score9,knee_score10,
-  knee_score11,knee_score12,hn,cid,assessor_date,total,result,outto,dateadd) 
+  knee_score11,knee_score12,hn,cid,assessor_date,assessor,total,result,outto,dateadd) 
       VALUES('" . $uhid . "','" . $knee_score1 . "','" . $knee_score2 . "','" . $knee_score3 . "','" . $knee_score4 . "','" . $knee_score5 . "','" . $knee_score6 . "',
       '" . $knee_score7 . "','" . $knee_score8 . "','" . $knee_score9 . "','" . $knee_score10 . "','" . $knee_score11 . "',
       '" . $knee_score12 . "','" . $hn . "',
-      '" . $cid . "','" . $assessor_date . "','" . $total . "','" . $result . "','" . $outto . "',CURRENT_TIMESTAMP)";
+      '" . $cid . "','" . $assessor_date . "','" . $assessor . "','" . $total . "','" . $result . "','" . $outto . "',CURRENT_TIMESTAMP)";
 
 
 

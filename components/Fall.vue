@@ -35,8 +35,12 @@
                   <v-icon>mdi-content-save-move </v-icon>
                   <h4>บันทึก</h4>
                 </v-btn>
-              </div></v-col
-            ></v-row
+              </div>
+              </v-col>
+              <v-col cols="12">
+              <div class="text-right">ผู้ประเมิน - {{ assessor }}</div>
+            </v-col>
+              </v-row
           >
         </v-card-text>
       </v-card>
@@ -119,9 +123,19 @@ export default {
       assessor_date: '',
 
       fall_selects: '',
+      session: '',
+      assessor: '',
+      assessor_new: '',
     }
   },
+  beforeMount() {
+    this.session = JSON.parse(localStorage.getItem('token'))
+    // alert(this.session[0].fullname)
+  },
   mounted() {
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
+    }
     //ดึง list cid and hn
     this.fecth_search_cid()
 
@@ -291,6 +305,7 @@ export default {
               hn: this.hn,
               cid: this.cid,
               assessor_date: this.assessor_date,
+              assessor: this.assessor,
             })
             .then((response) => {
               this.message = response.data
@@ -325,6 +340,7 @@ export default {
           this.fall_selects = response.data
           this.uhid = this.fall_selects[0].uhid
           this.fall = this.fall_selects[0].fall
+          this.assessor = this.fall_selects[0].assessor
         })
     },
     fall_update: function () {
@@ -343,6 +359,7 @@ export default {
             hn: this.hn,
             cid: this.cid,
             assessor_date: this.assessor_date,
+            assessor: this.assessor_new,
           })
           .then((response) => {
             this.message = response.data

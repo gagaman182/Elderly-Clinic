@@ -12,6 +12,7 @@ $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
 $result = $data['result'];
+$assessor = $data['assessor'];
 
 
 
@@ -27,6 +28,7 @@ SET frax1 = '" . $frax1 . "',
 frax2 = '" . $frax2 . "',
 frax3 = '" . $frax3 . "',
 result = '" . $result . "',
+assessor = '" . $assessor . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE cid = '" . $cid . "' 
 and hn = '" . $hn . "' 

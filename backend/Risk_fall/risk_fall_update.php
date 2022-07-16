@@ -23,7 +23,7 @@ $result = $data['result'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-
+$assessor = $data['assessor'];
 
 
 
@@ -48,6 +48,7 @@ riskfall_all = '" . $riskfall_all . "',
 
 total = '" . $total . "',
 result = '" . $result . "',
+assessor = '" . $assessor . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "' 
 

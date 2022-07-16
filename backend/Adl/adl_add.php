@@ -18,7 +18,9 @@ $adl9 = $data['adl9'];
 $adl10 = $data['adl10'];
 $hn = $data['hn'];
 $cid = $data['cid'];
+
 $assessor_date = $data['assessor_date'];
+$assessor = $data['assessor'];
 $total = $data['total'];
 $result = $data['result'];
 
@@ -32,10 +34,10 @@ if (!empty($uhid)) {
 
 
   $strvisit  = "  INSERT INTO adl(uhid,adl1,adl2,adl3,adl4,adl5,adl6,adl7,
-  adl8,adl9,adl10,hn,cid,assessor_date,total,result,dateadd) 
+  adl8,adl9,adl10,hn,cid,assessor_date,assessor,total,result,dateadd) 
       VALUES('" . $uhid . "','" . $adl1 . "','" . $adl2 . "','" . $adl3 . "','" . $adl4 . "','" . $adl5 . "',
       '" . $adl6 . "','" . $adl7 . "','" . $adl8 . "','" . $adl9 . "','" . $adl10 . "','" . $hn . "',
-      '" . $cid . "','" . $assessor_date . "','" . $total . "','" . $result . "',CURRENT_TIMESTAMP)";
+      '" . $cid . "','" . $assessor_date . "','" . $assessor . "','" . $total . "','" . $result . "',CURRENT_TIMESTAMP)";
 
 
 

@@ -16,6 +16,7 @@ $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
 $total = $data['total'];
 $result = $data['result'];
+$assessor = $data['assessor'];
 
 
 
@@ -27,10 +28,11 @@ include '../conn.php';
 if (!empty($uhid)) {
 
 
-  $strvisit  = "  INSERT INTO mini_cog(uhid,minicog2,minicog3_1,minicog3_2,minicog3_3,minicog3,hn,cid,assessor_date,total,result,dateadd) 
+  $strvisit  = "  INSERT INTO mini_cog(uhid,minicog2,minicog3_1,minicog3_2,minicog3_3,minicog3,
+  hn,cid,assessor_date,assessor,total,result,dateadd) 
       VALUES('" . $uhid . "','" . $minicog2 . "','" . $minicog3_1 . "','" . $minicog3_2 . "',
-      '" . $minicog3_3 . "','" . $minicog3 . "','" . $hn . "',
-      '" . $cid . "','" . $assessor_date . "','" . $total . "','" . $result . "',CURRENT_TIMESTAMP)";
+      '" . $minicog3_3 . "','" . $minicog3 . "','" . $hn . "','" . $cid . "',
+      '" . $assessor_date . "','" . $assessor . "','" . $total . "','" . $result . "',CURRENT_TIMESTAMP)";
 
 
 

@@ -551,6 +551,9 @@
                 </v-btn>
               </div>
             </v-col>
+            <v-col cols="12">
+              <div class="text-right">ผู้ประเมิน - {{ assessor }}</div>
+            </v-col>
           </v-row>
         </v-card-text>
       </v-card>
@@ -619,6 +622,18 @@ export default {
       cid: '',
       assessor_date: '',
       tmse_selects: '',
+      session: '',
+      assessor: '',
+      assessor_new: '',
+    }
+  },
+  beforeMount() {
+    this.session = JSON.parse(localStorage.getItem('token'))
+    // alert(this.session[0].fullname)
+  },
+  mounted() {
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
     }
   },
   methods: {
@@ -848,6 +863,7 @@ export default {
               assessor_date: this.assessor_date,
               total: this.total,
               result: this.result,
+              assessor: this.assessor,
             })
             .then((response) => {
               this.message = response.data
@@ -926,6 +942,7 @@ export default {
           this.assessor_date = this.tmse_selects[0].assessor_date
           this.total = this.tmse_selects[0].total
           this.result = this.tmse_selects[0].result
+          this.assessor = this.tmse_selects[0].assessor
         })
     },
     tmse_update: function () {
@@ -985,6 +1002,7 @@ export default {
             assessor_date: this.assessor_date,
             total: this.total,
             result: this.result,
+            assessor: this.assessor_new,
           })
           .then((response) => {
             this.message = response.data

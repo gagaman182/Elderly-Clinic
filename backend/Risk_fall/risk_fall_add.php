@@ -24,7 +24,7 @@ $result = $data['result'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-
+$assessor = $data['assessor'];
 
 
 include '../conn.php';
@@ -35,12 +35,12 @@ if (!empty($uhid)) {
 
 
   $strvisit  = "  INSERT INTO risk_fall(uhid,riskfall1,riskfall2,riskfall3,riskfall4,riskfall5,riskfall6,
-  riskfall7,riskfall8,riskfall9,riskfall10,riskfall_all,hn,cid,assessor_date,total,result,dateadd) 
+  riskfall7,riskfall8,riskfall9,riskfall10,riskfall_all,hn,cid,assessor_date,assessor,total,result,dateadd) 
       VALUES('" . $uhid . "','" . $riskfall1 . "','" . $riskfall2 . "','" . $riskfall3 . "','" . $riskfall4 . "',
       '" . $riskfall5 . "','" . $riskfall6 . "',
       '" . $riskfall7 . "','" . $riskfall8 . "','" . $riskfall9 . "',
       '" . $riskfall10 . "','" . $riskfall_all . "','" . $hn . "',
-      '" . $cid . "','" . $assessor_date . "','" . $total . "',
+      '" . $cid . "','" . $assessor_date . "','" . $assessor . "','" . $total . "',
       '" . $result . "',CURRENT_TIMESTAMP)";
 
 

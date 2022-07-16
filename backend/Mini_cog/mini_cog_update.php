@@ -15,6 +15,7 @@ $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
 $total = $data['total'];
 $result = $data['result'];
+$assessor = $data['assessor'];
 
 
 
@@ -33,6 +34,7 @@ minicog3_3 = '" . $minicog3_3 . "',
 minicog3 = '" . $minicog3 . "',
 total = '" . $total . "',
 result = '" . $result . "',
+assessor = '" . $assessor . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "'  
 

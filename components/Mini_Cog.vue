@@ -190,6 +190,9 @@
                 </v-btn>
               </div>
             </v-col>
+             <v-col cols="12">
+              <div class="text-right">ผู้ประเมิน - {{ assessor }}</div>
+            </v-col>
           </v-row>
         </v-card-text>
       </v-card>
@@ -283,9 +286,19 @@ export default {
       assessor_date: '',
 
       mini_cog_selects: '',
+      session: '',
+      assessor: '',
+      assessor_new: '',
     }
   },
+  beforeMount() {
+    this.session = JSON.parse(localStorage.getItem('token'))
+    // alert(this.session[0].fullname)
+  },
   mounted() {
+    if (this.session) {
+      this.assessor_new = this.session[0].fullname
+    }
     //ดึง list cid and hn
     this.fecth_search_cid()
 
@@ -536,6 +549,7 @@ export default {
               hn: this.hn,
               cid: this.cid,
               assessor_date: this.assessor_date,
+              assessor: this.assessor,
               total: this.total,
               result: this.result,
             })
@@ -573,6 +587,7 @@ export default {
         })
         .then((response) => {
           this.mini_cog_selects = response.data
+
           this.uhid = this.mini_cog_selects[0].uhid
           this.minicog2 = this.mini_cog_selects[0].minicog2
           this.minicog3_1 = this.mini_cog_selects[0].minicog3_1
@@ -582,6 +597,7 @@ export default {
           this.hn = this.mini_cog_selects[0].hn
           this.cid = this.mini_cog_selects[0].cid
           this.assessor_date = this.mini_cog_selects[0].assessor_date
+          this.assessor = this.mini_cog_selects[0].assessor
           this.total = this.mini_cog_selects[0].total
           this.result = this.mini_cog_selects[0].result
           // alert(this.total)
@@ -610,6 +626,7 @@ export default {
             assessor_date: this.assessor_date,
             total: this.total,
             result: this.result,
+            assessor: this.assessor_new,
           })
           .then((response) => {
             this.message = response.data

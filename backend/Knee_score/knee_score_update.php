@@ -23,7 +23,7 @@ $outto = $data['outto'];
 $hn = $data['hn'];
 $cid = $data['cid'];
 $assessor_date = $data['assessor_date'];
-
+$assessor = $data['assessor'];
 
 
 
@@ -50,6 +50,7 @@ knee_score12 = '" . $knee_score12 . "',
 total = '" . $total . "',
 result = '" . $result . "',
 outto = '" . $outto . "',
+assessor = '" . $assessor . "',
 dateedit = CURRENT_TIMESTAMP
 WHERE  uhid = '" . $uhid . "' 
 
